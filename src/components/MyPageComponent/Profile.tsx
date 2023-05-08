@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { userInfo } from "@/Types";
 import Image from "next/image";
-
+import MyAttendingClub from "./MyAttendingClub";
 const Profile = () => {
   const [userinfo, setUserInfo] = useState<userInfo | null>(null);
   const [pageLoading, setPageLoading] = useState(false);
@@ -85,7 +85,9 @@ const Profile = () => {
           </div>
           <div className="flex justify-start   shadow-lg shadow-blue-700  w-8/12 h-[27rem] m-auto rounded-lg bg-sky-300">
             <div className=" w-[18rem]"></div>
-            <div className="w-[15rem]">여기는 참여중인 동아리 정보</div>
+            <div className="w-[15rem]">
+              <MyAttendingClub />
+            </div>
           </div>
         </div>
       )}

@@ -4,11 +4,18 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 const inter = Inter({ subsets: ["latin"] });
 import Link from "next/link";
-import Header from "@/components/Header";
-import Navbar from "@/components/Navbar";
-import TopMeetingList from "@/components/TopMeetingList";
+import Header from "@/components/EssentialComponent/Header";
+import Navbar from "@/components/EssentialComponent/Navbar";
+import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
+import CateClubList from "@/components/HomeComponent/CateClubList";
 
 export default function Home() {
+  const data = ["스포츠", "문화생활"];
+  //이걸 넣어주고 싶은데, 오류 찾기ing
+  // const CateList = data.forEach((item) => {
+  //   <CateClubList data={item} />;
+  // });
+
   return (
     <>
       <Head>
@@ -24,23 +31,8 @@ export default function Home() {
         <TopMeetingList />
       </div>
       <div>
-        <div className="heigth-[4rem]"></div>
-        <div className="border-4 text-[40px] w-[62rem] my-1 mx-auto">
-          {" "}
-          스포츠 동아리List
-        </div>
-        <div className="border-4 text-[40px] w-[62rem] my-1 mx-auto">
-          {" "}
-          문화생활 동아리List
-        </div>
-        <div className="border-4 text-[40px] w-[62rem] my-1 mx-auto">
-          {" "}
-          스터디 동아리List
-        </div>
-        <div className="border-4 text-[40px] w-[62rem] my-1 mx-auto">
-          {" "}
-          기타List
-        </div>
+        <CateClubList data={data[0]} />;
+        <CateClubList data={data[1]} />;
       </div>
     </>
   );

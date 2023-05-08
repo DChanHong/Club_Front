@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRef } from "react";
-import Header from "../Header";
+import Header from "../EssentialComponent/Header";
 import { signFormData } from "@/Types";
 import { useRouter } from "next/router";
 import axiosInstance from "@/utils/axiosInstance";

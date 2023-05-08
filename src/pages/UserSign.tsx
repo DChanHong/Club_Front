@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/EssentialComponent/Header";
 import SignBox from "@/components/LoginSign/SignBox";
 
 const UserSign = () => {
