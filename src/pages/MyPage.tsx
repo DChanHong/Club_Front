@@ -4,7 +4,7 @@ import Profile from "@/components/MyPageComponent/Profile";
 
 const MyPage = () => {
   return (
-    <div className="w-screen h-screen bg-cover bg-gradient-to-r from-cyan-500 to-blue-500 ...">
+    <div className="">
       <div>
         <Header />
       </div>

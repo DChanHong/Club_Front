@@ -1,37 +1,36 @@
 import axiosInstance from "@/utils/axiosInstance";
+import { myPageHostInfo } from "@/Types";
 import { useEffect, useState } from "react";
-import { myPageAttInfo } from "@/Types";
-import { FiUsers } from "react-icons/fi";
-const MyAttendingClub = () => {
-  const [data, setData] = useState<myPageAttInfo[]>([]);
+import { BsFilePersonFill } from "react-icons/bs";
 
-  const getMyAttClubList = async () => {
-    const result = await axiosInstance.get("/customer/getMyAttClubList");
-    setData(result.data);
-    if (data.length > 0) {
-      console.log(data);
+const MyPageHostList = () => {
+  const [hostList, setHostList] = useState<myPageHostInfo[]>([]);
+
+  const getMyHostClubList = async () => {
+    const result = await axiosInstance.get("/customer/getMyHostClubList");
+    setHostList(result.data);
+    if (hostList.length > 0) {
+      console.log(hostList);
     }
   };
+
   useEffect(() => {
-    getMyAttClubList();
+    getMyHostClubList();
   }, []);
 
-  const test = () => {
-    console.log(data);
-  };
   return (
     <>
       <div className="mx-auto w-[18rem] text-center mt-4 font-bold text-[20px]">
-        활동중인 Club
+        My Club
       </div>
       <div>
-        {data.map((item) => (
+        {hostList.map((item) => (
           <div
-            className="flex flex-start border-2 border-gray-300 bg-white w-[20rem] rounded-lg my-4 py-3"
+            className="flex flex-start border-2  border-gray-300 bg-white w-[20rem] rounded-lg my-4 py-3"
             key={item.C_IDX}
           >
             <div>
-              <FiUsers className="mt-2 mx-6" size={30} />
+              <BsFilePersonFill className="mt-2 mx-6" size={30} />
             </div>
             <div>
               <div className="text-center">
@@ -50,4 +49,4 @@ const MyAttendingClub = () => {
   );
 };
 
-export default MyAttendingClub;
+export default MyPageHostList;

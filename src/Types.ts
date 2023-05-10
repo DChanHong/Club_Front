@@ -56,3 +56,23 @@ export interface cateClubInfo {
   C_AREA: string | undefined;
   C_IMAGE: string | undefined;
 }
+
+// 마이페이지 내가 참여중인 동아리 인터페이스
+export interface myPageAttInfo {
+  U_IDX: number | undefined;
+  C_IDX: number | undefined;
+  C_NAME: string | undefined;
+  C_CATEGORY: string | undefined;
+  C_CATE_DETAIL: string | undefined;
+  C_AREA: string | undefined;
+}
+
+// 마이페이지 내 호트인 동아리 불러오기 인터페이스
+export interface myPageHostInfo {
+  C_IDX: number | undefined;
+  U_IDX: number | undefined;
+  C_CATEGORY: string | undefined;
+  C_CATE_DETAIL: string | undefined;
+  C_NAME: string | undefined;
+  C_AREA: string | undefined;
+}

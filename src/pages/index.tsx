@@ -31,8 +31,9 @@ export default function Home() {
         <TopMeetingList />
       </div>
       <div>
-        <CateClubList data={data[0]} />;
-        <CateClubList data={data[1]} />;
+        {data.map((item, idx) => {
+          return <CateClubList data={item} key={idx} />;
+        })}
       </div>
     </>
   );

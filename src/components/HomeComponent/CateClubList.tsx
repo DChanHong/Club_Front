@@ -59,8 +59,10 @@ const CateClubList = ({ data }: any) => {
                 </p>
               </div>
               <div>
-                <button className="border-2 rounded-xl mb-2 " type="button">
-                  <p className="p-0.5">입장하기</p>
+                <button className="  mb-2 " type="button">
+                  <p className="bg-blue-600 border-2 border-blue-600  rounded-xl text-white p-1 text-[12px]">
+                    입장하기
+                  </p>
                 </button>
               </div>
             </div>

@@ -15,7 +15,7 @@ const TopMeetingList = () => {
 
   const getTopClubList = async () => {
     const result = await axiosInstance.get("customer/getTopClubList");
-    console.log(result);
+    // console.log(result);
     if (result) {
       setImages(result.data);
     }
@@ -39,13 +39,12 @@ const TopMeetingList = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 2,
+    slidesToScroll: 3,
   };
 
   return (
     <div className="mb-10">
-      <div></div>
-      <div className="border-2 w-[62rem] my-2 mx-auto text-[20px]">
+      <div className="mx-auto text-[22px] border-4 w-[20rem] text-center">
         인기 동아리 리스트
       </div>
 
@@ -57,10 +56,10 @@ const TopMeetingList = () => {
           {imgList?.map((item) => (
             <div key={item.U_IDX}>
               <Image
-                className="border-4 border-current border-indigo-200 rounded-full mx-7 mt-6 w-[12rem] "
+                className="border-4 border-current border-indigo-200 mx-7 mt-6 w-[12rem] "
                 src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
                 alt={`${item?.U_IDX}`}
-                width={500}
+                width={100}
                 height={500}
                 unoptimized={true}
               />

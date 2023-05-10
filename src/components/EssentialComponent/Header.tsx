@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 
 const Header = () => {
   const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
+  console.log(login);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -17,7 +18,7 @@ const Header = () => {
   };
 
   return (
-    <div className="w-[100%]">
+    <div className="w-[62rem] mx-auto">
       <div className="flex justify-between rounded-lg  h-[60px] bg-blue-600 drop-shadow-2xl shadow-blue-400">
         <Link href={"/"}>
           <div className="my-4 ml-10 text-white text-2xl">Club House</div>

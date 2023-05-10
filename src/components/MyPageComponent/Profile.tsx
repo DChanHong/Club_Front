@@ -3,15 +3,18 @@ import axiosInstance from "@/utils/axiosInstance";
 import { userInfo } from "@/Types";
 import Image from "next/image";
 import MyAttendingClub from "./MyAttendingClub";
+import MyPageHostList from "./MyPageHostList";
+
 const Profile = () => {
   const [userinfo, setUserInfo] = useState<userInfo | null>(null);
   const [pageLoading, setPageLoading] = useState(false);
 
   const getUserInfo = async () => {
     const userInfo = await axiosInstance.get("/customer/getuserInfo");
-    console.log(userInfo);
+    // console.log(userInfo);
     setUserInfo(userInfo.data[0]);
     setPageLoading(true);
+    // console.log(userInfo);
   };
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const Profile = () => {
         <div>...loading</div>
       ) : (
         <div>
-          <div className="flex justify-start shadow-lg shadow-blue-700 mt-4 mb-4  w-8/12 h-48 m-auto rounded-lg relative bg-blue-300">
+          <div className="flex justify-start shadow-lg shadow-blue-700 mt-4 mb-4  w-[62rem] h-48 m-auto rounded-lg relative bg-blue-300">
             <div className="w-[18rem]"></div>
             <div className=" shadow-lg shadow-blue-700 w-[15rem] h-[30rem]  m-auto rounded-lg absolute top-10 left-4  bg-blue-100">
               <div className="h-3/6">
@@ -76,17 +79,24 @@ const Profile = () => {
                   </form>
                 </div>
               </div>
-              <div className="mt-10">
-                <div> 이메일 : {userinfo?.U_EMAIL}</div>
-                <div> 이름 : {userinfo?.U_NAME}</div>
-                <div> 성별 : {userinfo?.U_GENDER}</div>
+              <div className="mt-10 flex flex-col">
+                <span className="ml-4  text-[20px] font-bold">
+                  {" "}
+                  {userinfo?.U_NAME}
+                </span>
+                <span className="ml-4 text-gray-400"> {userinfo?.U_EMAIL}</span>
+
+                {/* <span> {userinfo?.U_GENDER}</span> */}
               </div>
             </div>
           </div>
-          <div className="flex justify-start   shadow-lg shadow-blue-700  w-8/12 h-[27rem] m-auto rounded-lg bg-sky-300">
+          <div className="flex justify-start   shadow-lg shadow-blue-700  w-[62rem] h-[28rem] m-auto rounded-lg bg-sky-300">
             <div className=" w-[18rem]"></div>
             <div className="w-[15rem]">
               <MyAttendingClub />
+            </div>
+            <div className=" ml-24">
+              <MyPageHostList />
             </div>
           </div>
         </div>
