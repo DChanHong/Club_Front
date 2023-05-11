@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 const Header = () => {
   const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
-  console.log(login);
+
   const dispatch = useAppDispatch();
   const router = useRouter();
 

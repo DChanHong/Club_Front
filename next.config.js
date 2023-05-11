@@ -6,6 +6,8 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
+        protocol: "https",
+        hostname: "my-club-bucket.s3.ap-northeast-2.amazonaws.com",
       },
     ],
   },

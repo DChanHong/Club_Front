@@ -14,7 +14,7 @@ const TopMeetingList = () => {
   const [loading, setLoading] = useState(false);
 
   const getTopClubList = async () => {
-    const result = await axiosInstance.get("customer/getTopClubList");
+    const result = await axiosInstance.get("homeAdd/getTopClubList");
     // console.log(result);
     if (result) {
       setImages(result.data);
@@ -47,20 +47,19 @@ const TopMeetingList = () => {
       <div className="mx-auto text-[22px] border-4 w-[20rem] text-center">
         인기 동아리 리스트
       </div>
-
       <div className="flex justify-start w-[62rem] mx-auto ">
         <button onClick={handlePrevClick}>
           <AiFillCaretLeft />
         </button>
-        <Slider className=" w-[62rem]" ref={sliderRef} {...settings}>
+        <Slider className=" w-[62rem] mt-4" ref={sliderRef} {...settings}>
           {imgList?.map((item) => (
-            <div key={item.U_IDX}>
+            <div key={item.U_IDX} className="w-[13rem] h-[14rem]">
               <Image
-                className="border-4 border-current border-indigo-200 mx-7 mt-6 w-[12rem] "
+                className="w-[14rem] h-[12rem] border-4 rounded-2xl"
                 src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
                 alt={`${item?.U_IDX}`}
-                width={100}
-                height={500}
+                width={50}
+                height={100}
                 unoptimized={true}
               />
             </div>
