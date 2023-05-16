@@ -6,6 +6,7 @@ import { loginFormData } from "@/Types";
 import { useRouter } from "next/router";
 import { SET_IS_LOGIN } from "@/store/slice/isLoginSlice";
 import { useAppDispatch } from "@/store/hooks";
+import { useEffect } from "react";
 
 const LoginBox = () => {
   const router = useRouter();
@@ -30,6 +31,7 @@ const LoginBox = () => {
       console.log(loginValid);
       if (!loginValid.data.data) {
         dispatch(SET_IS_LOGIN(loginValid.data.login));
+        localStorage.setItem("login", `${loginValid.data.login}`);
 
         router.push("/");
       } else {

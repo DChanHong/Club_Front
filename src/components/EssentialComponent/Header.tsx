@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
-import { REMOVE_IS_LOGIN } from "@/store/slice/isLoginSlice";
+import { REMOVE_IS_LOGIN, SET_IS_LOGIN } from "@/store/slice/isLoginSlice";
 import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
 
 const Header = () => {
-  const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
+  let login = useAppSelector((state: RootState) => state.is_Login.is_Login);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -15,7 +15,16 @@ const Header = () => {
   const logout = () => {
     dispatch(REMOVE_IS_LOGIN(false));
     router.push("/");
+    localStorage.removeItem("login");
   };
+
+  useEffect(() => {
+    const test = localStorage.getItem("login");
+    if (test === "true") {
+      console.log("음");
+      dispatch(SET_IS_LOGIN(true));
+    }
+  }, []);
 
   return (
     <div className="w-[62rem] mx-auto">

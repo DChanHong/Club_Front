@@ -76,3 +76,37 @@ export interface myPageHostInfo {
   C_NAME: string | undefined;
   C_AREA: string | undefined;
 }
+
+// 동아리  입장하기 화면  불러올 데이터 인터페이스
+export interface clubDetailInfo {
+  HOSTNAME: number | undefined;
+  C_CATEGORY: string | undefined;
+  C_CATE_DETAIL: string | undefined;
+  C_NAME: string | undefined;
+  C_INTRO: string | undefined;
+  C_AREA: string | undefined;
+  C_IMAGE: string | undefined;
+  C_TEXT: string | undefined;
+  C_IDX: number | undefined;
+  U_IDX: number | undefined;
+  U_NAME: string | undefined;
+  U_IMAGE: string | undefined;
+}
+
+// 동아리 상세페이지 동아리 정보
+export interface clubContextInfo {
+  map(arg0: (item: any) => JSX.Element): import("react").ReactNode;
+  C_IDX: number | undefined;
+  U_IDX: number | undefined;
+  C_CATEGORY: string | undefined;
+  C_CATE_DETAIL: string | undefined;
+  C_NAME: string | undefined;
+  C_INTRO: string | undefined;
+  C_AREA: string | undefined;
+  C_IMAGE: string | undefined;
+  C_TEXT: string | undefined;
+}
+
+export interface clubTextInfo {
+  C_TEXT: string | undefined;
+}

@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { cateClubInfo } from "@/Types";
 import Image from "next/image";
+import Link from "next/link";
+import { useRef } from "react";
+import { useRouter } from "next/router";
 
 const CateClubList = ({ data }: any) => {
   const propsdata = data;
 
   const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const getCateClubList = async () => {
     const axiosData = { data: propsdata };
@@ -19,10 +22,16 @@ const CateClubList = ({ data }: any) => {
 
   useEffect(() => {
     getCateClubList();
-    if (cateClub.length > 0) {
-      setLoading(true);
-    }
   }, []);
+
+  ///////////
+  const router = useRouter();
+
+  const clubRouterButton = (data: any) => {
+    router.push({
+      pathname: `/clubDetailPage/${data}`,
+    });
+  };
 
   return (
     <div>
@@ -60,7 +69,11 @@ const CateClubList = ({ data }: any) => {
                 </p>
               </div>
               <div>
-                <button className="  mb-2 " type="button">
+                <button
+                  className="  mb-2 "
+                  type="button"
+                  onClick={() => clubRouterButton(item?.C_IDX)}
+                >
                   <p className="bg-blue-600 border-2 border-blue-600  rounded-xl text-white p-1 text-[12px]">
                     입장하기
                   </p>
