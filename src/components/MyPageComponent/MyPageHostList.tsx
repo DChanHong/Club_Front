@@ -2,6 +2,7 @@ import axiosInstance from "@/utils/axiosInstance";
 import { myPageHostInfo } from "@/Types";
 import { useEffect, useState } from "react";
 import { BsFilePersonFill } from "react-icons/bs";
+import { useRouter } from "next/router";
 
 const MyPageHostList = () => {
   const [hostList, setHostList] = useState<myPageHostInfo[]>([]);

@@ -6,13 +6,6 @@ const PostPage = () => {
   return (
     <>
       <div>
-        <Header />
-      </div>
-
-      <div>
-        <Navbar />
-      </div>
-      <div>
         <SearchList />
       </div>
     </>

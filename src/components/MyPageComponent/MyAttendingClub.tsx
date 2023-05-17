@@ -9,16 +9,12 @@ const MyAttendingClub = () => {
     const result = await axiosInstance.get("/customer/getMyAttClubList");
     setData(result.data);
     if (data.length > 0) {
-      console.log(data);
     }
   };
   useEffect(() => {
     getMyAttClubList();
   }, []);
 
-  const test = () => {
-    console.log(data);
-  };
   return (
     <>
       <div className="mx-auto w-[18rem] text-center mt-4 font-bold text-[20px]">

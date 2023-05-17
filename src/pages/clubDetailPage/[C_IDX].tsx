@@ -9,7 +9,7 @@ import UpdateText from "@/components/clubDetailpage/UpdateText";
 
 const ClubPostPage = () => {
   return (
-    <div className="flex flex-start w-[62rem]  border-2 mx-auto">
+    <div className="flex flex-start w-[62rem] h-[32rem] border-2 mx-auto">
       <div>
         <AttendUser />
       </div>

@@ -26,7 +26,7 @@ const AttendUser = () => {
   }, []);
 
   return (
-    <div className="border- w-[13rem]">
+    <div className="border-2 m-2 h-[31rem] w-[13rem]">
       <div className="border-2 my-2 mx-2">
         <p className="text-center my-1">참여자</p>
       </div>

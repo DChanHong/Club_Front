@@ -24,7 +24,10 @@ const ClubContext = () => {
   return (
     <div>
       {clubDetail.map((item) => (
-        <div key={item?.C_IDX} className="border-2 ml-4 w-[18rem] h-[14rem]">
+        <div
+          key={item?.C_IDX}
+          className="border-2 ml-4 my-2 w-[18rem] h-[14rem]"
+        >
           <Image
             className="m-2"
             src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
@@ -33,12 +36,16 @@ const ClubContext = () => {
             height={100}
             unoptimized={true}
           />
-          <div>
-            <p>{item?.C_NAME}</p>
-            <p>
-              {item?.C_CATEGORY} {item.C_CATE_DETAIL}
+          <div className="mt-6">
+            <p className="border-2 rounded-xl text-center text-[20px] my-2 ">
+              {item?.C_NAME}
             </p>
-            <p>{item?.C_INTRO}</p>
+            <p className="border-2 rounded-xl text-center text-[20px] my-2 ">
+              #{item?.C_CATEGORY} #{item.C_CATE_DETAIL}
+            </p>
+            <p className="border-2 rounded-xl text-center text-[20px] my-2 px-8 ">
+              {item?.C_INTRO}
+            </p>
           </div>
         </div>
       ))}

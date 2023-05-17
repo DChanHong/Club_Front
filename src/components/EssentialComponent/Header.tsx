@@ -21,8 +21,9 @@ const Header = () => {
   useEffect(() => {
     const test = localStorage.getItem("login");
     if (test === "true") {
-      console.log("음");
       dispatch(SET_IS_LOGIN(true));
+    } else {
+      dispatch(REMOVE_IS_LOGIN);
     }
   }, []);
 
