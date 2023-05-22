@@ -11,8 +11,8 @@ export const isLoginSlice = createSlice({
     SET_IS_LOGIN: (state, action) => {
       state.is_Login = action.payload;
     },
-    REMOVE_IS_LOGIN: (state) => {
-      state.is_Login = false;
+    REMOVE_IS_LOGIN: (state, action) => {
+      state.is_Login = action.payload;
     },
   },
 });

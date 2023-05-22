@@ -20,10 +20,10 @@ const UpdateText = () => {
   }, []);
 
   return (
-    <div className="border- my-1 mx-2 w-[28rem] ">
+    <div className=" my-1 mt-14 w-[20rem] ">
       {clubDetail.map((item) => (
         <div key={item.C_TEXT}>
-          <div className="text-center border-2 mx-auto h-[29rem] w-[26rem]">
+          <div className="text-center border-2 mx-auto h-[13rem] w-[18rem]">
             {item.C_TEXT}
           </div>
         </div>

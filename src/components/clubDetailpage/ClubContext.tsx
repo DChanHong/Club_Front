@@ -26,27 +26,20 @@ const ClubContext = () => {
       {clubDetail.map((item) => (
         <div
           key={item?.C_IDX}
-          className="border-2 ml-4 my-2 w-[18rem] h-[14rem]"
+          className=" ml-4 my-2 w-[18rem] h-[14rem] flex flex-col"
         >
+          <p className="border-2 rounded-xl text-center text-[20px] my-2 ">
+            {item?.C_NAME}
+          </p>
           <Image
-            className="m-2"
+            className="border-4 rounded-xl w-[18rem] h-[14rem]"
             src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
             alt={`${item?.C_IDX}`}
             width={270}
             height={100}
             unoptimized={true}
           />
-          <div className="mt-6">
-            <p className="border-2 rounded-xl text-center text-[20px] my-2 ">
-              {item?.C_NAME}
-            </p>
-            <p className="border-2 rounded-xl text-center text-[20px] my-2 ">
-              #{item?.C_CATEGORY} #{item.C_CATE_DETAIL}
-            </p>
-            <p className="border-2 rounded-xl text-center text-[20px] my-2 px-8 ">
-              {item?.C_INTRO}
-            </p>
-          </div>
+          <div className="mt-6"></div>
         </div>
       ))}
     </div>

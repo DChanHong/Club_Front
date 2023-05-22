@@ -14,8 +14,11 @@ axiosInstance.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           window.location.href = "/Login";
+          localStorage.setItem("login", "false");
           break;
-
+        case 402:
+          // window.location.href = "/Login";
+          localStorage.setItem("login", "false");
         default:
           return Promise.reject(error);
       }

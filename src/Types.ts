@@ -110,3 +110,7 @@ export interface clubContextInfo {
 export interface clubTextInfo {
   C_TEXT: string | undefined;
 }
+
+export interface joinCheck {
+  U_IDX: number | undefined;
+}
