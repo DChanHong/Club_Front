@@ -11,7 +11,7 @@ const MyPageHostList = () => {
     const result = await axiosInstance.get("/customer/getMyHostClubList");
     setHostList(result.data);
     if (hostList.length > 0) {
-      console.log(hostList);
+      // console.log(hostList);
     }
   };
 

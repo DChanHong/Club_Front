@@ -15,7 +15,7 @@ const Header = () => {
   const logout = () => {
     dispatch(REMOVE_IS_LOGIN(false));
     router.push("/");
-    localStorage.removeItem("login");
+    localStorage.setItem("login", "false");
   };
 
   useEffect(() => {

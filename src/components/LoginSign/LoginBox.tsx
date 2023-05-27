@@ -28,7 +28,7 @@ const LoginBox = () => {
       withCredentials: true,
     });
     try {
-      console.log(loginValid);
+      // console.log(loginValid);
       if (!loginValid.data.data) {
         dispatch(SET_IS_LOGIN(loginValid.data.login));
         localStorage.setItem("login", `${loginValid.data.login}`);

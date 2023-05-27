@@ -64,7 +64,6 @@ const TopMeetingList = () => {
   const showModal = (C_IDX: any) => {
     setMoadlIndex(C_IDX);
     dispatch(OPEN_SLIDER_MODAL(true));
-    // console.log(showMoalState);
   };
 
   return (

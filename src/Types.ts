@@ -114,3 +114,14 @@ export interface clubTextInfo {
 export interface joinCheck {
   U_IDX: number | undefined;
 }
+
+export interface scheduleInfo {
+  S_IDX: number | undefined;
+  U_IDX: number | undefined;
+  C_IDX: number | undefined;
+  S_DATE: string | undefined;
+  S_HEAD: string | undefined;
+  S_SUBH: string | undefined;
+  S_LIKE: number | undefined;
+  S_NOW: string | undefined;
+}
