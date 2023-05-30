@@ -7,13 +7,6 @@ export default function Home() {
 
   return (
     <>
-      {/* <Image
-        src={`https://my-club-bucket.s3.ap-northeast-2.amazonaws.com/mypage/curry.png`}
-        width={200}
-        height={200}
-        alt="asd"
-      /> */}
-
       <div>
         <TopMeetingList />
       </div>

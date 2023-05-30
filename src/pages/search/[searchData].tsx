@@ -1,10 +1,12 @@
 import SearchList from "@/components/SearchPage/SearchList";
-import Header from "@/components/EssentialComponent/Header";
-import Navbar from "@/components/EssentialComponent/Navbar";
+import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
 
 const PostPage = () => {
   return (
     <>
+      <div>
+        <TopMeetingList />
+      </div>
       <div>
         <SearchList />
       </div>

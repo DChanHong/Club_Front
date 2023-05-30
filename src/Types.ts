@@ -115,6 +115,7 @@ export interface joinCheck {
   U_IDX: number | undefined;
 }
 
+//일정
 export interface scheduleInfo {
   S_IDX: number | undefined;
   U_IDX: number | undefined;
@@ -124,4 +125,12 @@ export interface scheduleInfo {
   S_SUBH: string | undefined;
   S_LIKE: number | undefined;
   S_NOW: string | undefined;
+}
+
+// 일정 밑에 댓글 넣기
+export interface shceduleContext {
+  S_IDX: number | undefined;
+  U_IDX: number | undefined;
+  U_NAME: string | undefined;
+  CO_CONTEXT: string | undefined;
 }

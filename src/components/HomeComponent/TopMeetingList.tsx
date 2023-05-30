@@ -67,8 +67,8 @@ const TopMeetingList = () => {
   };
 
   return (
-    <div className="mb-10">
-      <div className="mx-auto text-[22px] border-4 w-[20rem] text-center">
+    <div className="mb-10 mt-2">
+      <div className="mx-auto text-[22px] py-2 border-2 border-x-white border-y-red-400 w-2/3 text-center">
         인기 동아리 리스트
       </div>
       <div className="flex justify-start w-[62rem] mx-auto ">

@@ -11,6 +11,9 @@ import { scheduleInfo } from "@/Types";
 import moment from "moment";
 import { AiFillLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
+
+import TextBox from "./TextBox";
+
 const AttendUser = () => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
@@ -119,11 +122,99 @@ const AttendUser = () => {
 
   ////////////
   // 댓글창 띄우기
+  const [showComment, setShowComment] = useState(false);
+  const [sidx, setSidx] = useState<number>(0);
+  const handleContentBox = (S_IDX: any) => {
+    setShowComment(!showComment);
+    setSidx(S_IDX);
+  };
 
   return (
     <div className="flex flex-start">
-      <div className="border-2 m-2 h-[31rem] w-[13rem] overflow-auto">
-        <div className="border-2 text-center p-1 my-2 mx-2 bg-blue-600 border-2 rounded-xl text-white">
+      <div className="flex flex-col">
+        <div className="border-2 p-1 rounded-xl m-2 h-[32rem] w-[24rem] ">
+          {join ? (
+            <div>
+              <div className=" overflow-y-auto h-[31rem]">
+                {sdata.map((item, index) => (
+                  <div
+                    key={index}
+                    className="border-2 m-2 bg-slate-100 shadow-lg rounded-xl overflow-y-auto"
+                  >
+                    <p className="m- text-center font-bold">{item.S_HEAD}</p>
+                    <p className="pl-2  text-[14px]">
+                      {" "}
+                      모임 날짜 :{`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
+                    </p>
+                    <p className="m-1 pl-1 text-[14px]">{item.S_SUBH}</p>
+                    <p className="flex justify-evenly mb-1">
+                      <button className="text-gray-400 text-[13px]">
+                        <div className="flex">
+                          <AiFillLike className="mx-2" size={16} />
+                          <span className="">좋아요</span>
+                        </div>
+                      </button>
+                      <button className="text-gray-400 text-[13px]">
+                        <div className="flex">
+                          <AiOutlineComment className="mx-2" size={16} />
+                          <span
+                            className=""
+                            onClick={() => handleContentBox(item.S_IDX)}
+                          >
+                            댓글
+                          </span>
+                        </div>
+                      </button>
+                    </p>
+                    <div
+                      className={`overflow-hidden transition-max-height duration-300 ease-in-out ${
+                        showComment && item.S_IDX === sidx
+                          ? "max-h-40"
+                          : "max-h-0"
+                      }`}
+                    >
+                      <TextBox S_IDX={item.S_IDX} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div>
+          <div className=" text-center bg-blue-600 border-2 rounded-xl text-white ml-4 p-1  mx-2 ">
+            <button className="" onClick={showModal}>
+              일정 생성하기{" "}
+            </button>{" "}
+          </div>
+        </div>
+      </div>
+      <div className=" ">
+        <div className="border-2 p-1 rounded-xl ml-4 m-2 h-[32rem] w-[13rem]  overflow-auto">
+          {clubDetail?.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-start border-2 rounded-xl my-1 mx-2 "
+            >
+              <span className="mb-2 ml-3 w-[45px] h-[45px]">
+                <Image
+                  className="rounded-full"
+                  src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                  alt={`${item.U_IDX}`}
+                  width="50"
+                  height="50"
+                  unoptimized={true}
+                />
+              </span>
+              <div className="my-1 mt-3 ml-4 text-[19px] ">
+                <span className="mx-auto mt-6 mr-2">{item.U_NAME}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="w-[13rem] border-2 text-center ml-4 p-1 my-2 mx-2 bg-red-600 border-2 rounded-xl text-white">
           {" "}
           {join ? (
             <button type="button" onClick={LeaveClub} className="">
@@ -135,71 +226,6 @@ const AttendUser = () => {
             </button>
           )}
         </div>
-        {clubDetail?.map((item) => (
-          <div
-            key={item?.U_IDX}
-            className="flex flex-start border-2 my-1 mx-2 "
-          >
-            <span className="my-1 ml-3 w-[45px] h-[45px]">
-              <Image
-                className="rounded-full"
-                src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
-                alt={`${item.U_IDX}`}
-                width="50"
-                height="50"
-                unoptimized={true}
-              />
-            </span>
-            <div className="my-1 mt-4 ml-4 text-[18px] ">
-              <span className="mx-auto mt-6 mr-2">
-                {item.U_NAME}
-                {item.U_IDX}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="border-2 m-2 h-[31rem] w-[24rem] overflow-auto">
-        {join ? (
-          <div>
-            <div className=" text-center bg-blue-600 m-2 p-2  rounded-xl text-white">
-              <button className="" onClick={showModal}>
-                일정 생성하기{" "}
-              </button>{" "}
-            </div>
-            <div>
-              {sdata.map((item) => (
-                <div
-                  key={item.S_IDX}
-                  className="border-2 m-2 bg-slate-100 shadow-lg  rounded-xl"
-                >
-                  <p className="m- text-center font-bold">{item.S_HEAD}</p>
-                  <p className="pl-2  text-[14px]">
-                    {" "}
-                    모임 날짜 :{`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
-                  </p>
-                  <p className="m-1 pl-1 text-[14px]">{item.S_SUBH}</p>
-                  <p className="flex justify-evenly mb-1">
-                    <button className="text-gray-400 text-[13px]">
-                      <div className="flex">
-                        <AiFillLike className="mx-2" size={16} />
-                        <span className="">좋아요</span>
-                      </div>
-                    </button>
-                    <button className="text-gray-400 text-[13px]">
-                      <div className="flex">
-                        <AiOutlineComment className="mx-2" size={16} />
-                        <span className="">댓글</span>
-                      </div>
-                    </button>
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div></div>
-        )}
       </div>
       {showComponent && <AddScheduleModal data={C_IDX} />}
     </div>

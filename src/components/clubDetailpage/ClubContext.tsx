@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { clubDetailInfo } from "@/Types";
 import Image from "next/image";
-
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { OPEN_SCHEDULE_MODAL } from "@/store/slice/isScheduleModalSlice";
 const ClubContext = () => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
@@ -20,13 +21,17 @@ const ClubContext = () => {
   useEffect(() => {
     getClubDetailUserList();
   }, []);
+  const dispatch = useAppDispatch();
+  const showModal = () => {
+    dispatch(OPEN_SCHEDULE_MODAL(true));
+  };
 
   return (
-    <div>
+    <div className="flex flex-col h-full">
       {clubDetail.map((item) => (
         <div
           key={item?.C_IDX}
-          className=" ml-4 my-2 w-[18rem] h-[14rem] flex flex-col"
+          className=" ml-4 my-2 w-[18rem] h-auto flex flex-col"
         >
           <p className="border-2 rounded-xl text-center text-[20px] my-2 ">
             {item?.C_NAME}
@@ -39,7 +44,6 @@ const ClubContext = () => {
             height={100}
             unoptimized={true}
           />
-          <div className="mt-6"></div>
         </div>
       ))}
     </div>

@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { cateClubInfo } from "@/Types";
 import Image from "next/image";
-import Link from "next/link";
-import { useRef } from "react";
 import { useRouter } from "next/router";
 
 const CateClubList = ({ data }: any) => {
@@ -35,14 +33,14 @@ const CateClubList = ({ data }: any) => {
 
   return (
     <div>
-      <div className="mx-auto text-[22px] border-4 w-[20rem] text-center">
+      <div className="mx-auto text-[22px] py-2 border-2 border-x-white border-y-gray-300 w-2/3 text-center">
         <p>{propsdata} 동아리 리스트</p>
       </div>
-      <div className=" grid grid-cols-2  mx-auto  w-[62rem] ">
+      <div className=" grid {{@screen sm:grid-cols-2 md:grid-cols-1}} mx-auto w-2/3 ">
         {cateClub?.map((item) => (
           <div
             key={item.C_IDX}
-            className="flex flex-start border-4 rounded-3xl border-slate-200 m-2 w-[28rem]"
+            className="flex flex-start border-4 mx-auto  rounded-3xl border-slate-200 my-2 w-[28rem]"
           >
             <div className="m-3 w-[8rem]">
               <Image
