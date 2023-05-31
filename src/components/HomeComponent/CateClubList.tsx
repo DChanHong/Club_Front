@@ -3,7 +3,7 @@ import axiosInstance from "@/utils/axiosInstance";
 import { cateClubInfo } from "@/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
+import { GoArrowRight } from "react-icons/go";
 const CateClubList = ({ data }: any) => {
   const propsdata = data;
 
@@ -32,17 +32,24 @@ const CateClubList = ({ data }: any) => {
   };
 
   return (
-    <div>
-      <div className="mx-auto text-[22px] py-2 border-2 border-x-white border-y-gray-300 w-2/3 text-center">
-        <p>{propsdata} 동아리 리스트</p>
+    <div className=" mb-10 mt-2 pb-6 border-2 border-t-white border-x-white border-b-neutral-100">
+      <div className="flex flex-start text-[22px] py-2 ml-4 ">
+        <p className="">
+          <GoArrowRight size={30} />
+        </p>
+        <p className="ml-4">{propsdata} 동아리 리스트</p>
       </div>
-      <div className=" grid {{@screen sm:grid-cols-2 md:grid-cols-1}} mx-auto w-2/3 ">
+
+      <div className="flex flex-wrap ">
         {cateClub?.map((item) => (
           <div
             key={item.C_IDX}
-            className="flex flex-start border-4 mx-auto  rounded-3xl border-slate-200 my-2 w-[28rem]"
+            className="
+                flex flex-start 
+                border-4  rounded-3xl mr-4
+                border-slate-200 my-2 w-[26rem]"
           >
-            <div className="m-3 w-[8rem]">
+            <div className="m-3 w-[8rem] ">
               <Image
                 className="w-[7rem] h-[6rem] border-2 rounded-xl"
                 src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}

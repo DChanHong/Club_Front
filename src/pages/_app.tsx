@@ -11,12 +11,18 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <title>Gathering Site</title>
       </Head>
-      <div>
+      <div
+        className="
+        max-w-[2520px]
+        mx-auto
+        
+      "
+      >
         <Header />
       </div>
-      <div>
+      {/* <div>
         <Navbar />
-      </div>
+      </div> */}
       <Component {...pageProps} />
     </Provider>
   );
