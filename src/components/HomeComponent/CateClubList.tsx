@@ -32,7 +32,7 @@ const CateClubList = ({ data }: any) => {
   };
 
   return (
-    <div className=" mb-10 mt-2 pb-6 border-2 border-t-white border-x-white border-b-neutral-100">
+    <div className="ml-6 mb-10 mt-2 pb-6 border-2 border-t-white border-x-white border-b-neutral-100">
       <div className="flex flex-start text-[22px] py-2 ml-4 ">
         <p className="">
           <GoArrowRight size={30} />

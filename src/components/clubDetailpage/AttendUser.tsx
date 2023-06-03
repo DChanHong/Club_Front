@@ -11,8 +11,9 @@ import { scheduleInfo } from "@/Types";
 import moment from "moment";
 import { AiFillLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
-
+import UpdateText from "./UpdateText";
 import TextBox from "./TextBox";
+import { IoAddOutline } from "react-icons/io5";
 
 const AttendUser = () => {
   const router = useRouter();
@@ -130,35 +131,69 @@ const AttendUser = () => {
   };
 
   return (
-    <div className="flex flex-start">
-      <div className="flex flex-col">
-        <div className="border-2 p-1 rounded-xl m-2 h-[32rem] w-[24rem] ">
+    <div className="flex">
+      {/*  일정 보여주는 부분 시작  */}
+      <div className="flex flex-col bg-[#E9ECF2] w-9/12 ">
+        <div className="flex justify-between mx-4 p-1 my-4">
+          <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Schedule</p>
+          {join ? (
+            <div className="flex">
+              <div>
+                <button
+                  className="bg-[#E00050] border-2 p-1 shadow-lg rounded-full text-white mt-1 mx-1"
+                  onClick={showModal}
+                >
+                  <IoAddOutline />
+                </button>{" "}
+              </div>
+              <p className="text-[14px] text-[#BDC3CC] pr-1 pt-2">sort ▼</p>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px]">
+          <p className="text-[#C6CACF] text-[11px]">
+            Comment on the club schedule you want to participate in
+          </p>
+        </div>
+
+        <div className=" h-full ">
           {join ? (
             <div>
-              <div className=" overflow-y-auto h-[31rem]">
+              <div className="  h-full">
                 {sdata.map((item, index) => (
                   <div
                     key={index}
-                    className="border-2 m-2 bg-slate-100 shadow-lg rounded-xl overflow-y-auto"
+                    className="border-2 m-3 mx-5 p-5 bg-white shadow-lg"
                   >
-                    <p className="m- text-center font-bold">{item.S_HEAD}</p>
-                    <p className="pl-2  text-[14px]">
-                      {" "}
+                    <div className="flex">
+                      <div> 올린 사람 프로필 사진</div>
+                      <div> 올린 사람 이름</div>
+                    </div>
+                    <p className="text-center font-bold">{item.S_HEAD}</p>
+                    <p className="text-[14px]">
                       모임 날짜 :{`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
                     </p>
-                    <p className="m-1 pl-1 text-[14px]">{item.S_SUBH}</p>
-                    <p className="flex justify-evenly mb-1">
+                    <p className="">{item.S_SUBH}</p>
+                    <p className="flex ">
                       <button className="text-gray-400 text-[13px]">
                         <div className="flex">
-                          <AiFillLike className="mx-2" size={16} />
-                          <span className="">좋아요</span>
+                          <AiFillLike color="#60A5FA" size={16} />
+                          <span className="text-blue-400 font-bold">
+                            좋아요
+                          </span>
                         </div>
                       </button>
                       <button className="text-gray-400 text-[13px]">
                         <div className="flex">
-                          <AiOutlineComment className="mx-2" size={16} />
+                          <AiOutlineComment
+                            className="mx-2 "
+                            color="#60A5FA"
+                            size={16}
+                          />
                           <span
-                            className=""
+                            className="text-blue-400 font-bold"
                             onClick={() => handleContentBox(item.S_IDX)}
                           >
                             댓글
@@ -183,22 +218,44 @@ const AttendUser = () => {
             <div></div>
           )}
         </div>
-        <div>
-          <div className=" text-center bg-blue-600 border-2 rounded-xl text-white ml-4 p-1  mx-2 ">
-            <button className="" onClick={showModal}>
-              일정 생성하기{" "}
-            </button>{" "}
+      </div>
+      {/*   참석자 리스트 시작  */}
+      <div className="w-3/12 border-2 shadow-lg ">
+        <div className="text-center font-bold my-3"> Notice </div>
+        <div className="mx-4">
+          <UpdateText />
+        </div>
+        <div
+          className="p-1  border-2 
+            border-x-white border-b-white "
+        >
+          <div
+            className=" 
+                 text-center"
+          >
+            {join ? (
+              <button
+                type="button"
+                onClick={LeaveClub}
+                className="w-full h-full my-2 bg-blue-500 outline outline-slate-200 rounded-xl"
+              >
+                탈퇴하기
+              </button>
+            ) : (
+              <button type="button" onClick={JoinClub} className="">
+                가입하기
+              </button>
+            )}
           </div>
         </div>
-      </div>
-      <div className=" ">
-        <div className="border-2 p-1 rounded-xl ml-4 m-2 h-[32rem] w-[13rem]  overflow-auto">
+        <div
+          className=" p-1  border-2 pt- shadow-lg
+            border-x-white border-b-white overflow-auto
+          "
+        >
           {clubDetail?.map((item, index) => (
-            <div
-              key={index}
-              className="flex flex-start border-2 rounded-xl my-1 mx-2 "
-            >
-              <span className="mb-2 ml-3 w-[45px] h-[45px]">
+            <div key={index} className="flex pl-4 my-2">
+              <div className="rounded-full p-1 w-[40px] h-[40px] border-2">
                 <Image
                   className="rounded-full"
                   src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
@@ -207,26 +264,15 @@ const AttendUser = () => {
                   height="50"
                   unoptimized={true}
                 />
-              </span>
-              <div className="my-1 mt-3 ml-4 text-[19px] ">
-                <span className="mx-auto mt-6 mr-2">{item.U_NAME}</span>
+              </div>
+              <div className=" ml-4 mt-2 text-[16px] text-center">
+                {item.U_NAME}
               </div>
             </div>
           ))}
         </div>
-        <div className="w-[13rem] border-2 text-center ml-4 p-1 my-2 mx-2 bg-red-600 border-2 rounded-xl text-white">
-          {" "}
-          {join ? (
-            <button type="button" onClick={LeaveClub} className="">
-              탈퇴하기
-            </button>
-          ) : (
-            <button type="button" onClick={JoinClub} className="">
-              가입하기
-            </button>
-          )}
-        </div>
       </div>
+
       {showComponent && <AddScheduleModal data={C_IDX} />}
     </div>
   );

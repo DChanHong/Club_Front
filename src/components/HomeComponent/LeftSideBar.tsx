@@ -20,12 +20,13 @@ const LeftSideBar = () => {
       <div
         className=" hidden md:block
         border-2 border-t-white
-         border-x-white border-b-neutral-100"
+        border-x-white border-b-neutral-100
+         "
       >
         {cateList.map((item) => (
           <div key={item.id} className="">
             <button type="button" className=" w-full h-full">
-              <div className="flex flex-start py-3.5">
+              <div className="flex py-3.5">
                 <p className="pt-1 pl-12">{item.icon}</p>
                 <p className="pl-4">{item.name}</p>
               </div>

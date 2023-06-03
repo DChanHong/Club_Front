@@ -21,10 +21,10 @@ const ClubContext = () => {
   useEffect(() => {
     getClubDetailUserList();
   }, []);
-  const dispatch = useAppDispatch();
-  const showModal = () => {
-    dispatch(OPEN_SCHEDULE_MODAL(true));
-  };
+  // const dispatch = useAppDispatch();
+  // const showModal = () => {
+  //   dispatch(OPEN_SCHEDULE_MODAL(true));
+  // };
 
   return (
     <div className="flex flex-col h-full">

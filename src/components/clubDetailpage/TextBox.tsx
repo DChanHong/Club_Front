@@ -1,7 +1,8 @@
+"댓글 박스";
+
 import axiosInstance from "@/utils/axiosInstance";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { shceduleContext } from "@/Types";
-import { useRef } from "react";
 const TextBox = (S_IDX: any) => {
   const [context, setContext] = useState<shceduleContext[]>([]);
   const getContext = async () => {
@@ -19,21 +20,24 @@ const TextBox = (S_IDX: any) => {
   }, []);
 
   //댓글 insert
-  const [insertContext, setInsertContext] = useState<string>("");
+  // const [insertContext, setInsertContext] = useState<string>("");
+  const insertText = useRef<HTMLInputElement>(null);
 
-  const handleContext = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInsertContext(e.target.value);
-  };
+  // const handleContext = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInsertContext(e.target.value);
+  // };
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const data = insertText.current?.value;
     event.preventDefault();
     const axiosData = {
-      CO_CONTEXT: insertContext,
+      CO_CONTEXT: data,
       S_IDX,
     };
     const result = axiosInstance.post("/clubDetail/insertContext", axiosData);
-    // console.log(result);
-    setInsertContext("");
+    if (insertText.current) {
+      insertText.current.value = "";
+    }
   };
   useEffect(() => {
     getContext();
@@ -48,8 +52,7 @@ const TextBox = (S_IDX: any) => {
               type="text"
               placeholder="  댓글을 입력해주세요"
               className="w-4/5  ml-1 border-y-neutral-800"
-              onChange={handleContext}
-              value={insertContext}
+              ref={insertText}
             />
             <button
               type="button"
