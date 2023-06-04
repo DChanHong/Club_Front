@@ -116,15 +116,17 @@ export interface joinCheck {
 }
 
 //일정
+
 export interface scheduleInfo {
   S_IDX: number | undefined;
-  U_IDX: number | undefined;
-  C_IDX: number | undefined;
   S_DATE: string | undefined;
   S_HEAD: string | undefined;
   S_SUBH: string | undefined;
   S_LIKE: number | undefined;
   S_NOW: string | undefined;
+  U_IDX: number | undefined;
+  U_IMAGE: string | undefined;
+  U_NAME: string | undefined;
 }
 
 // 일정 밑에 댓글 넣기
@@ -133,4 +135,11 @@ export interface shceduleContext {
   U_IDX: number | undefined;
   U_NAME: string | undefined;
   CO_CONTEXT: string | undefined;
+}
+
+// 디테일 페이지 호스트 정보
+export interface hostInfo {
+  U_IDX: number | undefined;
+  U_NAME: string | undefined;
+  U_IMAGE: string | undefined;
 }

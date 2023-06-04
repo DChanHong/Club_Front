@@ -12,7 +12,7 @@ const ClubContext = () => {
 
   const getClubDetailUserList = async () => {
     const axiosData = { data: C_IDX };
-    // console.log(axiosData);
+
     const result = await axiosInstance.get("/clubDetail/getClubDetailInfo", {
       params: axiosData,
     });
@@ -21,29 +21,33 @@ const ClubContext = () => {
   useEffect(() => {
     getClubDetailUserList();
   }, []);
-  // const dispatch = useAppDispatch();
-  // const showModal = () => {
-  //   dispatch(OPEN_SCHEDULE_MODAL(true));
-  // };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full mb-4">
       {clubDetail.map((item) => (
-        <div
-          key={item?.C_IDX}
-          className=" ml-4 my-2 w-[18rem] h-auto flex flex-col"
-        >
-          <p className="border-2 rounded-xl text-center text-[20px] my-2 ">
+        <div key={item?.C_IDX} className="flex flex-col">
+          <p className="text-center text-[22px] p-2 text-[#6A7D7C] font-bold my-2  ">
             {item?.C_NAME}
           </p>
-          <Image
-            className="border-4 rounded-xl w-[18rem] h-[14rem]"
-            src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
-            alt={`${item?.C_IDX}`}
-            width={270}
-            height={100}
-            unoptimized={true}
-          />
+          <div className="mx-5">
+            <Image
+              className="border-2 rounded-xl "
+              src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+              alt={`${item?.C_IDX}`}
+              width={270}
+              height={100}
+              unoptimized={true}
+            />
+          </div>
+          <div className="flex mx-5 mt-1 text-[15px]">
+            <p className="text-[#946CEE] underline">#{item.C_CATEGORY}</p>
+            <p className="text-[#946CEE] underline ml-1">
+              #{item.C_CATE_DETAIL}
+            </p>
+          </div>
+          <div className="mx-5 text-[13px] text-slate-400 mt-1">
+            {item.C_INTRO}
+          </div>
         </div>
       ))}
     </div>

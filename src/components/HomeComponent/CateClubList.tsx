@@ -4,6 +4,8 @@ import { cateClubInfo } from "@/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { GoArrowRight } from "react-icons/go";
+import { IoPeopleSharp } from "react-icons/io5";
+
 const CateClubList = ({ data }: any) => {
   const propsdata = data;
 
@@ -35,9 +37,9 @@ const CateClubList = ({ data }: any) => {
     <div className="ml-6 mb-10 mt-2 pb-6 border-2 border-t-white border-x-white border-b-neutral-100">
       <div className="flex flex-start text-[22px] py-2 ml-4 ">
         <p className="">
-          <GoArrowRight size={30} />
+          <IoPeopleSharp size={30} />
         </p>
-        <p className="ml-4">{propsdata} 동아리 리스트</p>
+        <p className="ml-4">{propsdata} Club List</p>
       </div>
 
       <div className="flex flex-wrap ">
@@ -64,7 +66,7 @@ const CateClubList = ({ data }: any) => {
                 <p className="text-[17px]">{item.C_NAME}</p>
               </div>
               <div>
-                <p className="text-blue-700 underline mb-1">
+                <p className="text-[#946CEE] underline mb-1">
                   #{item.C_CATEGORY} #{item.C_CATE_DETAIL} #{item.C_AREA}
                 </p>
               </div>
@@ -79,7 +81,7 @@ const CateClubList = ({ data }: any) => {
                   type="button"
                   onClick={() => clubRouterButton(item?.C_IDX)}
                 >
-                  <p className="bg-blue-600 border-2 rounded-xl text-white p-1 text-[12px]">
+                  <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                     입장하기
                   </p>
                 </button>

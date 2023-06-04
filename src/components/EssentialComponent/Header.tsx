@@ -7,6 +7,7 @@ import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
 import { MdOutlineFestival } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
+import { AiOutlineUser } from "react-icons/ai";
 
 const Header = () => {
   let login = useAppSelector((state: RootState) => state.is_Login.is_Login);
@@ -68,15 +69,15 @@ const Header = () => {
               text-2xl "
           >
             <p className="mt-1">
-              <MdOutlineFestival />
+              <MdOutlineFestival color="#946CEE" />
             </p>
-            <p className="ml-2 ">Club House</p>
+            <p className="ml-2 text-[#946CEE]">Club House</p>
           </div>
         </Link>
         <div className="mt-3 md:w-auto">
           <div
             className={`border-2 bg-white rounded-full flex flex-start
-            border-${!inputBorder ? "neutral-200" : "blue-600"}`}
+            ${!inputBorder ? "border-neutral-200" : "border-[#946CEE]"}`}
           >
             <div>
               <input
@@ -88,11 +89,7 @@ const Header = () => {
               />
             </div>
             <div className="mt-1">
-              <button
-                type="button"
-                onClick={routeSearchPage}
-                className="px-1 pt-"
-              >
+              <button type="button" onClick={routeSearchPage} className="px-1 ">
                 <p className="">
                   <BiSearch size={25} />
                 </p>
@@ -100,23 +97,25 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className="mr-10 mt-4 hidden md:block">
+        <div className=" mr-10 mt-4 hidden md:flex">
           {login === false ? (
             <Link href={"/Login"} className=" mr-6">
-              로그인
+              <div className="text-[#946CEE] mt-1">로그인</div>
             </Link>
           ) : (
             <Link href={"/MyPage"}>
-              <span className=""> mypage </span>{" "}
+              <div className="outline outline-[#946CEE]  p-1 rounded-full mx-3">
+                <AiOutlineUser size={25} color="#946CEE" />
+              </div>
             </Link>
           )}
           {login === false ? (
             <Link href={"/UserSign"} className="">
-              회원가입
+              <div className="text-[#946CEE] mt-1">회원가입</div>
             </Link>
           ) : (
             <button type="button" onClick={logout}>
-              <span className="">로그아웃</span>
+              <div className="text-[14px] text-slate-400 pb-2">로그아웃</div>
             </button>
           )}
         </div>

@@ -14,7 +14,8 @@ import { AiOutlineComment } from "react-icons/ai";
 import UpdateText from "./UpdateText";
 import TextBox from "./TextBox";
 import { IoAddOutline } from "react-icons/io5";
-
+import { GrFormClose } from "react-icons/gr";
+import ClubContext from "./ClubContext";
 const AttendUser = () => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
@@ -24,20 +25,26 @@ const AttendUser = () => {
   const getClubDetailUserList = async () => {
     const axiosData = { data: C_IDX };
     // console.log(axiosData);
-    const result = await axiosInstance.get(
-      "/clubDetail/getClubDetailUserList",
-      {
-        params: axiosData,
-      }
-    );
-    setClubDetail(result.data);
+
+    try {
+      const result = await axiosInstance.get(
+        "/clubDetail/getClubDetailUserList",
+        {
+          params: axiosData,
+        }
+      );
+      // console.log(result);
+      setClubDetail(result.data);
+    } catch (error) {
+      console.log(error);
+    }
     // console.log(clubDetail);
   };
 
   // 가입된 유저 리스트를 가져온다.
   useEffect(() => {
     getClubDetailUserList();
-    console.log(join);
+    // console.log(join);
   }, []);
   useEffect(() => {
     getClubDetailUserList();
@@ -106,15 +113,35 @@ const AttendUser = () => {
 
   //일정 불러오기
   const [sdata, setSdata] = useState<scheduleInfo[]>([]);
+  const [loginIdx, setloginIdx] = useState<number>(0);
 
   const callClubSchedule = async () => {
     const axiosData = { C_IDX: C_IDX };
-    const result = await axiosInstance.get("/clubDetail/callClubSchedule", {
-      params: axiosData,
-    });
-    setSdata(result.data);
+    try {
+      const result = await axiosInstance.get("/clubDetail/callClubSchedule", {
+        params: axiosData,
+      });
+      setSdata(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+
+    //로인한 아이디 들고오기
+    try {
+      const result2 = await axiosInstance.get("/clubDetail/getMyIdx");
+      const result = await axiosInstance.get("/clubDetail/callClubSchedule", {
+        params: axiosData,
+      });
+      setSdata(result.data);
+      setloginIdx(result2.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+
     // console.log(sdata);
   };
+
+  // 모일 일정 지우는 버튼 유무
 
   useEffect(() => {
     callClubSchedule();
@@ -130,12 +157,27 @@ const AttendUser = () => {
     setSidx(S_IDX);
   };
 
+  //스케쥴 삭제하기
+  const deleteSchedule = (data: any) => {
+    const axiosData = { S_IDX: data };
+    try {
+      axiosInstance.post("/clubDetail/deletSchedule", axiosData).then((res) => {
+        console.log(res);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //
+  const [deleteState, setDeleteState] = useState(false);
+
   return (
     <div className="flex">
       {/*  일정 보여주는 부분 시작  */}
       <div className="flex flex-col bg-[#E9ECF2] w-9/12 ">
         <div className="flex justify-between mx-4 p-1 my-4">
-          <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Schedule</p>
+          <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Meeting</p>
           {join ? (
             <div className="flex">
               <div>
@@ -160,59 +202,87 @@ const AttendUser = () => {
 
         <div className=" h-full ">
           {join ? (
-            <div>
-              <div className="  h-full">
-                {sdata.map((item, index) => (
-                  <div
-                    key={index}
-                    className="border-2 m-3 mx-5 p-5 bg-white shadow-lg"
-                  >
-                    <div className="flex">
-                      <div> 올린 사람 프로필 사진</div>
-                      <div> 올린 사람 이름</div>
-                    </div>
+            <div className="h-full ">
+              {sdata.map((item, index) => (
+                <div
+                  key={index}
+                  className="border-2 m-3 mx-5 p-5 bg-white shadow-lg "
+                >
+                  <div className="flex justify-between">
+                    <p></p>
                     <p className="text-center font-bold">{item.S_HEAD}</p>
-                    <p className="text-[14px]">
-                      모임 날짜 :{`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
+                    <p>
+                      {item.U_IDX === loginIdx ? (
+                        <button
+                          type="button"
+                          onClick={() => deleteSchedule(item.U_IDX)}
+                        >
+                          <GrFormClose />
+                        </button>
+                      ) : (
+                        ""
+                      )}
                     </p>
-                    <p className="">{item.S_SUBH}</p>
-                    <p className="flex ">
-                      <button className="text-gray-400 text-[13px]">
-                        <div className="flex">
-                          <AiFillLike color="#60A5FA" size={16} />
-                          <span className="text-blue-400 font-bold">
-                            좋아요
-                          </span>
-                        </div>
-                      </button>
-                      <button className="text-gray-400 text-[13px]">
-                        <div className="flex">
-                          <AiOutlineComment
-                            className="mx-2 "
-                            color="#60A5FA"
-                            size={16}
-                          />
-                          <span
-                            className="text-blue-400 font-bold"
-                            onClick={() => handleContentBox(item.S_IDX)}
-                          >
-                            댓글
-                          </span>
-                        </div>
-                      </button>
-                    </p>
-                    <div
-                      className={`overflow-hidden transition-max-height duration-300 ease-in-out ${
-                        showComment && item.S_IDX === sidx
-                          ? "max-h-40"
-                          : "max-h-0"
-                      }`}
-                    >
-                      <TextBox S_IDX={item.S_IDX} />
+                  </div>
+                  <div className="flex">
+                    <div className="rounded-full p-1 w-[50px]  border-2">
+                      <Image
+                        className="rounded-full w-full h-full"
+                        src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                        alt={`${item.U_IDX}`}
+                        width="50"
+                        height="50"
+                        unoptimized={true}
+                      />
+                    </div>
+                    <div className="mx-4 mt-2 text-[16px] flex flex-col ">
+                      <p>{item.U_NAME}</p>
+                      <p className="text-[13px] text-[#D2D5D9]">
+                        Date : {`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
+                      </p>
                     </div>
                   </div>
-                ))}
-              </div>
+                  <p className=" my-4">{item.S_SUBH}</p>
+                  <p className="flex">
+                    <button className="text-gray-400 text-[13px]">
+                      <div className="flex">
+                        <AiFillLike
+                          className="mr-1"
+                          color="#946CEE"
+                          size={16}
+                        />
+                        <div className="text-[#946CEE] font-bold mr-12">
+                          좋아요
+                        </div>
+                      </div>
+                    </button>
+                    <button className="text-[13px]">
+                      <div className="flex">
+                        <AiOutlineComment
+                          className="ml-2 mt-0.4 mr-1"
+                          color="#946CEE"
+                          size={16}
+                        />
+                        <div
+                          className="text-[#946CEE] font-bold "
+                          onClick={() => handleContentBox(item.S_IDX)}
+                        >
+                          댓글
+                        </div>
+                      </div>
+                    </button>
+                  </p>
+                  <div
+                    className={`overflow-hidden transition-max-height duration-300 ease-in-out ${
+                      showComment && item.S_IDX === sidx
+                        ? "max-h-40"
+                        : "max-h-0"
+                    }`}
+                  >
+                    <TextBox S_IDX={item.S_IDX} />
+                  </div>
+                </div>
+              ))}
             </div>
           ) : (
             <div></div>
@@ -221,14 +291,10 @@ const AttendUser = () => {
       </div>
       {/*   참석자 리스트 시작  */}
       <div className="w-3/12 border-2 shadow-lg ">
-        <div className="text-center font-bold my-3"> Notice </div>
-        <div className="mx-4">
-          <UpdateText />
+        <div>
+          <ClubContext />
         </div>
-        <div
-          className="p-1  border-2 
-            border-x-white border-b-white "
-        >
+        <div className="p-1 mx-2">
           <div
             className=" 
                  text-center"
@@ -237,12 +303,16 @@ const AttendUser = () => {
               <button
                 type="button"
                 onClick={LeaveClub}
-                className="w-full h-full my-2 bg-blue-500 outline outline-slate-200 rounded-xl"
+                className="w-full h-full my-2 bg-red-500 outline outline-slate-200 rounded-xl"
               >
                 탈퇴하기
               </button>
             ) : (
-              <button type="button" onClick={JoinClub} className="">
+              <button
+                type="button"
+                onClick={JoinClub}
+                className="w-full h-full my-2 bg-blue-500 outline outline-slate-200 rounded-xl"
+              >
                 가입하기
               </button>
             )}

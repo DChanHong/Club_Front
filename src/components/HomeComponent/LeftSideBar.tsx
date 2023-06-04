@@ -25,7 +25,7 @@ const LeftSideBar = () => {
       >
         {cateList.map((item) => (
           <div key={item.id} className="">
-            <button type="button" className=" w-full h-full">
+            <button type="button" className="hover:bg-[#EFF6FF] w-full h-full">
               <div className="flex py-3.5">
                 <p className="pt-1 pl-12">{item.icon}</p>
                 <p className="pl-4">{item.name}</p>
