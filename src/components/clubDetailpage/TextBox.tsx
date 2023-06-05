@@ -1,8 +1,10 @@
 "댓글 박스";
-
+import classNames from "classnames";
 import axiosInstance from "@/utils/axiosInstance";
 import { useEffect, useState, useRef } from "react";
 import { shceduleContext } from "@/Types";
+import { GrFormClose } from "react-icons/gr";
+import { MdSend } from "react-icons/md";
 const TextBox = (S_IDX: any) => {
   const [context, setContext] = useState<shceduleContext[]>([]);
   const getContext = async () => {
@@ -14,18 +16,11 @@ const TextBox = (S_IDX: any) => {
     });
     setContext(result.data);
   };
-
   useEffect(() => {
     getContext();
   }, []);
 
-  //댓글 insert
-  // const [insertContext, setInsertContext] = useState<string>("");
   const insertText = useRef<HTMLInputElement>(null);
-
-  // const handleContext = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setInsertContext(e.target.value);
-  // };
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     const data = insertText.current?.value;
@@ -34,53 +29,136 @@ const TextBox = (S_IDX: any) => {
       CO_CONTEXT: data,
       S_IDX,
     };
-    const result = axiosInstance.post("/clubDetail/insertContext", axiosData);
+    try {
+      const result = axiosInstance.post("/clubDetail/insertContext", axiosData);
+      AddContextBox();
+    } catch (error) {
+      console.log(error);
+    }
     if (insertText.current) {
       insertText.current.value = "";
     }
   };
+
+  // 댓글 박스 useRef
+  const inputAddRef = useRef<HTMLDivElement>(null);
+
+  const AddContextBox = () => {
+    const inputText = insertText.current?.value;
+
+    if (inputAddRef.current && inputText && userName !== "") {
+      // console.log(inputAddRef.current);
+      const newDiv = document.createElement("div");
+      newDiv.textContent = `${userName} : ${inputText}`;
+      newDiv.className = classNames(
+        "border-2",
+        "py-2",
+        "pl-3",
+        "my-1",
+        "text-[14px]",
+        "border-y-gray-100",
+        "border-x-white",
+        "border-t-white"
+      );
+      inputAddRef.current.appendChild(newDiv);
+    }
+  };
+
+  //로그인 유저 이름 가져오기
+
+  const [userName, setUserName] = useState<string>("");
+
+  const getUserName = async () => {
+    try {
+      const result = await axiosInstance.get("/clubDetail/getUserName");
+      // setUserName(result.data);
+
+      setUserName(result.data[0].U_NAME);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    getContext();
-  }, [handleSubmit]);
+    getUserName();
+  }, []);
+
+  //댓글 삭제기능
+
+  const deleteContext = (data: any) => {
+    const axiosData = { CO_IDX: data };
+    try {
+      const result = axiosInstance.post("/clubDetail/deleteContext", axiosData);
+      addHidden(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 각 일정에 줄 useRef
+  const contextRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const addHidden = (id: string) => {
+    console.log(id);
+    const contextElement = contextRef.current[id];
+    if (contextElement) {
+      contextElement.hidden = true;
+    }
+  };
 
   return (
-    <div>
-      <div className=" my-2 ">
+    <>
+      <div className="my-2">
         <form>
-          <div className="flex flex-start">
+          <div className="flex border-2 border-x-white border-t-white flex-start">
             <input
               type="text"
-              placeholder="  댓글을 입력해주세요"
-              className="w-4/5  ml-1 border-y-neutral-800"
+              placeholder="댓글을 입력해주세요"
+              className="w-full outline-none ml-1 border-y-neutral-800 pl-2 py-1"
               ref={insertText}
             />
             <button
               type="button"
-              className="mx-1 border-2 px-2 rounded-xl"
+              className="mx-1 px-2 rounded-xl"
               onClick={handleSubmit}
             >
-              {" "}
-              등록{" "}
+              <MdSend />
             </button>
           </div>
         </form>
       </div>
-      {context?.map((item, index) => (
-        <div
-          key={index}
-          className="flex flex-start 
-          border-2
-          py-2 pl-3 my-1
-          text-[14px]  
-          border-y-gray-200
-          border-x-slate-100
-        "
-        >
-          <p>{item.U_NAME} : </p>
-          <p>&nbsp; {item.CO_CONTEXT}</p>
-        </div>
-      ))}
-    </div>
+
+      <div>
+        <div className="" ref={inputAddRef}></div>
+        {context?.map((item, index) => (
+          <div
+            key={index}
+            ref={(ref) => (contextRef.current[String(item.CO_IDX)] = ref)}
+          >
+            <div
+              className="flex justify-between 
+                        border-2
+                        py-2 pl-3 my-1
+                        text-[14px]  
+                        border-y-gray-100
+                        border-x-white
+                        border-t-white
+            "
+            >
+              <p>
+                {item.U_NAME} :&nbsp; {item.CO_CONTEXT}
+              </p>
+              {item.U_NAME === userName ? (
+                <button onClick={() => deleteContext(Number(item.CO_IDX))}>
+                  <GrFormClose />
+                </button>
+              ) : (
+                <p></p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

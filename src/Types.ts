@@ -131,6 +131,7 @@ export interface scheduleInfo {
 
 // 일정 밑에 댓글 넣기
 export interface shceduleContext {
+  CO_IDX: number | undefined;
   S_IDX: number | undefined;
   U_IDX: number | undefined;
   U_NAME: string | undefined;

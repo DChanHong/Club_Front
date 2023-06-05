@@ -11,11 +11,13 @@ import { scheduleInfo } from "@/Types";
 import moment from "moment";
 import { AiFillLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
-import UpdateText from "./UpdateText";
+import { useRef } from "react";
 import TextBox from "./TextBox";
 import { IoAddOutline } from "react-icons/io5";
 import { GrFormClose } from "react-icons/gr";
 import ClubContext from "./ClubContext";
+import { ImExit } from "react-icons/im";
+
 const AttendUser = () => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
@@ -150,6 +152,9 @@ const AttendUser = () => {
 
   ////////////
   // 댓글창 띄우기
+  const commetRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const openCommentBox = () => {};
+
   const [showComment, setShowComment] = useState(false);
   const [sidx, setSidx] = useState<number>(0);
   const handleContentBox = (S_IDX: any) => {
@@ -163,14 +168,22 @@ const AttendUser = () => {
     try {
       axiosInstance.post("/clubDetail/deletSchedule", axiosData).then((res) => {
         console.log(res);
+        addHidden(data);
       });
     } catch (error) {
       console.log(error);
     }
   };
 
-  //
-  const [deleteState, setDeleteState] = useState(false);
+  // 각 일정에 줄 useRef
+  const scheduleRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const addHidden = (id: number) => {
+    const scheduleElement = scheduleRef.current[id];
+    if (scheduleElement) {
+      scheduleElement.hidden = true;
+    }
+  };
 
   return (
     <div className="flex">
@@ -206,6 +219,7 @@ const AttendUser = () => {
               {sdata.map((item, index) => (
                 <div
                   key={index}
+                  ref={(ref) => (scheduleRef.current[String(item.S_IDX)] = ref)}
                   className="border-2 m-3 mx-5 p-5 bg-white shadow-lg "
                 >
                   <div className="flex justify-between">
@@ -215,7 +229,7 @@ const AttendUser = () => {
                       {item.U_IDX === loginIdx ? (
                         <button
                           type="button"
-                          onClick={() => deleteSchedule(item.U_IDX)}
+                          onClick={() => deleteSchedule(item.S_IDX)}
                         >
                           <GrFormClose />
                         </button>
@@ -273,7 +287,8 @@ const AttendUser = () => {
                     </button>
                   </p>
                   <div
-                    className={`overflow-hidden transition-max-height duration-300 ease-in-out ${
+                    ref={(ref) => (commetRef.current[String(item.S_IDX)] = ref)}
+                    className={`mt-4 overflow-y-auto transition-max-height duration-300 ease-in-out ${
                       showComment && item.S_IDX === sidx
                         ? "max-h-40"
                         : "max-h-0"
@@ -295,23 +310,19 @@ const AttendUser = () => {
           <ClubContext />
         </div>
         <div className="p-1 mx-2">
-          <div
-            className=" 
-                 text-center"
-          >
+          <div className="text-center">
             {join ? (
-              <button
-                type="button"
-                onClick={LeaveClub}
-                className="w-full h-full my-2 bg-red-500 outline outline-slate-200 rounded-xl"
-              >
-                탈퇴하기
+              <button type="button" onClick={LeaveClub} className="flex  ">
+                <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
+                <div className=" mr-1 text-[#D2D5D9] text-[15px]">
+                  exit
+                </div>{" "}
               </button>
             ) : (
               <button
                 type="button"
                 onClick={JoinClub}
-                className="w-full h-full my-2 bg-blue-500 outline outline-slate-200 rounded-xl"
+                className="w-full h-full my-2 bg-blue-500 text-white outline outline-slate-200 rounded-xl"
               >
                 가입하기
               </button>
