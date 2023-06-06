@@ -153,14 +153,22 @@ const AttendUser = () => {
   ////////////
   // 댓글창 띄우기
   const commetRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  const openCommentBox = () => {};
 
-  const [showComment, setShowComment] = useState(false);
-  const [sidx, setSidx] = useState<number>(0);
-  const handleContentBox = (S_IDX: any) => {
-    setShowComment(!showComment);
-    setSidx(S_IDX);
+  const handleCommentClick = (S_IDX: string) => {
+    const ref = commetRef.current[S_IDX];
+    if (ref) {
+      ref.classList.toggle("max-h-40");
+      ref.classList.toggle("max-h-0");
+    }
   };
+  // const openCommentBox = () => {};
+
+  // const [showComment, setShowComment] = useState(false);
+  // const [sidx, setSidx] = useState<number>(0);
+  // const handleContentBox = (S_IDX: any) => {
+  //   setShowComment(!showComment);
+  //   setSidx(S_IDX);
+  // };
 
   //스케쥴 삭제하기
   const deleteSchedule = (data: any) => {
@@ -279,7 +287,7 @@ const AttendUser = () => {
                         />
                         <div
                           className="text-[#946CEE] font-bold "
-                          onClick={() => handleContentBox(item.S_IDX)}
+                          onClick={() => handleCommentClick(String(item.S_IDX))}
                         >
                           댓글
                         </div>
@@ -288,11 +296,10 @@ const AttendUser = () => {
                   </p>
                   <div
                     ref={(ref) => (commetRef.current[String(item.S_IDX)] = ref)}
-                    className={`mt-4 overflow-y-auto transition-max-height duration-300 ease-in-out ${
-                      showComment && item.S_IDX === sidx
-                        ? "max-h-40"
-                        : "max-h-0"
-                    }`}
+                    className={`mt-4 overflow-y-auto transition-max-height 
+                    duration-300 ease-in-out max-h-0
+
+                    `}
                   >
                     <TextBox S_IDX={item.S_IDX} />
                   </div>
@@ -360,3 +367,9 @@ const AttendUser = () => {
 };
 
 export default AttendUser;
+
+// ${
+//   showComment && item.S_IDX === sidx
+//     ? "max-h-40"
+//     : "max-h-0"
+// }

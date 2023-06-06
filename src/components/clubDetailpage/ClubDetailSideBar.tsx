@@ -19,7 +19,6 @@ const ClubDetailSideBar = () => {
       });
 
       setHostInfoData(result.data);
-      // console.log(hostInfodata);
     } catch (error) {
       console.log(error);
     }

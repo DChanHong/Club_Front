@@ -21,11 +21,14 @@ const SearchList = () => {
   }, []);
   return (
     <div>
-      <div className=" grid grid-cols-2  mx-auto  w-[62rem] ">
+      <div className="flex flex-wrap ml-6 ">
         {searchData?.map((item) => (
           <div
             key={item.C_IDX}
-            className="flex flex-start border-4 rounded-3xl border-slate-200 m-2 w-[28rem]"
+            className="
+              flex flex-start 
+              border-4  rounded-3xl mr-4
+              border-slate-200 my-2 w-[26rem]"
           >
             <div className="m-3 w-[8rem]">
               <Image
@@ -42,7 +45,7 @@ const SearchList = () => {
                 <p className="text-[17px]">{item.C_NAME}</p>
               </div>
               <div>
-                <p className="text-blue-700 underline mb-1">
+                <p className="text-[#946CEE] underline mb-1">
                   #{item.C_CATEGORY} #{item.C_CATE_DETAIL} #{item.C_AREA}
                 </p>
               </div>
@@ -53,7 +56,7 @@ const SearchList = () => {
               </div>
               <div>
                 <button className="  mb-2 " type="button">
-                  <p className="bg-blue-600 border-2 border-blue-600  rounded-xl text-white p-1 text-[12px]">
+                  <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                     입장하기
                   </p>
                 </button>

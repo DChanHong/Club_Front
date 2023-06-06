@@ -10,7 +10,6 @@ const CateClubList = ({ data }: any) => {
   const propsdata = data;
 
   const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
-  // const [loading, setLoading] = useState(false);
 
   const getCateClubList = async () => {
     const axiosData = { data: propsdata };
