@@ -144,3 +144,10 @@ export interface hostInfo {
   U_NAME: string | undefined;
   U_IMAGE: string | undefined;
 }
+
+//임시 댓글창 용
+export interface temporaryContextInfo {
+  S_IDX: number | undefined;
+  data: string | undefined;
+  id: number | undefined;
+}

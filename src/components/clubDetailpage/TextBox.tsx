@@ -5,11 +5,17 @@ import { useEffect, useState, useRef } from "react";
 import { shceduleContext } from "@/Types";
 import { GrFormClose } from "react-icons/gr";
 import { MdSend } from "react-icons/md";
+import { temporaryContextInfo } from "@/Types";
+
 const TextBox = (S_IDX: any) => {
   const [context, setContext] = useState<shceduleContext[]>([]);
+  const [temporaryContext, setTemporaryContext] = useState<
+    temporaryContextInfo[]
+  >([]);
+
+  // 창 처음 들어올 때 댓글 불러오기
   const getContext = async () => {
     const axiosData = S_IDX;
-    // console.log(axiosData);
 
     const result = await axiosInstance.get("/clubDetail/getContext", {
       params: axiosData,
@@ -20,9 +26,10 @@ const TextBox = (S_IDX: any) => {
     getContext();
   }, []);
 
+  // 댓글 등록
   const insertText = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     const data = insertText.current?.value;
     event.preventDefault();
     const axiosData = {
@@ -30,8 +37,12 @@ const TextBox = (S_IDX: any) => {
       S_IDX,
     };
     try {
-      const result = axiosInstance.post("/clubDetail/insertContext", axiosData);
-      AddContextBox();
+      const result = await axiosInstance.post(
+        "/clubDetail/insertContext",
+        axiosData
+      );
+      const newAddComment = { S_IDX: S_IDX.S_IDX, data, id: result.data.id };
+      setTemporaryContext((prevComment) => [...prevComment, newAddComment]);
     } catch (error) {
       console.log(error);
     }
@@ -39,8 +50,12 @@ const TextBox = (S_IDX: any) => {
       insertText.current.value = "";
     }
   };
+  useEffect(() => {}, [temporaryContext]);
 
   // 댓글 박스 useRef
+  /* 
+  이거는 document 사용한거
+
   const inputAddRef = useRef<HTMLDivElement>(null);
 
   const AddContextBox = () => {
@@ -63,6 +78,9 @@ const TextBox = (S_IDX: any) => {
       inputAddRef.current.appendChild(newDiv);
     }
   };
+  */
+
+  //댓글 박스 버전 2
 
   //로그인 유저 이름 가져오기
 
@@ -105,6 +123,27 @@ const TextBox = (S_IDX: any) => {
     }
   };
 
+  //임시 댓글창 삭제 버튼
+  const deleteTemporaryContext = (data: any) => {
+    const axiosData = { CO_IDX: data };
+    try {
+      const result = axiosInstance.post("/clubDetail/deleteContext", axiosData);
+      temAddHidden(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //임시 댓글 useRef
+  const temContextref = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const temAddHidden = (id: string) => {
+    const contextElement = contextRef.current[id];
+    if (contextElement) {
+      contextElement.hidden = true;
+    }
+  };
+
   return (
     <>
       <div className="my-2">
@@ -128,7 +167,30 @@ const TextBox = (S_IDX: any) => {
       </div>
 
       <div>
-        <div className="" ref={inputAddRef}></div>
+        <div>
+          {temporaryContext.map((item, index) => (
+            <div
+              key={index}
+              ref={(ref) => (contextRef.current[String(item.id)] = ref)}
+            >
+              <div
+                className="flex justify-between border-2 py-2 pl-3 my-1
+                  text-[14px] border-y-gray-100 border-x-white border-t-white"
+              >
+                <p>
+                  {userName} :&nbsp; {item.data}
+                </p>
+                <p>
+                  <button
+                    onClick={() => deleteTemporaryContext(Number(item.id))}
+                  >
+                    <GrFormClose />
+                  </button>
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
         {context?.map((item, index) => (
           <div
             key={index}

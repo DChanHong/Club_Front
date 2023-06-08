@@ -22,7 +22,7 @@ axiosInstance.interceptors.response.use(
           localStorage.setItem("login", "false");
         case 500:
           window.location.href = "/Login";
-          alert("로그인이 필요합니다");
+          // alert("로그인이 필요합니다");
           localStorage.setItem("login", "false");
 
         default:

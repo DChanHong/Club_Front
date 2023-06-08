@@ -32,7 +32,7 @@ const CategoryIndex = () => {
 
   useEffect(() => {
     selectCategoryClub();
-  }, []);
+  }, [Category]);
 
   return (
     <>
