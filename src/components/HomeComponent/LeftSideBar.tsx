@@ -18,7 +18,7 @@ const LeftSideBar = (data: any) => {
 
   // console.log(data);
   const router = useRouter();
-  console.log(data.data);
+  // console.log(data.data);
 
   const moveCateIndex = (data: string) => {
     // console.log(data);
