@@ -7,6 +7,9 @@ import { tempClub } from "@/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { IoAddOutline, IoPeopleSharp } from "react-icons/io5";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
+
 const MakeClubModal = () => {
   const customStyles = {
     content: {
@@ -18,9 +21,9 @@ const MakeClubModal = () => {
       transform: "translate(-50%, -50%)",
     },
   };
-
-  const loginCheck = localStorage.getItem("login");
-
+  const loginCheck = useAppSelector(
+    (state: RootState) => state.is_Login.is_Login
+  );
   const router = useRouter();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -237,7 +240,7 @@ const MakeClubModal = () => {
         </Modal>
       </div>
 
-      {loginCheck === "true" ? (
+      {loginCheck ? (
         <div className="ml-6 flex">
           <p>
             <button

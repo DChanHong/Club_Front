@@ -10,7 +10,7 @@ import { BiSearch } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
 
 const Header = () => {
-  let login = useAppSelector((state: RootState) => state.is_Login.is_Login);
+  const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
