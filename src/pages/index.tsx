@@ -3,6 +3,7 @@ import CateClubList from "@/components/HomeComponent/CateClubList";
 import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
 import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
+import MakeClubModal from "@/components/modals/MakeClubModal";
 
 export default function Home() {
   const data = ["스포츠", "문화생활"];
@@ -29,6 +30,9 @@ export default function Home() {
           </div>
           <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">
             <TopMeetingList />
+          </div>
+          <div>
+            <MakeClubModal />
           </div>
           <div>
             {data.map((item, idx) => {
