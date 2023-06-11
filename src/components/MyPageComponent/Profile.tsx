@@ -55,7 +55,8 @@ const Profile = () => {
       router.push({
         pathname: `/`,
       });
-      localStorage.removeItem("login");
+
+      localStorage.setItem("login", "false");
     } catch (error) {
       console.log(error);
     }
