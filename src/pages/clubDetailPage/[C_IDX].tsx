@@ -1,4 +1,5 @@
 import AttendUser from "@/components/clubDetailpage/AttendUser";
+import { GetServerSideProps } from "next";
 
 import ClubDetailSideBar from "@/components/clubDetailpage/ClubDetailSideBar";
 const ClubPostPage = () => {
@@ -15,3 +16,13 @@ const ClubPostPage = () => {
 };
 
 export default ClubPostPage;
+
+//
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const data = params;
+  return {
+    props: {
+      data,
+    },
+  };
+};
