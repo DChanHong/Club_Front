@@ -3,7 +3,6 @@ import axiosInstance from "@/utils/axiosInstance";
 import { cateClubInfo } from "@/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { GoArrowRight } from "react-icons/go";
 import { IoPeopleSharp } from "react-icons/io5";
 
 const CateClubList = ({ data }: any) => {
@@ -26,7 +25,7 @@ const CateClubList = ({ data }: any) => {
   ///////////
   const router = useRouter();
 
-  const clubRouterButton = (data: any) => {
+  const clubRouterButton = (data: string) => {
     router.push({
       pathname: `/clubDetailPage/${data}`,
     });
@@ -78,7 +77,7 @@ const CateClubList = ({ data }: any) => {
                 <button
                   className="  mb-2 "
                   type="button"
-                  onClick={() => clubRouterButton(item?.C_IDX)}
+                  onClick={() => clubRouterButton(String(item?.C_IDX))}
                 >
                   <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                     입장하기

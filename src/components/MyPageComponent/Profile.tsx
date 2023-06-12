@@ -4,17 +4,18 @@ import { userInfo } from "@/Types";
 import Image from "next/image";
 import MyAttendingClub from "./MyAttendingClub";
 import MyPageHostList from "./MyPageHostList";
+import { useRouter } from "next/router";
 
 const Profile = () => {
+  const router = useRouter();
   const [userinfo, setUserInfo] = useState<userInfo | null>(null);
   const [pageLoading, setPageLoading] = useState(false);
 
   const getUserInfo = async () => {
     const userInfo = await axiosInstance.get("/customer/getuserInfo");
-    // console.log(userInfo);
+
     setUserInfo(userInfo.data[0]);
     setPageLoading(true);
-    // console.log(userInfo);
   };
 
   useEffect(() => {
@@ -47,6 +48,20 @@ const Profile = () => {
     }
   };
 
+  //회원 탈퇴하기
+  const withdrawalUser = async () => {
+    try {
+      const result = await axiosInstance.get("/mypage/withdrawalUser");
+      router.push({
+        pathname: `/`,
+      });
+
+      localStorage.setItem("login", "false");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {!pageLoading ? (
@@ -57,36 +72,37 @@ const Profile = () => {
             <div className="w-[18rem]"></div>
             <div className=" shadow-lg shadow-blue-700 w-[15rem] h-[30rem]  m-auto rounded-lg absolute top-10 left-4  bg-blue-100">
               <div className="h-3/6">
-                <div>
-                  <Image
-                    className="border-4 border-current border-indigo-200 rounded-full mx-7 mt-6 w-[12rem] "
-                    src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
-                    alt={`${userinfo?.U_EMAIL}`}
-                    width={400}
-                    height={400}
-                    unoptimized={true}
+                <Image
+                  className="border-4 border-current border-indigo-200 rounded-full mx-7 mt-6 w-[12rem] "
+                  src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
+                  alt={`${userinfo?.U_EMAIL}`}
+                  width={400}
+                  height={400}
+                  unoptimized={true}
+                />
+
+                <form onSubmit={handleSubmit}>
+                  <input
+                    className="mx-4"
+                    type="file"
+                    onChange={handleFileChange}
                   />
-
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      className="mx-4"
-                      type="file"
-                      onChange={handleFileChange}
-                    />
-                    <button className="ml-4" type="submit">
-                      Upload
-                    </button>
-                  </form>
-                </div>
+                  <button className="ml-4" type="submit">
+                    Upload
+                  </button>
+                </form>
               </div>
-              <div className="mt-10 flex flex-col">
-                <span className="ml-4  text-[20px] font-bold">
-                  {" "}
-                  {userinfo?.U_NAME}
-                </span>
-                <span className="ml-4 text-gray-400"> {userinfo?.U_EMAIL}</span>
 
-                {/* <span> {userinfo?.U_GENDER}</span> */}
+              <div className="mt-10 flex flex-col">
+                <div className="ml-4  text-[20px] font-bold">
+                  {userinfo?.U_NAME}
+                </div>
+                <div className="ml-4 text-gray-400"> {userinfo?.U_EMAIL}</div>
+              </div>
+              <div className="mt-20  ml-40 text-gray-400">
+                <button type="button" onClick={withdrawalUser}>
+                  탈퇴하기
+                </button>
               </div>
             </div>
           </div>
