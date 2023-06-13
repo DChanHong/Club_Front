@@ -24,7 +24,7 @@ export default function Home() {
         <div className="flex flex-col w-5/6">
           <div>
             <button type="button" onClick={test}>
-              테스트 버튼
+              테스트 버튼2222
             </button>
             <div>{testData}</div>
           </div>
