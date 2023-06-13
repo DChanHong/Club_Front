@@ -162,3 +162,8 @@ export interface tempClub {
   C_AREA: string | undefined;
   C_IMAGE: string | undefined;
 }
+
+// 공지사항 가져오기용
+export interface temporaryContextInfo {
+  C_TEXT: string | undefined;
+}

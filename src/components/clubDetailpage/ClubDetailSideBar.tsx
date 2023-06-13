@@ -49,17 +49,21 @@ const ClubDetailSideBar = () => {
         </div>
       ))}
       <div className="my-4 flex flex-col ">
-        <div className="flex my-2 pl-4">
-          <p className="pt-1.5 ">
-            <GrSchedulePlay />
-          </p>
-          <p className="pl-4"> meeting</p>
+        <div>
+          <button className="flex my-2 pl-4">
+            <p className="pt-1.5 ">
+              <GrSchedulePlay />
+            </p>
+            <p className="pl-4"> meeting</p>
+          </button>
         </div>
-        <div className="flex pl-4  my-4">
-          <p className="pt-1.5 ">
-            <FaMicrophoneAlt />
-          </p>
-          <p className="pl-4"> Intro</p>
+        <div>
+          <button type="button" className="flex my-2 pl-4">
+            <p className="pt-1.5 ">
+              <FaMicrophoneAlt />
+            </p>
+            <p className="pl-4"> Notice</p>
+          </button>
         </div>
       </div>
     </div>

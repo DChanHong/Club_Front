@@ -13,7 +13,7 @@ export default function Home() {
     const result = await axiosInstance.get("/test");
     setTest(result.data);
   };
-  console.log(testData);
+  // console.log(testData);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { clubDetailInfo } from "@/Types";
+import { clubDetailInfo, clubTextInfo } from "@/Types";
 import Image from "next/image";
 import AddScheduleModal from "../modals/AddScheduleModal";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -14,19 +14,23 @@ import { AiOutlineComment } from "react-icons/ai";
 import { useRef } from "react";
 import TextBox from "./TextBox";
 import { IoAddOutline } from "react-icons/io5";
-import { GrFormClose } from "react-icons/gr";
+import { GrFormClose, GrSchedulePlay, GrUpdate } from "react-icons/gr";
 import ClubContext from "./ClubContext";
 import { ImExit } from "react-icons/im";
+import { hostInfo } from "@/Types";
+import { FaMicrophoneAlt } from "react-icons/fa";
+import { temporaryContextInfo } from "@/Types";
+import UpdateNoticeModal from "../modals/UpdateNoticeModal";
 
 const AttendUser = () => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
   const { C_IDX } = router.query;
+
   // 가입 , 탈퇴
   const [join, setJoin] = useState(false); //true : 가입된 상태 , false: 틸퇴 상태 0을 주는것이 좋다.
   const getClubDetailUserList = async () => {
     const axiosData = { data: C_IDX };
-    // console.log(axiosData);
 
     try {
       const result = await axiosInstance.get(
@@ -35,18 +39,15 @@ const AttendUser = () => {
           params: axiosData,
         }
       );
-      // console.log(result);
       setClubDetail(result.data);
     } catch (error) {
       console.log(error);
     }
-    // console.log(clubDetail);
   };
 
   // 가입된 유저 리스트를 가져온다.
   useEffect(() => {
     getClubDetailUserList();
-    // console.log(join);
   }, []);
   useEffect(() => {
     getClubDetailUserList();
@@ -61,9 +62,7 @@ const AttendUser = () => {
       const result = await axiosInstance.get("/clubDetail/clubJoinUserCheck", {
         params: axiosData,
       });
-      // console.log(result);
       setJoin(result.data.data); //true면 이미 가입된거
-      // console.log(result);
     } catch (erorr) {
       console.log(erorr);
     }
@@ -143,14 +142,12 @@ const AttendUser = () => {
     // console.log(sdata);
   };
 
-  // 모일 일정 지우는 버튼 유무
+  // 모임 일정 지우는 버튼 유무
 
   useEffect(() => {
     callClubSchedule();
   }, [showComponent]);
-  // 이러면 다른 페이지에서 쓸 때 소스코드가 많이 필요해진다.
 
-  ////////////
   // 댓글창 띄우기
   const commetRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
@@ -161,14 +158,6 @@ const AttendUser = () => {
       ref.classList.toggle("max-h-0");
     }
   };
-  // const openCommentBox = () => {};
-
-  // const [showComment, setShowComment] = useState(false);
-  // const [sidx, setSidx] = useState<number>(0);
-  // const handleContentBox = (S_IDX: any) => {
-  //   setShowComment(!showComment);
-  //   setSidx(S_IDX);
-  // };
 
   //스케쥴 삭제하기
   const deleteSchedule = (data: any) => {
@@ -193,126 +182,256 @@ const AttendUser = () => {
     }
   };
 
-  return (
-    <div className="flex">
-      {/*  일정 보여주는 부분 시작  */}
-      <div className="flex flex-col bg-[#E9ECF2] w-9/12 ">
-        <div className="flex justify-between mx-4 p-1 my-4">
-          <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Meeting</p>
-          {join ? (
-            <div className="flex">
-              <div>
-                <button
-                  className="bg-[#E00050] border-2 p-1 shadow-lg rounded-full text-white mt-1 mx-1"
-                  onClick={showModal}
-                >
-                  <IoAddOutline />
-                </button>{" "}
-              </div>
-              <p className="text-[14px] text-[#BDC3CC] pr-1 pt-2">sort ▼</p>
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </div>
-        <div className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px]">
-          <p className="text-[#C6CACF] text-[11px]">
-            Comment on the club schedule you want to participate in
-          </p>
-        </div>
+  // 사이드바 여기에 추가
+  const [hostInfodata, setHostInfoData] = useState<hostInfo[]>([]);
 
-        <div className=" h-full ">
-          {join ? (
-            <div className="h-full ">
-              {sdata.map((item, index) => (
-                <div
-                  key={index}
-                  ref={(ref) => (scheduleRef.current[String(item.S_IDX)] = ref)}
-                  className="border-2 m-3 mx-5 p-5 bg-white shadow-lg "
-                >
-                  <div className="flex justify-between">
-                    <p></p>
-                    <p className="text-center font-bold">{item.S_HEAD}</p>
-                    <p>
-                      {item.U_IDX === loginIdx ? (
-                        <button
-                          type="button"
-                          onClick={() => deleteSchedule(item.S_IDX)}
-                        >
-                          <GrFormClose />
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                    </p>
-                  </div>
-                  <div className="flex">
-                    <div className="rounded-full p-1 w-[50px]  border-2">
-                      <Image
-                        className="rounded-full w-full h-full"
-                        src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
-                        alt={`${item.U_IDX}`}
-                        width="50"
-                        height="50"
-                        unoptimized={true}
-                      />
-                    </div>
-                    <div className="mx-4 mt-2 text-[16px] flex flex-col ">
-                      <p>{item.U_NAME}</p>
-                      <p className="text-[13px] text-[#D2D5D9]">
-                        Date : {`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
+  const getHostInfo = async () => {
+    const axiosData = { C_IDX };
+    try {
+      const result = await axiosInstance.get("/clubDetail/getHostInfo", {
+        params: axiosData,
+      });
+
+      setHostInfoData(result.data);
+      // console.log(hostInfodata);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getHostInfo();
+  }, []);
+
+  // 왼쪽 바 Notice 버튼 클릭
+  const [pageNunber, setPageNumber] = useState(0);
+  const moveSideBar = (data: number) => {
+    setPageNumber(data);
+  };
+
+  //2번 페이지 (Notice) 데이터
+  const [noticeText, setNoticeText] = useState<temporaryContextInfo[]>([]);
+  const selectNotice = async () => {
+    const axiosData = { C_IDX };
+    try {
+      const result = await axiosInstance.get("/clubDetail/selectNotice", {
+        params: axiosData,
+      });
+      setNoticeText(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    selectNotice();
+  }, []);
+
+  // 왼쪽 바 위에 호스트 정보
+
+  //  공지사항 업데이트 기능
+  const updateNotice = () => {};
+
+  return (
+    <div className="flex h-full">
+      {/* 왼쪽 바 시작 부분 */}
+      <div className="border-2 w-2/12 h-full drop-shadow-lg">
+        {hostInfodata.map((item) => (
+          <div key={item.U_IDX} className="ml-3 mt-4">
+            <div className="rounded-full p-1 w-[80px]  border-2">
+              <Image
+                className="rounded-full w-full h-full"
+                src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                alt={`${item.U_IDX}`}
+                width="50"
+                height="50"
+                unoptimized={true}
+              />
+            </div>
+            <div className=" ml-4 mt-2 text-slate-400 text-[13px] ">host</div>
+            <div className=" ml-4 font-bold text-[16px] text-[#82888F]">
+              {item.U_NAME}
+            </div>
+          </div>
+        ))}
+        <div className="my-4 flex flex-col ">
+          <div>
+            <button
+              type="button"
+              onClick={() => moveSideBar(0)}
+              className="flex my-2 pl-4
+              "
+            >
+              <p className="pt-1.5 ">
+                <GrSchedulePlay />
+              </p>
+              <p className="pl-4"> meeting</p>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => moveSideBar(1)}
+              className="flex my-2 pl-4"
+            >
+              <p className="pt-1.5 ">
+                <FaMicrophoneAlt />
+              </p>
+              <p className="pl-4"> Notice</p>
+            </button>
+          </div>
+        </div>
+      </div>
+      {/*  중앙 부분 시작  */}
+
+      {/* meeting */}
+      {pageNunber === 0 ? (
+        <div className="flex flex-col bg-[#E9ECF2] w-7/12 ">
+          <div className="flex justify-between mx-4 p-1 my-4">
+            <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Meeting</p>
+            {/*  */}
+            {join ? (
+              <div className="flex">
+                <div>
+                  <button
+                    className="bg-[#E00050] border-2 p-1 shadow-lg rounded-full text-white mt-1 mx-1"
+                    onClick={showModal}
+                  >
+                    <IoAddOutline />
+                  </button>{" "}
+                </div>
+                <p className="text-[14px] text-[#BDC3CC] pr-1 pt-2">sort ▼</p>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <div className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px]">
+            <p className="text-[#C6CACF] text-[11px]">
+              Comment on the club schedule you want to participate in
+            </p>
+          </div>
+
+          <div className=" h-full ">
+            {join ? (
+              <div className="h-full ">
+                {sdata.map((item, index) => (
+                  <div
+                    key={index}
+                    ref={(ref) =>
+                      (scheduleRef.current[String(item.S_IDX)] = ref)
+                    }
+                    className="border-2 m-3 mx-5 p-5 bg-white shadow-lg "
+                  >
+                    <div className="flex justify-between">
+                      <p></p>
+                      <p className="text-center font-bold">{item.S_HEAD}</p>
+                      <p>
+                        {item.U_IDX === loginIdx ? (
+                          <button
+                            type="button"
+                            onClick={() => deleteSchedule(item.S_IDX)}
+                          >
+                            <GrFormClose />
+                          </button>
+                        ) : (
+                          ""
+                        )}
                       </p>
                     </div>
-                  </div>
-                  <p className=" my-4">{item.S_SUBH}</p>
-                  <p className="flex">
-                    <button className="text-gray-400 text-[13px]">
-                      <div className="flex">
-                        <AiFillLike
-                          className="mr-1"
-                          color="#946CEE"
-                          size={16}
+                    <div className="flex">
+                      <div className="rounded-full p-1 w-[50px]  border-2">
+                        <Image
+                          className="rounded-full w-full h-full"
+                          src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                          alt={`${item.U_IDX}`}
+                          width="50"
+                          height="50"
+                          unoptimized={true}
                         />
-                        <div className="text-[#946CEE] font-bold mr-12">
-                          좋아요
-                        </div>
                       </div>
-                    </button>
-                    <button className="text-[13px]">
-                      <div className="flex">
-                        <AiOutlineComment
-                          className="ml-2 mt-0.4 mr-1"
-                          color="#946CEE"
-                          size={16}
-                        />
-                        <div
-                          className="text-[#946CEE] font-bold "
-                          onClick={() => handleCommentClick(String(item.S_IDX))}
-                        >
-                          댓글
-                        </div>
+                      <div className="mx-4 mt-2 text-[16px] flex flex-col ">
+                        <p>{item.U_NAME}</p>
+                        <p className="text-[13px] text-[#D2D5D9]">
+                          Date : {`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
+                        </p>
                       </div>
-                    </button>
-                  </p>
-                  <div
-                    ref={(ref) => (commetRef.current[String(item.S_IDX)] = ref)}
-                    className={`mt-4 overflow-y-auto transition-max-height 
+                    </div>
+                    <p className=" my-4">{item.S_SUBH}</p>
+                    <p className="flex">
+                      <button className="text-gray-400 text-[13px]">
+                        <div className="flex">
+                          <AiFillLike
+                            className="mr-1"
+                            color="#946CEE"
+                            size={16}
+                          />
+                          <div className="text-[#946CEE] font-bold mr-12">
+                            좋아요
+                          </div>
+                        </div>
+                      </button>
+                      <button className="text-[13px]">
+                        <div className="flex">
+                          <AiOutlineComment
+                            className="ml-2 mt-0.4 mr-1"
+                            color="#946CEE"
+                            size={16}
+                          />
+                          <div
+                            className="text-[#946CEE] font-bold "
+                            onClick={() =>
+                              handleCommentClick(String(item.S_IDX))
+                            }
+                          >
+                            댓글
+                          </div>
+                        </div>
+                      </button>
+                    </p>
+                    <div
+                      ref={(ref) =>
+                        (commetRef.current[String(item.S_IDX)] = ref)
+                      }
+                      className={`mt-4 overflow-y-auto transition-max-height 
                     duration-300 ease-in-out max-h-0
 
                     `}
-                  >
-                    <TextBox S_IDX={item.S_IDX} />
+                    >
+                      <TextBox S_IDX={item.S_IDX} />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
+      {/* Notice */}
+      {pageNunber === 1 ? (
+        <div className="flex flex-col bg-[#E9ECF2] w-7/12 ">
+          <div className="flex justify-between mx-4 p-1 my-4">
+            <div className="text-[22px] pl-1 text-[#6A7D7C] font-bold">
+              Notice
             </div>
+          </div>
+          {join ? (
+            <>
+              <UpdateNoticeModal data={Number(C_IDX)} />
+            </>
           ) : (
-            <div></div>
+            <></>
           )}
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
+
       {/*   참석자 리스트 시작  */}
-      <div className="w-3/12 border-2 shadow-lg ">
+      <div className="w-2/12 border-2 shadow-lg ">
         <div>
           <ClubContext />
         </div>
@@ -367,9 +486,3 @@ const AttendUser = () => {
 };
 
 export default AttendUser;
-
-// ${
-//   showComment && item.S_IDX === sidx
-//     ? "max-h-40"
-//     : "max-h-0"
-// }

@@ -1,10 +1,10 @@
+"오른쪽 바에 동아리 정보";
+
 import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { clubDetailInfo } from "@/Types";
 import Image from "next/image";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { OPEN_SCHEDULE_MODAL } from "@/store/slice/isScheduleModalSlice";
 const ClubContext = () => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
