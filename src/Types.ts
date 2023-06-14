@@ -167,3 +167,10 @@ export interface tempClub {
 export interface temporaryContextInfo {
   C_TEXT: string | undefined;
 }
+
+// 임시 댓글용 인터페이스
+export interface temporaryContextInfo2 {
+  S_IDX: number | undefined;
+  data: string | undefined;
+  id: number | undefined;
+}
