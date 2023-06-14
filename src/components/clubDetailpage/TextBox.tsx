@@ -6,11 +6,12 @@ import { shceduleContext } from "@/Types";
 import { GrFormClose } from "react-icons/gr";
 import { MdSend } from "react-icons/md";
 import { temporaryContextInfo } from "@/Types";
+import { temporaryContextInfo2 } from "@/Types";
 
 const TextBox = (S_IDX: any) => {
   const [context, setContext] = useState<shceduleContext[]>([]);
   const [temporaryContext, setTemporaryContext] = useState<
-    temporaryContextInfo[]
+    temporaryContextInfo2[]
   >([]);
 
   // 창 처음 들어올 때 댓글 불러오기
@@ -42,7 +43,10 @@ const TextBox = (S_IDX: any) => {
         axiosData
       );
       const newAddComment = { S_IDX: S_IDX.S_IDX, data, id: result.data.id };
-      setTemporaryContext((prevComment) => [...prevComment, newAddComment]);
+      setTemporaryContext((prevComment: temporaryContextInfo2[]) => [
+        ...prevComment,
+        newAddComment,
+      ]);
     } catch (error) {
       console.log(error);
     }

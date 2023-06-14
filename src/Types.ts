@@ -151,3 +151,26 @@ export interface temporaryContextInfo {
   data: string | undefined;
   id: number | undefined;
 }
+
+//방금 생성한 동아리 보여주기용
+export interface tempClub {
+  C_IDX: number | undefined;
+  C_CATEGORY: string | undefined;
+  C_CATE_DETAIL: string | undefined;
+  C_NAME: string | undefined;
+  C_INTRO: string | undefined;
+  C_AREA: string | undefined;
+  C_IMAGE: string | undefined;
+}
+
+// 공지사항 가져오기용
+export interface temporaryContextInfo {
+  C_TEXT: string | undefined;
+}
+
+// 임시 댓글용 인터페이스
+export interface temporaryContextInfo2 {
+  S_IDX: number | undefined;
+  data: string | undefined;
+  id: number | undefined;
+}
