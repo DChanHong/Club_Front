@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:4000/api",
-  baseURL: "http://52.78.175.136/api",
+  baseURL: "http://localhost:4000/api",
+  // baseURL: "http://52.78.175.136/api",
   withCredentials: true,
 });
 
@@ -17,9 +17,9 @@ axiosInstance.interceptors.response.use(
           window.location.href = "/Login";
           localStorage.setItem("login", "false");
           break;
-        case 402:
-          window.location.href = "/Login";
-          // alert("로그인이 필요합니다");
+          // case 402:
+          //   window.location.href = "/Login";
+          //   // alert("로그인이 필요합니다");
           localStorage.setItem("login", "false");
         case 500:
           window.location.href = "/Login";

@@ -91,7 +91,7 @@ const MakeClubModal = () => {
       { value: "서든어택", name: "서든어택" },
       { value: "기타", name: "기타" },
     ],
-    etc: [{ value: "기타", name: "기타" }],
+    기타: [{ value: "기타", name: "기타" }],
   };
 
   /*
@@ -218,7 +218,7 @@ const MakeClubModal = () => {
                   className="mx-2 border-2 rounded-xl p-1"
                   ref={selectDetailCategoryRef}
                 >
-                  {detatilCategory.map((item, index) => (
+                  {detatilCategory?.map((item, index) => (
                     <option key={index} value={item.value}>
                       {item.name}
                     </option>
