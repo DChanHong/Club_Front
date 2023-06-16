@@ -19,6 +19,8 @@ import ClubContext from "./ClubContext";
 import { ImExit } from "react-icons/im";
 import { hostInfo } from "@/Types";
 import { FaMicrophoneAlt } from "react-icons/fa";
+import { RxHamburgerMenu } from "react-icons/rx";
+
 import { temporaryContextInfo } from "@/Types";
 import UpdateNoticeModal from "../modals/UpdateNoticeModal";
 
@@ -207,6 +209,7 @@ const AttendUser = () => {
   const [pageNunber, setPageNumber] = useState(0);
   const moveSideBar = (data: number) => {
     setPageNumber(data);
+    setBurgetMenuState(false);
   };
 
   //2번 페이지 (Notice) 데이터
@@ -231,10 +234,16 @@ const AttendUser = () => {
   //  공지사항 업데이트 기능
   const updateNotice = () => {};
 
+  // 사이드바 버거 메뉴 버튼 핸들
+  const [burgerMenuState, setBurgetMenuState] = useState(false);
+  const sideBurgetHandle = () => {
+    setBurgetMenuState(!burgerMenuState);
+  };
+
   return (
-    <div className="flex h-full">
+    <div className="flex justify-center md:flex">
       {/* 왼쪽 바 시작 부분 */}
-      <div className="border-2 w-2/12 h-full drop-shadow-lg">
+      <div className="hidden md:block border-2 w-2/12 drop-shadow-lg">
         {hostInfodata.map((item) => (
           <div key={item.U_IDX} className="ml-3 mt-4">
             <div className="rounded-full p-1 w-[80px]  border-2">
@@ -254,7 +263,7 @@ const AttendUser = () => {
           </div>
         ))}
         <div className="my-4 flex flex-col ">
-          <div>
+          <div className="">
             <button
               type="button"
               onClick={() => moveSideBar(0)}
@@ -281,11 +290,71 @@ const AttendUser = () => {
           </div>
         </div>
       </div>
+      {/* 960px 이하일 경우 사이드바 뛰어 주는 부분 */}
+      <div className="mr-2 md:hidden">
+        <button type="button" onClick={sideBurgetHandle}>
+          <RxHamburgerMenu size={34} />
+        </button>
+        {burgerMenuState ? (
+          <div className="absolute z-100 w-[10rem] border-2 bg-white shadow-xl rounded-xl">
+            {hostInfodata.map((item) => (
+              <div key={item.U_IDX} className="ml-3 mt-4">
+                <div className="rounded-full p-1 w-[80px]  border-2">
+                  <Image
+                    className="rounded-full w-full h-full"
+                    src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                    alt={`${item.U_IDX}`}
+                    width="50"
+                    height="50"
+                    unoptimized={true}
+                  />
+                </div>
+                <div className=" ml-4 mt-2 text-slate-400 text-[13px] ">
+                  host
+                </div>
+                <div className=" ml-4 font-bold text-[16px] text-[#82888F]">
+                  {item.U_NAME}
+                </div>
+              </div>
+            ))}
+            <div className="my-4 flex flex-col ">
+              <div>
+                <button
+                  type="button"
+                  onClick={() => moveSideBar(0)}
+                  className="flex my-2 pl-4
+              "
+                >
+                  <p className="pt-1.5 ">
+                    <GrSchedulePlay />
+                  </p>
+                  <p className="pl-4"> meeting</p>
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => moveSideBar(1)}
+                  className="flex my-2 pl-4"
+                >
+                  <p className="pt-1.5 ">
+                    <FaMicrophoneAlt />
+                  </p>
+                  <p className="pl-4"> Notice</p>
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+
       {/*  중앙 부분 시작  */}
 
       {/* meeting */}
       {pageNunber === 0 ? (
-        <div className="flex flex-col bg-[#E9ECF2] w-7/12 ">
+        <div className=" w-[40rem]  md:flex flex-col bg-[#E9ECF2] w-7/12  ">
           <div className="flex justify-between mx-4 p-1 my-4">
             <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Meeting</p>
             {/*  */}
@@ -304,6 +373,30 @@ const AttendUser = () => {
             ) : (
               <div></div>
             )}
+          </div>
+          {/* 960px이하로 줄어들 때 클럽 가입하기 넣어줄 부분 */}
+          <div className="md:hidden">
+            <div>
+              <ClubContext />
+            </div>
+            <div className="text-center p-1 ml-6">
+              {join ? (
+                <button type="button" onClick={LeaveClub} className="flex  ">
+                  <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
+                  <div className=" mr-1 text-[#D2D5D9] text-[15px]">
+                    exit
+                  </div>{" "}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={JoinClub}
+                  className="w-full h-full my-2 bg-blue-500 text-white outline outline-slate-200 rounded-xl"
+                >
+                  가입하기
+                </button>
+              )}
+            </div>
           </div>
           <div className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px]">
             <p className="text-[#C6CACF] text-[11px]">
@@ -410,18 +503,20 @@ const AttendUser = () => {
       ) : (
         <></>
       )}
-      {/* Notice */}
+
+      {/* <div className=" w-[40rem]  md:flex flex-col bg-[#E9ECF2] w-7/12  "> */}
+      {/* Notice 페이지 */}
       {pageNunber === 1 ? (
-        <div className="flex flex-col bg-[#E9ECF2] w-7/12 ">
+        <div className="w-[40rem] md:flex flex-col bg-[#E9ECF2] w-7/12 ">
           <div className="flex justify-between mx-4 p-1 my-4">
             <div className="text-[22px] pl-1 text-[#6A7D7C] font-bold">
               Notice
             </div>
           </div>
           {join ? (
-            <>
+            <div className="w-[40rem]">
               <UpdateNoticeModal data={Number(C_IDX)} />
-            </>
+            </div>
           ) : (
             <></>
           )}
@@ -431,7 +526,8 @@ const AttendUser = () => {
       )}
 
       {/*   참석자 리스트 시작  */}
-      <div className="w-2/12 border-2 shadow-lg ">
+      {/* 960px 이상일 경우에 나올 화면 */}
+      <div className="hidden md:block w-2/12 border-2 shadow-lg ">
         <div>
           <ClubContext />
         </div>
