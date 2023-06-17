@@ -43,6 +43,8 @@ const UpdateNoticeModal = (data: { data: Number }) => {
 
   //2번 페이지 (Notice) 데이터
   const [noticeText, setNoticeText] = useState<temporaryContextInfo[]>([]);
+  const [test, setTest] = useState([]);
+
   const selectNotice = async () => {
     const axiosData = { C_IDX: data.data };
     try {
@@ -50,6 +52,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
         params: axiosData,
       });
       setNoticeText(result.data);
+
       // console.log(result.data);
     } catch (error) {
       console.log(error);
@@ -59,29 +62,42 @@ const UpdateNoticeModal = (data: { data: Number }) => {
     selectNotice();
   }, []);
 
-  // 업데이트하기 함수
+  // 업데이트하기 부분 시작
   const [tempUpdateText, setTempUpdateText] = useState("");
-  const updateTextref = useRef<HTMLInputElement>(null);
+  const updateTextref = useRef<HTMLTextAreaElement>(null);
 
+  // Enter 클릭시마다 \n 추가시킴
+  const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (updateTextref.current) {
+        updateTextref.current.value += "\n";
+      }
+    }
+  };
+
+  // 제출 버튼
   const handleUpdateSubmit = async () => {
     if (updateTextref.current?.value === "") {
       alert("내용을 다시 확인해주세요");
     } else {
-      // console.log(updateTextref.current?.value);
-      const axiosData = {
-        C_IDX: data.data,
-        C_TEXT: updateTextref.current?.value,
-      };
-      // console.log(axiosData);
       try {
+        if (updateTextref.current?.value) {
+          setTempUpdateText(updateTextref.current?.value);
+        }
+
+        const C_TEXT = tempUpdateText?.replaceAll(/\n/g, "Enter");
+
+        const axiosData = {
+          C_IDX: data.data,
+          C_TEXT: C_TEXT,
+        };
+        // console.log(axiosData);
         const result = await axiosInstance.get("/clubDetail/updateNotice", {
           params: axiosData,
         });
         showModal();
         setNoticeText([]);
-        if (updateTextref.current?.value) {
-          setTempUpdateText(updateTextref.current?.value);
-        }
       } catch (error) {
         console.log(error);
       }
@@ -106,15 +122,24 @@ const UpdateNoticeModal = (data: { data: Number }) => {
         <div>
           {noticeText.map((item, index) => (
             <div
-              className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px]"
+              className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px] text-center"
               key={index}
             >
-              <p>{item.C_TEXT}</p>
+              {item.C_TEXT?.split("Enter").map((item, index) => (
+                <div key={index} className="">
+                  <div> {item}</div>
+                </div>
+              ))}
             </div>
           ))}
           {noticeText.length === 0 ? (
-            <div className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px]">
-              {tempUpdateText}
+            <div className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px] text-center">
+              {tempUpdateText
+                .replaceAll("\n", "Enter")
+                .split("Enter")
+                .map((item, index) => (
+                  <div key={index}>{item}</div>
+                ))}
             </div>
           ) : (
             <></>
@@ -139,10 +164,10 @@ const UpdateNoticeModal = (data: { data: Number }) => {
                 </button>
               </div>
               <div>
-                <input
+                <textarea
                   className="p-1 m-1 border-2 w-[400px] h-[200px] rounded-xl w-9/12"
-                  type="text"
                   ref={updateTextref}
+                  onKeyDown={handleEnter}
                 />
               </div>
             </div>
