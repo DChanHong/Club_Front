@@ -5,23 +5,28 @@ import Image from "next/image";
 import MyAttendingClub from "./MyAttendingClub";
 import MyPageHostList from "./MyPageHostList";
 import { useRouter } from "next/router";
+import { CiImageOn } from "react-icons/ci";
+import moment from "moment";
+
+import { BiUser } from "react-icons/bi";
+import { AiOutlineMail } from "react-icons/ai";
+import { FaBirthdayCake } from "react-icons/fa";
+import { BiMaleFemale } from "react-icons/bi";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Profile = () => {
   const router = useRouter();
   const [userinfo, setUserInfo] = useState<userInfo | null>(null);
-  const [pageLoading, setPageLoading] = useState(false);
-
+  const [imageUpdateState, setImageUpdateState] = useState(false);
   const getUserInfo = async () => {
     const userInfo = await axiosInstance.get("/customer/getuserInfo");
-
     setUserInfo(userInfo.data[0]);
-    setPageLoading(true);
   };
 
   useEffect(() => {
     getUserInfo();
   }, []);
-
+  // U_EMAIL,U_NAME,U_GENDER,U_BIRTH
   //이미지 추가
   const [files, setFiles] = useState<File | null>(null);
 
@@ -38,6 +43,7 @@ const Profile = () => {
         },
       });
       getUserInfo();
+      handleUpdateBox();
     } catch (error) {
       console.log(error);
     }
@@ -62,62 +68,150 @@ const Profile = () => {
     }
   };
 
+  //업데이트 박스 보여주기
+  const handleUpdateBox = () => {
+    setImageUpdateState(!imageUpdateState);
+  };
+
+  //사이드 부분 프로필
+  const [sideState, setSideState] = useState(false);
+  const handldeSideState = () => {
+    setSideState(!sideState);
+  };
+
   return (
-    <>
-      {!pageLoading ? (
-        <div>...loading</div>
-      ) : (
-        <div>
-          <div className="flex justify-start shadow-lg shadow-blue-700 mt-4 mb-4  w-[62rem] h-48 m-auto rounded-lg relative bg-blue-300">
-            <div className="w-[18rem]"></div>
-            <div className=" shadow-lg shadow-blue-700 w-[15rem] h-[30rem]  m-auto rounded-lg absolute top-10 left-4  bg-blue-100">
-              <div className="h-3/6">
+    <div className="w-full flex justify-center ">
+      <div className="flex  w-7/12 ">
+        {/* 내 프로필 부분 */}
+        {/* 960px 이상일 경우 */}
+        <div className="hidden md:block rounded-lg bg-[#131827] w-3/12">
+          <div className="text-[#fb7185] text-center p-5 text-[24px]">
+            My Profile
+          </div>
+          <div className="mx-6">
+            <Image
+              className="border-4 border-current border-indigo-200 rounded-full"
+              src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
+              alt={`${userinfo?.U_EMAIL}`}
+              width={400}
+              height={400}
+              unoptimized={true}
+            />
+          </div>
+          <div>
+            {imageUpdateState ? (
+              <div className="absolute border-2 rounded-xl mt-14 ml-4 p-2 flex bg-white">
+                <form onSubmit={handleSubmit}>
+                  <div className="flex flex-col">
+                    <input
+                      className=""
+                      type="file"
+                      onChange={handleFileChange}
+                    />
+                    <button
+                      className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
+                      type="submit"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          <div className="flex flex-row-reverse mt-2">
+            <button className="flex" onClick={handleUpdateBox}>
+              <p className="mt-2 text-[#62656B]">Update</p>
+              <CiImageOn className="mr-2" color="#62656B" size={40} />
+            </button>
+          </div>
+
+          <div className="mt-2 flex flex-col">
+            <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+              <BiUser size={24} />
+              <p className="ml-2">{userinfo?.U_NAME}</p>
+            </p>
+            <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+              <AiOutlineMail size={22} />
+              <p className="ml-2">{userinfo?.U_EMAIL}</p>
+            </p>
+            <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+              <FaBirthdayCake size={18} />
+              <p className="ml-2">{`${moment(userinfo?.U_BIRTH).format(
+                "YYYY-MM-DD"
+              )}`}</p>
+            </p>
+            <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+              <BiMaleFemale size={20} />
+              <p className="ml-2">{userinfo?.U_GENDER}</p>
+            </p>
+          </div>
+          <div className="text-[#3E4249] flex flex-row-reverse">
+            <div className="mr-4 mb-2">
+              <button type="button" onClick={withdrawalUser}>
+                탈퇴하기
+              </button>
+            </div>
+          </div>
+        </div>
+        {/* 960px 이하일 경우 */}
+        <div className="block md:hidden">
+          <button type="button" className="mr-2" onClick={handldeSideState}>
+            <RxHamburgerMenu size={20} />
+          </button>
+          {sideState ? (
+            <></>
+          ) : (
+            <div className="absolute border-2 rounded-lg bg-[#131827] p-2">
+              <div className="text-[#fb7185] text-center p-5 text-[24px]">
+                My Profile
+              </div>
+              <div className="mx-1 w-[14rem]">
                 <Image
-                  className="border-4 border-current border-indigo-200 rounded-full mx-7 mt-6 w-[12rem] "
+                  className="border-4 border-current border-indigo-200 rounded-full"
                   src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
                   alt={`${userinfo?.U_EMAIL}`}
                   width={400}
                   height={400}
                   unoptimized={true}
                 />
-
-                <form onSubmit={handleSubmit}>
-                  <input
-                    className="mx-4"
-                    type="file"
-                    onChange={handleFileChange}
-                  />
-                  <button className="ml-4" type="submit">
-                    Upload
-                  </button>
-                </form>
               </div>
-
-              <div className="mt-10 flex flex-col">
-                <div className="ml-4  text-[20px] font-bold">
-                  {userinfo?.U_NAME}
-                </div>
-                <div className="ml-4 text-gray-400"> {userinfo?.U_EMAIL}</div>
-              </div>
-              <div className="mt-20  ml-40 text-gray-400">
-                <button type="button" onClick={withdrawalUser}>
-                  탈퇴하기
-                </button>
+              <div className="mt-2 flex flex-col ">
+                <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+                  <BiUser size={24} />
+                  <p className="ml-2">{userinfo?.U_NAME}</p>
+                </p>
+                <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+                  <AiOutlineMail size={22} />
+                  <p className="ml-2">{userinfo?.U_EMAIL}</p>
+                </p>
+                <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+                  <FaBirthdayCake size={18} />
+                  <p className="ml-2">{`${moment(userinfo?.U_BIRTH).format(
+                    "YYYY-MM-DD"
+                  )}`}</p>
+                </p>
+                <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+                  <BiMaleFemale size={20} />
+                  <p className="ml-2">{userinfo?.U_GENDER}</p>
+                </p>
               </div>
             </div>
+          )}
+        </div>
+        {/* 참여중 클럽 리스트 */}
+        <div className="flex flex-wrap gap-10 justify-center bg-[#F6F7F9] w-9/12">
+          <div className="">
+            <MyAttendingClub />
           </div>
-          <div className="flex justify-start   shadow-lg shadow-blue-700  w-[62rem] h-[28rem] m-auto rounded-lg bg-sky-300">
-            <div className=" w-[18rem]"></div>
-            <div className="w-[15rem]">
-              <MyAttendingClub />
-            </div>
-            <div className=" ml-24">
-              <MyPageHostList />
-            </div>
+          <div className="">
+            <MyPageHostList />
           </div>
         </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 };
 

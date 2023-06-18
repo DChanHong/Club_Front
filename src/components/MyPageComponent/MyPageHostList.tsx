@@ -20,24 +20,27 @@ const MyPageHostList = () => {
   }, []);
 
   return (
-    <>
-      <div className="mx-auto w-[18rem] text-center mt-4 font-bold text-[20px]">
+    <div className="">
+      <div className="text-center mt-4 font-bold text-[20px] text-[#6A7D7C]">
         My Club
       </div>
-      <div>
+      <div
+        className="overflow-y-auto bg-white px-4 my-6
+        h-[30rem]   shadow-lg rounded-xl"
+      >
         {hostList.map((item) => (
           <div
-            className="flex flex-start border-2  border-gray-300 bg-white w-[20rem] rounded-lg my-4 py-3"
+            className="flex border-2 border-gray-300 bg-white  rounded-lg my-4 py-3 pl-4 pr-4"
             key={item.C_IDX}
           >
-            <div>
-              <BsFilePersonFill className="mt-2 mx-6" size={30} />
+            <div className="my-1">
+              <BsFilePersonFill size={30} />
             </div>
             <div>
-              <div className="text-center">
+              <div>
                 <p className="text-[18px] font-bold">{item.C_NAME}</p>
               </div>
-              <div className="flex flex-start my-1 ml-2 text-[12px]">
+              <div className="flex text-[12px]">
                 <p>#{item.C_CATEGORY}&nbsp;</p>
                 <p>#{item.C_CATE_DETAIL}&nbsp;</p>
                 <p>#{item.C_AREA}</p>
@@ -46,7 +49,7 @@ const MyPageHostList = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

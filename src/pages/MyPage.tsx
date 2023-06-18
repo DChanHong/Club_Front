@@ -4,11 +4,9 @@ import Profile from "@/components/MyPageComponent/Profile";
 
 const MyPage = () => {
   return (
-    <div>
-      <div>
-        <Profile />
-      </div>
-    </div>
+    <>
+      <Profile />
+    </>
   );
 };
 
