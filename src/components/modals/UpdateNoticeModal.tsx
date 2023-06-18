@@ -43,7 +43,6 @@ const UpdateNoticeModal = (data: { data: Number }) => {
 
   //2번 페이지 (Notice) 데이터
   const [noticeText, setNoticeText] = useState<temporaryContextInfo[]>([]);
-  const [test, setTest] = useState([]);
 
   const selectNotice = async () => {
     const axiosData = { C_IDX: data.data };
