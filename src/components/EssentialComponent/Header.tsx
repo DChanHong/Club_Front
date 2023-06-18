@@ -74,7 +74,7 @@ const Header = () => {
             <p className="ml-2 text-[#946CEE]">Club House</p>
           </div>
         </Link>
-        <div className="mt-3 md:w-auto">
+        <div className="mt-3 mx-auto">
           <div
             className={`border-2 bg-white rounded-full flex flex-start
             ${!inputBorder ? "border-neutral-200" : "border-[#946CEE]"}`}

@@ -74,7 +74,7 @@ const Profile = () => {
   };
 
   //사이드 부분 프로필
-  const [sideState, setSideState] = useState(false);
+  const [sideState, setSideState] = useState(true);
   const handldeSideState = () => {
     setSideState(!sideState);
   };
