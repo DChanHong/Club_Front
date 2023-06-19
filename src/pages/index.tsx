@@ -6,7 +6,7 @@ import { useState } from "react";
 import MakeClubModal from "@/components/modals/MakeClubModal";
 
 export default function Home() {
-  const data = ["스포츠", "문화생활"];
+  const data = ["스포츠", "문화생활", "스터디", "게임", "기타"];
 
   const [testData, setTest] = useState("");
   const test = async () => {
@@ -19,8 +19,11 @@ export default function Home() {
     <>
       <div className="flex flex-start ">
         <div className="w-1/6 ">
-          <LeftSideBar />
+          <div>
+            <LeftSideBar />
+          </div>
         </div>
+
         <div className="flex flex-col w-5/6">
           <div>
             <button type="button" onClick={test}>
@@ -36,7 +39,7 @@ export default function Home() {
           </div>
           <div>
             {data.map((item, idx) => {
-              return <CateClubList data={item} key={idx} />;
+              return <CateClubList data={String(item)} key={idx} />;
             })}
           </div>
         </div>

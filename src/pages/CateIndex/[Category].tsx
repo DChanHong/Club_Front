@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
-import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
+
 import axiosInstance from "@/utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { cateClubInfo } from "@/Types";
 import Image from "next/image";
+import { BsFillHeartFill } from "react-icons/bs";
 
 const CategoryIndex = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const CategoryIndex = () => {
   const selectCategoryClub = async () => {
     try {
       const axiosData = { data: Category };
-      const result = await axiosInstance.get("/search/selcectCategoryClub", {
+      const result = await axiosInstance.get("/homeAdd/getAllCateClub", {
         params: axiosData,
       });
 
@@ -41,8 +42,13 @@ const CategoryIndex = () => {
           <LeftSideBar data={String(Category)} />
         </div>
         <div className="flex flex-col w-5/6">
-          <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">
-            <TopMeetingList />
+          <div className="ml-8 mb-2">
+            <div className="flex text-[22px]">
+              <p className="mt-1.5 mr-2">
+                <BsFillHeartFill />
+              </p>
+              <p className="">{Category} Club</p>
+            </div>
           </div>
           <div>
             <div className="flex flex-wrap ml-6">

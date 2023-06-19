@@ -16,7 +16,7 @@ const MyAttendingClub = () => {
   }, []);
 
   return (
-    <div className=" ">
+    <div>
       <div className=" text-center mt-4 font-bold text-[20px] text-[#6A7D7C]">
         활동중인 Club
       </div>
@@ -27,7 +27,7 @@ const MyAttendingClub = () => {
         {data.map((item) => (
           <div
             className="flex border-2 border-gray-300 bg-white 
-            rounded-lg my-4 py-3 pl-4"
+            rounded-lg my-4 py-3 pl-4 px-4"
             key={item.C_IDX}
           >
             <div className="mx-2 my-1 ">

@@ -4,8 +4,9 @@ import { cateClubInfo } from "@/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { IoPeopleSharp } from "react-icons/io5";
+import { BiRightArrow } from "react-icons/bi";
 
-const CateClubList = ({ data }: any) => {
+const CateClubList = ({ data }: { data: string }) => {
   const propsdata = data;
 
   const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
@@ -22,7 +23,7 @@ const CateClubList = ({ data }: any) => {
     getCateClubList();
   }, []);
 
-  ///////////
+  //
   const router = useRouter();
 
   const clubRouterButton = (data: string) => {
@@ -31,16 +32,37 @@ const CateClubList = ({ data }: any) => {
     });
   };
 
+  const moveCateIndex = (data: string) => {
+    router.push({
+      pathname: `/CateIndex/${data}`,
+    });
+  };
   return (
-    <div className="ml-6 mb-10 mt-2 pb-6 border-2 border-t-white border-x-white border-b-neutral-100">
+    <div
+      className="
+          ml-6 mb-10 mt-2 pb-6 border-2 
+          border-t-white border-x-white 
+          border-b-neutral-100
+    "
+    >
       <div className="flex flex-start text-[22px] py-2 ml-4 ">
         <p className="">
           <IoPeopleSharp size={30} />
         </p>
-        <p className="ml-4">{propsdata} Club List</p>
+        <p className="ml-4 ">{propsdata} Club List</p>
+        <button
+          type="button"
+          className="flex"
+          onClick={() => moveCateIndex(String(propsdata))}
+        >
+          <p className=" ml-4 mt-2 ">
+            <BiRightArrow size={20} color="#BDC3CC" />
+          </p>
+          <p className="text-[14px] text-[#BDC3CC]  mt-2 ">전체보기</p>
+        </button>
       </div>
 
-      <div className="flex flex-wrap ">
+      <div className="flex flex-wrap overflow-y-auto ">
         {cateClub?.map((item) => (
           <div
             key={item.C_IDX}

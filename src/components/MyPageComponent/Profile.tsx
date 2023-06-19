@@ -129,24 +129,24 @@ const Profile = () => {
           </div>
 
           <div className="mt-2 flex flex-col">
-            <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+            <div className="flex ml-6 my-3 text-[#AFB2B5] ">
               <BiUser size={24} />
               <p className="ml-2">{userinfo?.U_NAME}</p>
-            </p>
-            <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+            </div>
+            <div className="flex ml-6 my-3 text-[#AFB2B5] ">
               <AiOutlineMail size={22} />
               <p className="ml-2">{userinfo?.U_EMAIL}</p>
-            </p>
-            <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+            </div>
+            <div className="flex ml-6 my-3 text-[#AFB2B5] ">
               <FaBirthdayCake size={18} />
               <p className="ml-2">{`${moment(userinfo?.U_BIRTH).format(
                 "YYYY-MM-DD"
               )}`}</p>
-            </p>
-            <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+            </div>
+            <div className="flex ml-6 my-3 text-[#AFB2B5] ">
               <BiMaleFemale size={20} />
               <p className="ml-2">{userinfo?.U_GENDER}</p>
-            </p>
+            </div>
           </div>
           <div className="text-[#3E4249] flex flex-row-reverse">
             <div className="mr-4 mb-2">
@@ -179,24 +179,24 @@ const Profile = () => {
                 />
               </div>
               <div className="mt-2 flex flex-col ">
-                <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+                <div className="flex ml-6 my-3 text-[#AFB2B5] ">
                   <BiUser size={24} />
                   <p className="ml-2">{userinfo?.U_NAME}</p>
-                </p>
-                <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+                </div>
+                <div className="flex ml-6 my-3 text-[#AFB2B5] ">
                   <AiOutlineMail size={22} />
                   <p className="ml-2">{userinfo?.U_EMAIL}</p>
-                </p>
-                <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+                </div>
+                <div className="flex ml-6 my-3 text-[#AFB2B5] ">
                   <FaBirthdayCake size={18} />
                   <p className="ml-2">{`${moment(userinfo?.U_BIRTH).format(
                     "YYYY-MM-DD"
                   )}`}</p>
-                </p>
-                <p className="flex ml-6 my-3 text-[#AFB2B5] ">
+                </div>
+                <div className="flex ml-6 my-3 text-[#AFB2B5] ">
                   <BiMaleFemale size={20} />
                   <p className="ml-2">{userinfo?.U_GENDER}</p>
-                </p>
+                </div>
               </div>
             </div>
           )}

@@ -21,7 +21,7 @@ const TopMeetingList = () => {
 
   const getTopClubList = async () => {
     const result = await axiosInstance.get("homeAdd/getTopClubList");
-    // console.log(result);
+
     if (result) {
       setImages(result.data);
     }
