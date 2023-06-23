@@ -1,7 +1,6 @@
 import AttendUser from "@/components/clubDetailpage/AttendUser";
 import { GetServerSideProps } from "next";
 
-import ClubDetailSideBar from "@/components/clubDetailpage/ClubDetailSideBar";
 const ClubPostPage = () => {
   return (
     <div className=" md:flex justify-center">

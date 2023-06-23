@@ -10,7 +10,7 @@ export default function Home() {
 
   const [testData, setTest] = useState("");
   const test = async () => {
-    const result = await axiosInstance.get("/test");
+    const result = await axiosInstance.get("http://52.78.175.137/test");
     setTest(result.data);
   };
   // console.log(testData);

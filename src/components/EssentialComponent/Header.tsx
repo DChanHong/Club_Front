@@ -90,7 +90,7 @@ const Header = () => {
             </div>
             <div className="mt-1">
               <button type="button" onClick={routeSearchPage} className="px-1 ">
-                <p className="">
+                <p>
                   <BiSearch size={25} />
                 </p>
               </button>

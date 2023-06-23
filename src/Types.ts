@@ -174,3 +174,22 @@ export interface temporaryContextInfo2 {
   data: string | undefined;
   id: number | undefined;
 }
+
+//채팅 인터페이스
+export interface chatInfo {
+  C_IDX: number | string | undefined;
+  U_IDX: number | undefined;
+  userName: string | undefined;
+  userChat: string | undefined;
+  time: string | undefined;
+}
+
+// 채팅리스트 불러오기
+export interface getAllChatInfo {
+  C_IDX: string | undefined;
+  U_IDX: number | undefined;
+  time: string | undefined;
+  userChat: string | undefined;
+  userName: string | undefined;
+  _id: string | undefined;
+}

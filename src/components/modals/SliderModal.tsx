@@ -16,7 +16,7 @@ const SliderModal = (C_IDX: any) => {
 
   const getSliderModalInfo = async () => {
     const axiosData = C_IDX;
-    console.log(axiosData);
+    // console.log(axiosData);
     const result = await axiosInstance.get("/homeAdd/getSliderModalInfo", {
       params: axiosData,
     });

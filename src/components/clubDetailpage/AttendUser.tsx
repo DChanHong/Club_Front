@@ -1,6 +1,6 @@
 import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { clubDetailInfo, clubTextInfo } from "@/Types";
 import Image from "next/image";
 import AddScheduleModal from "../modals/AddScheduleModal";
@@ -11,7 +11,6 @@ import { scheduleInfo } from "@/Types";
 import moment from "moment";
 import { AiFillLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
-import { useRef } from "react";
 import TextBox from "./TextBox";
 import { IoAddOutline } from "react-icons/io5";
 import { GrFormClose, GrSchedulePlay, GrUpdate } from "react-icons/gr";
@@ -23,6 +22,11 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 import { temporaryContextInfo } from "@/Types";
 import UpdateNoticeModal from "../modals/UpdateNoticeModal";
+import { BsMessenger } from "react-icons/bs";
+import { MdSend } from "react-icons/md";
+import io, { Socket } from "socket.io-client";
+import { chatInfo } from "@/Types";
+import { getAllChatInfo } from "@/Types";
 
 const AttendUser = () => {
   const router = useRouter();
@@ -206,7 +210,7 @@ const AttendUser = () => {
   }, []);
 
   // 왼쪽 바 Notice 버튼 클릭
-  const [pageNunber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(0);
   const moveSideBar = (data: number) => {
     setPageNumber(data);
     setBurgetMenuState(false);
@@ -240,6 +244,141 @@ const AttendUser = () => {
     setBurgetMenuState(!burgerMenuState);
   };
 
+  /* 여기부턴 소켓 댓글창 */
+
+  // 1.로그인 유저 이름 가져오기
+  const [userName, setUserName] = useState<string>("");
+  const [chatHistory, setChatHistory] = useState<chatInfo[]>([]); //소켓 통신을 위한 것
+
+  const getUserName = async () => {
+    try {
+      const result = await axiosInstance.get("/clubDetail/getUserName");
+      setUserName(result.data[0].U_NAME);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getUserName();
+  }, []);
+
+  //2. 소켓 연결
+  const socketRef = useRef<Socket | null>(null);
+
+  const SOCKET_SERVER_URL = "http://localhost:4000";
+  useEffect(() => {
+    //웹소켓 socket.io 연결
+    socketRef.current = io(SOCKET_SERVER_URL); // -> 이거 env로 고쳐봐야될듯
+
+    //이벤트 리스너 등록 (채팅 리스너)
+    socketRef.current.on("chatting", (message) => {
+      setChatHistory((chatHistory) => [...chatHistory, message]);
+    });
+
+    //다른페이지 가면 소켓 해제
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
+  }, []);
+
+  // 3. 채팅 보내기 소켓 통신
+  const chatRef = useRef<HTMLInputElement>(null);
+
+  const sendChat = () => {
+    const value = chatRef?.current?.value;
+
+    if (value && socketRef.current) {
+      const message = {
+        C_IDX: C_IDX,
+        U_IDX: loginIdx,
+        userName: userName,
+        userChat: value,
+        time: new Date().toLocaleString(), //현재 시각
+      };
+      // console.log(message);
+      pushChatting(message);
+
+      // console.log(message);
+      socketRef.current.emit("chatting", message);
+    }
+    if (chatRef.current) {
+      chatRef.current.value = "";
+    }
+  };
+
+  // 4. 내가 쓴 글은 오른쪽 , 상대방이 쓴 글은 왼쪽으로 되게 만드는 함수
+  const renderChat = (item: chatInfo) => {
+    // const className =
+    //   chat.U_IDX === loginIdx
+    //     ? "flex flex-row-reverse border-2"
+    //     : "flex flex-row border2";
+    return (
+      <div
+        className={` ${
+          item.U_IDX === loginIdx
+            ? "flex flex-row-reverse mr-4 mb-2"
+            : "flex flex-row ml-4 mb-2"
+        }`}
+      >
+        <div className="flex flex-col">
+          <p
+            className={`text-[#8292A9] text-[12px] ${
+              item.U_IDX === loginIdx ? "flex flex-row-reverse" : ""
+            }`}
+          >
+            {item.userName}
+          </p>
+          <p
+            className={`p-1 px-4 text-center rounded-full ${
+              item.U_IDX === loginIdx ? "bg-[#30C3C1]" : "bg-[#DDDDE7]"
+            }`}
+          >
+            {item.userChat}
+          </p>
+          <p
+            className={`text-[10px] text-[#5B6D7E] ${
+              item.U_IDX === loginIdx ? "flex flex-row-reverse" : "flex"
+            }`}
+          >{`${moment(item.time, "YYYY. M. D. A H:mm:ss").format(
+            "YY/MM/DD A H:mm"
+          )}`}</p>
+        </div>
+      </div>
+    );
+  };
+
+  // 5. 댓글 MongoDB insert함수
+  const pushChatting = async (message: any) => {
+    try {
+      const result = await axiosInstance.post("/chat/insertchatting", message);
+      // console.log("인설트 성공");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //6. 모든 채팅내역 불러오기
+
+  const [allChatList, setAllChatList] = useState<getAllChatInfo[]>([]);
+
+  const getAllchattingList = async () => {
+    try {
+      const axiosData = { C_IDX };
+      const result = await axiosInstance.get("/chat/selectAllChatting", {
+        params: axiosData,
+      });
+      setAllChatList(result.data);
+      // console.log(allChatList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getAllchattingList();
+  }, []);
+
   return (
     <div className="flex justify-center md:flex">
       {/* 왼쪽 바 시작 부분 */}
@@ -262,30 +401,42 @@ const AttendUser = () => {
             </div>
           </div>
         ))}
-        <div className="my-4 flex flex-col ">
-          <div className="">
+        <div className="my-10 flex flex-col ">
+          <div>
             <button
               type="button"
               onClick={() => moveSideBar(0)}
-              className="flex my-2 pl-4
+              className="flex pl-4 mb-6
               "
             >
               <p className="pt-1.5 ">
                 <GrSchedulePlay />
               </p>
-              <p className="pl-4"> meeting</p>
+              <p className="pl-4"> Meeting</p>
             </button>
           </div>
           <div>
             <button
               type="button"
               onClick={() => moveSideBar(1)}
-              className="flex my-2 pl-4"
+              className="flex mb-6 pl-4"
             >
               <p className="pt-1.5 ">
                 <FaMicrophoneAlt />
               </p>
               <p className="pl-4"> Notice</p>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => moveSideBar(2)}
+              className="flex mb-6 pl-4"
+            >
+              <p className="pt-1.5 ">
+                <BsMessenger />
+              </p>
+              <p className="pl-4">Messenger</p>
             </button>
           </div>
         </div>
@@ -343,6 +494,18 @@ const AttendUser = () => {
                   <p className="pl-4"> Notice</p>
                 </button>
               </div>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => moveSideBar(2)}
+                  className="flex my-2 pl-4"
+                >
+                  <p className="pt-1.5 ">
+                    <BsMessenger />
+                  </p>
+                  <p className="pl-4">Messenger</p>
+                </button>
+              </div>
             </div>
           </div>
         ) : (
@@ -353,7 +516,7 @@ const AttendUser = () => {
       {/*  중앙 부분 시작  */}
 
       {/* meeting */}
-      {pageNunber === 0 ? (
+      {pageNumber === 0 ? (
         <div className=" w-[40rem]  md:flex flex-col bg-[#E9ECF2] w-7/12  ">
           <div className="flex justify-between mx-4 p-1 my-4">
             <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Meeting</p>
@@ -366,7 +529,7 @@ const AttendUser = () => {
                     onClick={showModal}
                   >
                     <IoAddOutline />
-                  </button>{" "}
+                  </button>
                 </div>
                 <p className="text-[14px] text-[#BDC3CC] pr-1 pt-2">sort ▼</p>
               </div>
@@ -506,11 +669,34 @@ const AttendUser = () => {
 
       {/* <div className=" w-[40rem]  md:flex flex-col bg-[#E9ECF2] w-7/12  "> */}
       {/* Notice 페이지 */}
-      {pageNunber === 1 ? (
+      {pageNumber === 1 ? (
         <div className="w-[40rem] md:flex flex-col bg-[#E9ECF2] w-7/12 ">
           <div className="flex justify-between mx-4 p-1 my-4">
             <div className="text-[22px] pl-1 text-[#6A7D7C] font-bold">
               Notice
+            </div>
+          </div>
+          <div className="md:hidden">
+            <div>
+              <ClubContext />
+            </div>
+            <div className="text-center p-1 ml-6">
+              {join ? (
+                <button type="button" onClick={LeaveClub} className="flex  ">
+                  <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
+                  <div className=" mr-1 text-[#D2D5D9] text-[15px]">
+                    exit
+                  </div>{" "}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={JoinClub}
+                  className="w-full h-full my-2 bg-blue-500 text-white outline outline-slate-200 rounded-xl"
+                >
+                  가입하기
+                </button>
+              )}
             </div>
           </div>
           {join ? (
@@ -524,7 +710,115 @@ const AttendUser = () => {
       ) : (
         <></>
       )}
-
+      {pageNumber === 2 ? (
+        <div className="w-[40rem] md:flex flex-col bg-[#E9ECF2] w-7/12 ">
+          <div className="flex justify-between mx-4 p-1 my-4">
+            <div className="text-[22px] pl-1 text-[#6A7D7C] font-bold">
+              Messenger
+            </div>
+          </div>
+          <div className="md:hidden">
+            <div>
+              <ClubContext />
+            </div>
+            <div className="text-center p-1 ml-6">
+              {join ? (
+                <button type="button" onClick={LeaveClub} className="flex">
+                  <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
+                  <div className=" mr-1 text-[#D2D5D9] text-[15px]">
+                    exit
+                  </div>{" "}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={JoinClub}
+                  className="w-full h-full my-2 bg-blue-500 text-white outline outline-slate-200 rounded-xl"
+                >
+                  가입하기
+                </button>
+              )}
+            </div>
+          </div>
+          {/* 메신저 단톡방 */}
+          {join ? (
+            <>
+              <div className="border-4 p-4 mx-4 rounded-xl bg-white overflow-auto h-[38rem]">
+                {/* 이전 채팅 내역 보여줄 부분  bg-[#30C3C1] */}
+                <div>
+                  {allChatList.map((item) => (
+                    <div key={item._id}>
+                      <div
+                        className={` ${
+                          item.U_IDX === loginIdx
+                            ? "flex flex-row-reverse mr-4 mb-2"
+                            : "flex flex-row ml-4 mb-2"
+                        }`}
+                      >
+                        <div className="flex flex-col">
+                          <p
+                            className={`text-[#8292A9] text-[12px] ${
+                              item.U_IDX === loginIdx
+                                ? "flex flex-row-reverse"
+                                : ""
+                            }`}
+                          >
+                            {item.userName}
+                          </p>
+                          <p
+                            className={`p-1 px-4 text-center rounded-full ${
+                              item.U_IDX === loginIdx
+                                ? "bg-[#30C3C1]"
+                                : "bg-[#DDDDE7]"
+                            }`}
+                          >
+                            {item.userChat}
+                          </p>
+                          <p
+                            className={`text-[10px] text-[#5B6D7E] ${
+                              item.U_IDX === loginIdx
+                                ? "flex flex-row-reverse"
+                                : "flex"
+                            }`}
+                          >
+                            {`${moment(
+                              item.time,
+                              "YYYY. M. D. A H:mm:ss"
+                            ).format("YY/MM/DD A H:mm")}`}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* 방금 입력한 댓글 보여주는 부분 */}
+                <div className="bg-white flex flex-col">
+                  <div className=" overflow-auto">
+                    {chatHistory.map((chat, index) => (
+                      <div key={index}>{renderChat(chat)}</div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="border-2 flex mx-4 bg-white rounded-xl my-2">
+                <input
+                  type="text"
+                  className="px-3 w-[36rem] rounded-xl h-[2rem] outline-0"
+                  placeholder="채팅을 입력해주세요"
+                  ref={chatRef}
+                />
+                <button className=" mx-2 rounded-xl" onClick={() => sendChat()}>
+                  <MdSend />
+                </button>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+      ) : (
+        <></>
+      )}
       {/*   참석자 리스트 시작  */}
       {/* 960px 이상일 경우에 나올 화면 */}
       <div className="hidden md:block w-2/12 border-2 shadow-lg ">
