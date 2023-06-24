@@ -7,13 +7,13 @@ import MyPageHostList from "./MyPageHostList";
 import { useRouter } from "next/router";
 import { CiImageOn } from "react-icons/ci";
 import moment from "moment";
-
+import { REMOVE_IS_LOGIN, SET_IS_LOGIN } from "@/store/slice/isLoginSlice";
 import { BiUser } from "react-icons/bi";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaBirthdayCake } from "react-icons/fa";
 import { BiMaleFemale } from "react-icons/bi";
 import { RxHamburgerMenu } from "react-icons/rx";
-
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 const Profile = () => {
   const router = useRouter();
   const [userinfo, setUserInfo] = useState<userInfo | null>(null);
@@ -21,8 +21,9 @@ const Profile = () => {
   const getUserInfo = async () => {
     const userInfo = await axiosInstance.get("/mypage/user/information");
     setUserInfo(userInfo.data[0]);
+    // console.log(userInfo);
   };
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -57,11 +58,11 @@ const Profile = () => {
   //회원 탈퇴하기
   const withdrawalUser = async () => {
     try {
-      const result = await axiosInstance.get("/mypage/user/withdrawal");
+      const result = await axiosInstance.put("/mypage/user/withdrawal");
       router.push({
         pathname: `/`,
       });
-
+      dispatch(REMOVE_IS_LOGIN(false));
       localStorage.setItem("login", "false");
     } catch (error) {
       console.log(error);

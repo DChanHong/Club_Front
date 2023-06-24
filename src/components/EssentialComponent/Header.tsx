@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { MdOutlineFestival } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
 import { AiOutlineUser } from "react-icons/ai";
+import { redirect } from "next/dist/server/api-utils";
 
 const Header = () => {
   const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
@@ -41,7 +42,7 @@ const Header = () => {
     if (test === "true") {
       dispatch(SET_IS_LOGIN(true));
     } else {
-      dispatch(REMOVE_IS_LOGIN);
+      dispatch(REMOVE_IS_LOGIN(false));
     }
   }, []);
 
