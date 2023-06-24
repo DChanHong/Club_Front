@@ -86,17 +86,21 @@ const UpdateNoticeModal = (data: { data: Number }) => {
         }
 
         const C_TEXT = tempUpdateText?.replaceAll(/\n/g, "Enter");
+        // console.log(C_TEXT);
+        if (C_TEXT) {
+          const axiosData = {
+            C_IDX: data.data,
+            C_TEXT: C_TEXT,
+          };
+          // console.log(axiosData);
+          // 공지사항 수정
+          const result = await axiosInstance.put("/club/notice/host/text", {
+            params: axiosData,
+          });
 
-        const axiosData = {
-          C_IDX: data.data,
-          C_TEXT: C_TEXT,
-        };
-        // console.log(axiosData);
-        const result = await axiosInstance.get("/club/notice/host/text", {
-          params: axiosData,
-        });
-        showModal();
-        setNoticeText([]);
+          showModal();
+          setNoticeText([]);
+        }
       } catch (error) {
         console.log(error);
       }

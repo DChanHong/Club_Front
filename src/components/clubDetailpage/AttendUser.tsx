@@ -91,8 +91,9 @@ const AttendUser = () => {
 
   const LeaveClub = async () => {
     try {
-      const axiosData = { data: C_IDX };
-      await axiosInstance.post("/club/leave-club", axiosData, {
+      // const axiosData = { data: C_IDX };
+      await axiosInstance.delete("/club/delete/leave-club", {
+        data: { data: C_IDX },
         withCredentials: true,
       });
       setJoin(false);
@@ -166,10 +167,12 @@ const AttendUser = () => {
   const deleteSchedule = (data: any) => {
     const axiosData = { S_IDX: data };
     try {
-      axiosInstance.post("/club/d-schedule", axiosData).then((res) => {
-        console.log(res);
-        addHidden(data);
-      });
+      axiosInstance
+        .delete("/club/delete/schedule", { data: { S_IDX: data } })
+        .then((res) => {
+          console.log(res);
+          addHidden(data);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -677,6 +680,7 @@ const AttendUser = () => {
             <div>
               <ClubContext />
             </div>
+
             <div className="text-center p-1 ml-6">
               {join ? (
                 <button type="button" onClick={LeaveClub} className="flex  ">

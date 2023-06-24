@@ -110,9 +110,11 @@ const TextBox = (S_IDX: any) => {
   //댓글 삭제기능
 
   const deleteContext = (data: any) => {
-    const axiosData = { CO_IDX: data };
+    // const axiosData = { CO_IDX: data };
     try {
-      const result = axiosInstance.post("/club/d-schedule/context", axiosData);
+      const result = axiosInstance.delete("/club/delete/schedule/context", {
+        data: { CO_IDX: data },
+      });
       addHidden(data);
     } catch (error) {
       console.log(error);
@@ -134,7 +136,9 @@ const TextBox = (S_IDX: any) => {
   const deleteTemporaryContext = (data: any) => {
     const axiosData = { CO_IDX: data };
     try {
-      const result = axiosInstance.post("/club/d-schedule/context", axiosData);
+      const result = axiosInstance.delete("/delete/schedule/context", {
+        data: { CO_IDX: data },
+      });
       temAddHidden(data);
     } catch (error) {
       console.log(error);
