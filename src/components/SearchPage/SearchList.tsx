@@ -10,9 +10,12 @@ const SearchList = () => {
   const selectSearchClub = async () => {
     const { searchData } = router.query;
     const axiosData = { data: searchData };
-    const result = await axiosInstance.get("/search/selectSearchClub", {
-      params: axiosData,
-    });
+    const result = await axiosInstance.get(
+      "/search-page/user/club/search-word",
+      {
+        params: axiosData,
+      }
+    );
     setSearchData(result.data);
   };
 

@@ -24,7 +24,7 @@ const SignBox = () => {
     const data = {
       email: email,
     };
-    const isvalid = await axiosInstance.post(`/customer/checkID`, data);
+    const isvalid = await axiosInstance.post(`/customer/check-id`, data);
     if (!isvalid.data.data) {
       return "중복된 아이디 입니다.";
     }
@@ -39,7 +39,7 @@ const SignBox = () => {
       birth: data.birth,
     };
     await axiosInstance
-      .post(`/customer`, signData)
+      .post(`/customer/user/data/injection`, signData)
       .then((response) => {
         console.log(response);
       })

@@ -39,12 +39,9 @@ const AttendUser = () => {
     const axiosData = { data: C_IDX };
 
     try {
-      const result = await axiosInstance.get(
-        "/clubDetail/getClubDetailUserList",
-        {
-          params: axiosData,
-        }
-      );
+      const result = await axiosInstance.get("/club/user/entrance/list", {
+        params: axiosData,
+      });
       setClubDetail(result.data);
     } catch (error) {
       console.log(error);
@@ -65,7 +62,7 @@ const AttendUser = () => {
     // console.log(axiosData);
     try {
       // C_IDX를 보내고 , 토큰으로 node에서 U_IDX를 추출하여 가져옴
-      const result = await axiosInstance.get("/clubDetail/clubJoinUserCheck", {
+      const result = await axiosInstance.get("/club/user/join-check", {
         params: axiosData,
       });
       setJoin(result.data.data); //true면 이미 가입된거
@@ -81,7 +78,7 @@ const AttendUser = () => {
   const JoinClub = async () => {
     try {
       const axiosData = { data: C_IDX };
-      await axiosInstance.post("/clubDetail/JoinClub", axiosData, {
+      await axiosInstance.post("/club/user/join-club", axiosData, {
         withCredentials: true,
       });
       setJoin(true);
@@ -95,7 +92,7 @@ const AttendUser = () => {
   const LeaveClub = async () => {
     try {
       const axiosData = { data: C_IDX };
-      await axiosInstance.post("/clubDetail/LeaveClub", axiosData, {
+      await axiosInstance.post("/club/leave-club", axiosData, {
         withCredentials: true,
       });
       setJoin(false);
@@ -125,7 +122,7 @@ const AttendUser = () => {
   const callClubSchedule = async () => {
     const axiosData = { C_IDX: C_IDX };
     try {
-      const result = await axiosInstance.get("/clubDetail/callClubSchedule", {
+      const result = await axiosInstance.get("/club/schedule/information", {
         params: axiosData,
       });
       setSdata(result.data);
@@ -135,8 +132,8 @@ const AttendUser = () => {
 
     //로인한 아이디 들고오기
     try {
-      const result2 = await axiosInstance.get("/clubDetail/getMyIdx");
-      const result = await axiosInstance.get("/clubDetail/callClubSchedule", {
+      const result2 = await axiosInstance.get("/club/u-idx");
+      const result = await axiosInstance.get("/club/schedule/information", {
         params: axiosData,
       });
       setSdata(result.data);
@@ -169,7 +166,7 @@ const AttendUser = () => {
   const deleteSchedule = (data: any) => {
     const axiosData = { S_IDX: data };
     try {
-      axiosInstance.post("/clubDetail/deletSchedule", axiosData).then((res) => {
+      axiosInstance.post("/club/d-schedule", axiosData).then((res) => {
         console.log(res);
         addHidden(data);
       });
@@ -194,7 +191,7 @@ const AttendUser = () => {
   const getHostInfo = async () => {
     const axiosData = { C_IDX };
     try {
-      const result = await axiosInstance.get("/clubDetail/getHostInfo", {
+      const result = await axiosInstance.get("/club/host/information", {
         params: axiosData,
       });
 
@@ -221,7 +218,7 @@ const AttendUser = () => {
   const selectNotice = async () => {
     const axiosData = { C_IDX };
     try {
-      const result = await axiosInstance.get("/clubDetail/selectNotice", {
+      const result = await axiosInstance.get("/club/notice/text", {
         params: axiosData,
       });
       setNoticeText(result.data);
@@ -252,7 +249,7 @@ const AttendUser = () => {
 
   const getUserName = async () => {
     try {
-      const result = await axiosInstance.get("/clubDetail/getUserName");
+      const result = await axiosInstance.get("/club/my-name");
       setUserName(result.data[0].U_NAME);
     } catch (error) {
       console.log(error);

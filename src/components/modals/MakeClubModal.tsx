@@ -124,10 +124,7 @@ const MakeClubModal = () => {
       //   console.log(axiosData);
 
       try {
-        const result = await axiosInstance.post(
-          "/homeAdd/insertNewClubInfo",
-          axiosData
-        );
+        const result = await axiosInstance.post("/home/new-club", axiosData);
         // console.log(result);
         const newAddClub = {
           C_IDX: Number(result.data.insertId),

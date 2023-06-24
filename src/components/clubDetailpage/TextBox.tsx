@@ -18,9 +18,12 @@ const TextBox = (S_IDX: any) => {
   const getContext = async () => {
     const axiosData = S_IDX;
 
-    const result = await axiosInstance.get("/clubDetail/getContext", {
-      params: axiosData,
-    });
+    const result = await axiosInstance.get(
+      "/club/schedule/information/context",
+      {
+        params: axiosData,
+      }
+    );
     setContext(result.data);
   };
   useEffect(() => {
@@ -39,7 +42,7 @@ const TextBox = (S_IDX: any) => {
     };
     try {
       const result = await axiosInstance.post(
-        "/clubDetail/insertContext",
+        "/club/i-shchedule/context",
         axiosData
       );
       const newAddComment = { S_IDX: S_IDX.S_IDX, data, id: result.data.id };
@@ -92,7 +95,7 @@ const TextBox = (S_IDX: any) => {
 
   const getUserName = async () => {
     try {
-      const result = await axiosInstance.get("/clubDetail/getUserName");
+      const result = await axiosInstance.get("/club/my-name");
       // setUserName(result.data);
 
       setUserName(result.data[0].U_NAME);
@@ -109,7 +112,7 @@ const TextBox = (S_IDX: any) => {
   const deleteContext = (data: any) => {
     const axiosData = { CO_IDX: data };
     try {
-      const result = axiosInstance.post("/clubDetail/deleteContext", axiosData);
+      const result = axiosInstance.post("/club/d-schedule/context", axiosData);
       addHidden(data);
     } catch (error) {
       console.log(error);
@@ -131,7 +134,7 @@ const TextBox = (S_IDX: any) => {
   const deleteTemporaryContext = (data: any) => {
     const axiosData = { CO_IDX: data };
     try {
-      const result = axiosInstance.post("/clubDetail/deleteContext", axiosData);
+      const result = axiosInstance.post("/club/d-schedule/context", axiosData);
       temAddHidden(data);
     } catch (error) {
       console.log(error);

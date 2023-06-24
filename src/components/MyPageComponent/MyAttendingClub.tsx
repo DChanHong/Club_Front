@@ -6,7 +6,7 @@ const MyAttendingClub = () => {
   const [data, setData] = useState<myPageAttInfo[]>([]);
 
   const getMyAttClubList = async () => {
-    const result = await axiosInstance.get("/customer/getMyAttClubList");
+    const result = await axiosInstance.get("/mypage/participation/club/list");
     setData(result.data);
     if (data.length > 0) {
     }

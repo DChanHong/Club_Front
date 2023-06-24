@@ -10,7 +10,7 @@ const UpdateText = () => {
   const getClubDetailUserList = async () => {
     const axiosData = { data: C_IDX };
     // console.log(axiosData);
-    const result = await axiosInstance.get("/clubDetail/getClubText", {
+    const result = await axiosInstance.get("/club/information/notice", {
       params: axiosData,
     });
     setClubDetail(result.data);

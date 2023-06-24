@@ -13,7 +13,7 @@ const CateClubList = ({ data }: { data: string }) => {
 
   const getCateClubList = async () => {
     const axiosData = { data: propsdata };
-    const result = await axiosInstance.get("/homeAdd/getCateClubList", {
+    const result = await axiosInstance.get("/home/club/category/limit/list", {
       params: axiosData,
     });
     setCateClub(result.data);

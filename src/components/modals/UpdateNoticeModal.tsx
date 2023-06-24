@@ -28,7 +28,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
     const axiosData = { data };
     // console.log(axiosData);
     try {
-      const result = await axiosInstance.get("/clubDetail/selectHost", {
+      const result = await axiosInstance.get("/club/host/check-info", {
         params: axiosData,
       });
       setHostCheck(result.data.data);
@@ -47,7 +47,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
   const selectNotice = async () => {
     const axiosData = { C_IDX: data.data };
     try {
-      const result = await axiosInstance.get("/clubDetail/selectNotice", {
+      const result = await axiosInstance.get("/club/notice/text", {
         params: axiosData,
       });
       setNoticeText(result.data);
@@ -92,7 +92,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
           C_TEXT: C_TEXT,
         };
         // console.log(axiosData);
-        const result = await axiosInstance.get("/clubDetail/updateNotice", {
+        const result = await axiosInstance.get("/club/notice/host/text", {
           params: axiosData,
         });
         showModal();

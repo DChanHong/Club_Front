@@ -14,7 +14,7 @@ const ClubDetailSideBar = () => {
   const getHostInfo = async () => {
     const axiosData = { C_IDX };
     try {
-      const result = await axiosInstance.get("/clubDetail/getHostInfo", {
+      const result = await axiosInstance.get("/club/host/information", {
         params: axiosData,
       });
 

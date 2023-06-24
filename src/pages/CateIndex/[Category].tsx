@@ -14,9 +14,12 @@ const CategoryIndex = () => {
   const selectCategoryClub = async () => {
     try {
       const axiosData = { data: Category };
-      const result = await axiosInstance.get("/homeAdd/getAllCateClub", {
-        params: axiosData,
-      });
+      const result = await axiosInstance.get(
+        "/search-page/user/Category/club",
+        {
+          params: axiosData,
+        }
+      );
 
       setCateClub(result.data);
       // console.log(cateClub);

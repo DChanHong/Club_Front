@@ -19,7 +19,7 @@ const Profile = () => {
   const [userinfo, setUserInfo] = useState<userInfo | null>(null);
   const [imageUpdateState, setImageUpdateState] = useState(false);
   const getUserInfo = async () => {
-    const userInfo = await axiosInstance.get("/customer/getuserInfo");
+    const userInfo = await axiosInstance.get("/mypage/user/information");
     setUserInfo(userInfo.data[0]);
   };
 
@@ -57,7 +57,7 @@ const Profile = () => {
   //회원 탈퇴하기
   const withdrawalUser = async () => {
     try {
-      const result = await axiosInstance.get("/mypage/withdrawalUser");
+      const result = await axiosInstance.get("/mypage/user/withdrawal");
       router.push({
         pathname: `/`,
       });

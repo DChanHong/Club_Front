@@ -13,9 +13,12 @@ const ClubContext = () => {
   const getClubDetailUserList = async () => {
     const axiosData = { data: C_IDX };
 
-    const result = await axiosInstance.get("/clubDetail/getClubDetailInfo", {
-      params: axiosData,
-    });
+    const result = await axiosInstance.get(
+      "/club/information/title/image/etc",
+      {
+        params: axiosData,
+      }
+    );
     setClubDetail(result.data);
   };
   useEffect(() => {

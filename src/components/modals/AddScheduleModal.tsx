@@ -52,10 +52,7 @@ const AddScheduleModal = (data: any) => {
       S_DATE: selectedDate,
     };
     // console.log(axiosData);
-    const result = axiosInstance.post(
-      "/clubDetail/makeClubSchedule",
-      axiosData
-    );
+    const result = axiosInstance.post("/club/i-schedule", axiosData);
     alert("일정이 생성되었습니다.");
     dispatch(CLOSE_SCHEDULE_MODAL(false));
   };
