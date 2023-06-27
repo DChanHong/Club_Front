@@ -10,6 +10,7 @@ const SearchList = () => {
   const selectSearchClub = async () => {
     const { searchData } = router.query;
     const axiosData = { data: searchData };
+
     const result = await axiosInstance.get(
       "/search-page/user/club/search-word",
       {
@@ -17,6 +18,10 @@ const SearchList = () => {
       }
     );
     setSearchData(result.data);
+  };
+
+  const clubRouterButton = (data: string) => {
+    router.push({ pathname: `/clubDetailPage/${data}` });
   };
 
   useEffect(() => {
@@ -58,7 +63,11 @@ const SearchList = () => {
                 </p>
               </div>
               <div>
-                <button className="  mb-2 " type="button">
+                <button
+                  className="  mb-2 "
+                  type="button"
+                  onClick={() => clubRouterButton(String(item.C_IDX))}
+                >
                   <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                     입장하기
                   </p>
