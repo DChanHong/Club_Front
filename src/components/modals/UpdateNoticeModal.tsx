@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { temporaryContextInfo } from "@/Types";
+import { useCallback } from "react";
 
 const UpdateNoticeModal = (data: { data: Number }) => {
   const customStyles = {
@@ -65,7 +66,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
   const [tempUpdateText, setTempUpdateText] = useState("");
   const updateTextref = useRef<HTMLTextAreaElement>(null);
 
-  // Enter 클릭시마다 \n 추가시킴
+  // Enter 클릭시마다 \n 추가시킴 Eneter 한번만 적용되고 있음 개선 필요
   const handleEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -75,17 +76,57 @@ const UpdateNoticeModal = (data: { data: Number }) => {
     }
   };
 
+  // gpt 답변 내용
+  // 문제는 setTempUpdateText 함수를 사용해 상태를 업데이트할 때 발생합니다.
+  //  React 상태 업데이트는 비동기적으로 이루어지기 때문에 상태를 업데이트하고
+  //  바로 읽어오려면 이전 값이 반환될 수 있습니다.
+  //  setTempUpdateText를 사용하기 보다는 updateTextref.current?.value를 여러 번 참조하는 대신
+  //   이 값을 로컬 변수에 저장한 후 사용하면 이 문제를 해결할 수 있습니다.
+
   // 제출 버튼
+  // const handleUpdateSubmit = async () => {
+  //   console.log("클릭 확인");
+  //   if (updateTextref.current?.value === "") {
+  //     alert("내용을 다시 확인해주세요");
+  //   } else {
+  //     try {
+  //       if (updateTextref.current?.value) {
+  //         setTempUpdateText(updateTextref.current?.value);
+  //       }
+
+  //       const C_TEXT = tempUpdateText?.replaceAll(/\n/g, "Enter");
+  //       // console.log(C_TEXT);
+  //       if (C_TEXT) {
+  //         const axiosData = {
+  //           C_IDX: data.data,
+  //           C_TEXT: C_TEXT,
+  //         };
+  //         // console.log(axiosData);
+  //         // 공지사항 수정
+  //         const result = await axiosInstance.put("/club/notice/host/text", {
+  //           params: axiosData,
+  //         });
+
+  //         showModal();
+  //         setNoticeText([]);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
+
   const handleUpdateSubmit = async () => {
-    if (updateTextref.current?.value === "") {
+    const inputValue = updateTextref.current?.value;
+    if (inputValue === "") {
       alert("내용을 다시 확인해주세요");
     } else {
       try {
-        if (updateTextref.current?.value) {
+        if (inputValue) {
           setTempUpdateText(updateTextref.current?.value);
         }
 
-        const C_TEXT = tempUpdateText?.replaceAll(/\n/g, "Enter");
+        const C_TEXT = inputValue?.replaceAll(/\n/g, "Enter");
         // console.log(C_TEXT);
         if (C_TEXT) {
           const axiosData = {
@@ -150,7 +191,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
         </div>
       </div>
       {/*  모달 */}
-      <div>
+      <div className="my-4">
         <Modal
           style={customStyles}
           isOpen={modalIsOpen}

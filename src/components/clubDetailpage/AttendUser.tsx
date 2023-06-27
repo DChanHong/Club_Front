@@ -99,7 +99,7 @@ const AttendUser = () => {
       setJoin(false);
       alert("탈퇴가 완료되었습니다.");
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
   // 모달
@@ -248,7 +248,8 @@ const AttendUser = () => {
 
   // 1.로그인 유저 이름 가져오기
   const [userName, setUserName] = useState<string>("");
-  const [chatHistory, setChatHistory] = useState<chatInfo[]>([]); //소켓 통신을 위한 것
+  const [chatHistory, setChatHistory] = useState<chatInfo[]>([]); //소켓 통신용
+  const [chatHistory2, setChatHistory2] = useState<chatInfo[]>([]); // 소켓 나갈 떄 용
 
   const getUserName = async () => {
     try {
@@ -267,17 +268,20 @@ const AttendUser = () => {
 
   const SOCKET_SERVER_URL = "http://localhost:4000";
   useEffect(() => {
-    //웹소켓 socket.io 연결
+    // 웹소켓 socket.io 연결
     socketRef.current = io(SOCKET_SERVER_URL); // -> 이거 env로 고쳐봐야될듯
 
     //이벤트 리스너 등록 (채팅 리스너)
-    socketRef.current.on("chatting", (message) => {
+    socketRef.current.on("message", (message) => {
+      // console.log(message);
       setChatHistory((chatHistory) => [...chatHistory, message]);
     });
 
     //다른페이지 가면 소켓 해제
     return () => {
       if (socketRef.current) {
+        // console.log(chatHistory2);
+        // test();
         socketRef.current.disconnect();
       }
     };
@@ -288,19 +292,19 @@ const AttendUser = () => {
 
   const sendChat = () => {
     const value = chatRef?.current?.value;
-
+    const club_IDX = String(C_IDX);
     if (value && socketRef.current) {
-      const message = {
-        C_IDX: C_IDX,
+      const message: chatInfo = {
+        C_IDX: club_IDX,
         U_IDX: loginIdx,
         userName: userName,
         userChat: value,
         time: new Date().toLocaleString(), //현재 시각
       };
-      // console.log(message);
-      pushChatting(message);
 
-      // console.log(message);
+      pushChatting(message);
+      setChatHistory2((chatHistory) => [...chatHistory, message]);
+
       socketRef.current.emit("chatting", message);
     }
     if (chatRef.current) {
@@ -352,12 +356,26 @@ const AttendUser = () => {
   // 5. 댓글 MongoDB insert함수
   const pushChatting = async (message: any) => {
     try {
+      console.log(message);
       const result = await axiosInstance.post("/chat/insertchatting", message);
       // console.log("인설트 성공");
     } catch (error) {
       console.log(error);
     }
   };
+  // const test = async () => {
+  //   try {
+  //     if (chatHistory2) {
+  //       console.log(chatHistory2);
+  //       const result = await axiosInstance.post(
+  //         "/chat/post/context/chatting",
+  //         chatHistory2
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   //6. 모든 채팅내역 불러오기
 

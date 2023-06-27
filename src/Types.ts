@@ -177,7 +177,7 @@ export interface temporaryContextInfo2 {
 
 //채팅 인터페이스
 export interface chatInfo {
-  C_IDX: number | string | undefined;
+  C_IDX: string | number | undefined;
   U_IDX: number | undefined;
   userName: string | undefined;
   userChat: string | undefined;
