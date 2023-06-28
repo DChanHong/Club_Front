@@ -84,49 +84,15 @@ const UpdateNoticeModal = (data: { data: Number }) => {
   //   이 값을 로컬 변수에 저장한 후 사용하면 이 문제를 해결할 수 있습니다.
 
   // 제출 버튼
-  // const handleUpdateSubmit = async () => {
-  //   console.log("클릭 확인");
-  //   if (updateTextref.current?.value === "") {
-  //     alert("내용을 다시 확인해주세요");
-  //   } else {
-  //     try {
-  //       if (updateTextref.current?.value) {
-  //         setTempUpdateText(updateTextref.current?.value);
-  //       }
-
-  //       const C_TEXT = tempUpdateText?.replaceAll(/\n/g, "Enter");
-  //       // console.log(C_TEXT);
-  //       if (C_TEXT) {
-  //         const axiosData = {
-  //           C_IDX: data.data,
-  //           C_TEXT: C_TEXT,
-  //         };
-  //         // console.log(axiosData);
-  //         // 공지사항 수정
-  //         const result = await axiosInstance.put("/club/notice/host/text", {
-  //           params: axiosData,
-  //         });
-
-  //         showModal();
-  //         setNoticeText([]);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
   const handleUpdateSubmit = async () => {
-    const inputValue = updateTextref.current?.value;
-    if (inputValue === "") {
+    console.log(updateTextref.current?.value);
+    if (updateTextref.current?.value === "") {
       alert("내용을 다시 확인해주세요");
     } else {
       try {
-        if (inputValue) {
-          setTempUpdateText(updateTextref.current?.value);
-        }
+        setTempUpdateText(updateTextref.current?.value || "");
 
-        const C_TEXT = inputValue?.replaceAll(/\n/g, "Enter");
+        const C_TEXT = updateTextref.current?.value.replaceAll(/\n/g, "Enter");
         // console.log(C_TEXT);
         if (C_TEXT) {
           const axiosData = {
@@ -147,6 +113,38 @@ const UpdateNoticeModal = (data: { data: Number }) => {
       }
     }
   };
+
+  // const handleUpdateSubmit = async () => {
+  //   const inputValue = updateTextref.current?.value;
+  //   if (inputValue === "") {
+  //     alert("내용을 다시 확인해주세요");
+  //   } else {
+  //     try {
+  //       if (inputValue) {
+  //         setTempUpdateText(updateTextref.current?.value);
+  //       }
+
+  //       const C_TEXT = inputValue?.replaceAll(/\n/g, "Enter");
+  //       // console.log(C_TEXT);
+  //       if (C_TEXT) {
+  //         const axiosData = {
+  //           C_IDX: data.data,
+  //           C_TEXT: C_TEXT,
+  //         };
+  //         // console.log(axiosData);
+  //         // 공지사항 수정
+  //         const result = await axiosInstance.put("/club/notice/host/text", {
+  //           params: axiosData,
+  //         });
+
+  //         showModal();
+  //         setNoticeText([]);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   return (
     <>

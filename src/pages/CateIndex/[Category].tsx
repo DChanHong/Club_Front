@@ -4,13 +4,20 @@ import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
 import axiosInstance from "@/utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { cateClubInfo } from "@/Types";
-import Image from "next/image";
-import { BsFillHeartFill } from "react-icons/bs";
 
+import { BsFillHeartFill } from "react-icons/bs";
+import PageClubList from "@/components/CategoryPage/PageClubList";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
+import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { RxDoubleArrowRight } from "react-icons/rx";
+import { BiLastPage } from "react-icons/bi";
+import { BiFirstPage } from "react-icons/bi";
 const CategoryIndex = () => {
   const router = useRouter();
   const { Category } = router.query;
   const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
+
+  const [totalPage, setTotalPage] = useState<number>(0);
   const selectCategoryClub = async () => {
     try {
       const axiosData = { data: Category };
@@ -20,19 +27,67 @@ const CategoryIndex = () => {
           params: axiosData,
         }
       );
-
       setCateClub(result.data);
-      // console.log(cateClub);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const clubRouterButton = (data: any) => {
-    router.push({
-      pathname: `/clubDetailPage/${data}`,
-    });
+  const [selectedPage, setSelectedPage] = useState<number>(1);
+
+  const [naviList, setNaviList] = useState<number[]>([]);
+
+  const makePageNavi = (selectedPageNumber: number) => {
+    const newStartPage = Number.isInteger(selectedPageNumber / 3)
+      ? (selectedPageNumber / 3 - 1) * 3 + 1
+      : Math.floor(selectedPageNumber / 3) * 3 + 1;
+
+    const newEndPage =
+      totalPage - newStartPage === 0 ||
+      totalPage - newStartPage === 1 ||
+      totalPage - newStartPage === 2
+        ? totalPage
+        : newStartPage + 2;
+
+    // console.log(newEndPage);
+    makeNaviList(newStartPage, newEndPage);
   };
+
+  const makeNaviList = (newStartPage: number, newEndPage: number) => {
+    const newNaviList: number[] = [];
+    for (let i = newStartPage; i <= newEndPage; i++) {
+      newNaviList.push(i);
+    }
+    setNaviList(newNaviList);
+  };
+
+  const moveRightPage = () => {
+    if (selectedPage < totalPage) {
+      setSelectedPage(selectedPage + 1);
+    }
+  };
+
+  const moveLeftpage = () => {
+    if (selectedPage != 1) {
+      setSelectedPage(selectedPage - 1);
+    }
+  };
+
+  const moveFirstPage = () => {
+    setSelectedPage(1);
+  };
+
+  const moveLastPage = () => {
+    setSelectedPage(totalPage);
+  };
+
+  useEffect(() => {
+    setTotalPage(Math.ceil(cateClub.length / 6));
+  }, [cateClub]);
+
+  useEffect(() => {
+    makePageNavi(selectedPage);
+  }, [totalPage, selectedPage]);
 
   useEffect(() => {
     selectCategoryClub();
@@ -54,55 +109,43 @@ const CategoryIndex = () => {
             </div>
           </div>
           <div>
-            <div className="flex flex-wrap ml-6">
-              {cateClub?.map((item) => (
+            <PageClubList
+              pageNumber={selectedPage}
+              Category={String(Category)}
+            />
+          </div>
+          <div>
+            <div className="flex justify-center mr-40 my-10">
+              <button onClick={moveFirstPage}>
+                <BiFirstPage size={30} color="#8F92B3" />
+              </button>
+              <button onClick={moveLeftpage}>
+                <MdOutlineArrowBackIosNew color="#8F92B3" size={20} />
+              </button>
+              {naviList.map((item, index) => (
                 <div
-                  key={item.C_IDX}
-                  className="
-                flex flex-start 
-                border-4  rounded-3xl mr-4
-                border-slate-200 my-2 w-[26rem]"
+                  key={index}
+                  onClick={() => setSelectedPage(item)}
+                  className={`mx-2 px-2 py-1 hover:bg-[#5CE8D7] rounded-full ${
+                    item === selectedPage ? "bg-[#5CE8D7]" : ""
+                  }`}
                 >
-                  <div className="m-3 w-[8rem]">
-                    <Image
-                      className="w-[7rem] h-[6rem] border-2 rounded-xl"
-                      src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
-                      alt={`${item?.U_IDX}`}
-                      width={100}
-                      height={100}
-                      unoptimized={true}
-                    />
-                  </div>
-                  <div>
-                    <div className="mt-3 ">
-                      <p className="text-[17px]">{item.C_NAME}</p>
-                    </div>
-                    <div>
-                      <p className="text-[#946CEE] underline mb-1">
-                        #{item.C_CATEGORY} #{item.C_CATE_DETAIL} #{item.C_AREA}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-slate-500 text-[12px] mb-1">
-                        {item.C_INTRO}
-                      </p>
-                    </div>
-                    <div>
-                      <button
-                        className="  mb-2 "
-                        type="button"
-                        onClick={() => clubRouterButton(item?.C_IDX)}
-                      >
-                        <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
-                          입장하기
-                        </p>
-                      </button>
-                    </div>
-                  </div>
+                  <button type="button" className=" w-full h-full ">
+                    {item}
+                  </button>
                 </div>
               ))}
+
+              <button onClick={moveRightPage}>
+                <MdOutlineArrowForwardIos color="#8F92B3" size={20} />
+              </button>
+              <button onClick={moveLastPage}>
+                <BiLastPage color="#8F92B3" size={30} />
+              </button>
             </div>
           </div>
+
+          {/* 여기에 페이지 네비게이션 */}
         </div>
       </div>
     </>
