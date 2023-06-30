@@ -21,6 +21,7 @@ const CategoryIndex = () => {
   const selectCategoryClub = async () => {
     try {
       const axiosData = { data: Category };
+
       const result = await axiosInstance.get(
         "/search-page/user/Category/club",
         {
@@ -54,11 +55,16 @@ const CategoryIndex = () => {
   };
 
   const makeNaviList = (newStartPage: number, newEndPage: number) => {
-    const newNaviList: number[] = [];
-    for (let i = newStartPage; i <= newEndPage; i++) {
-      newNaviList.push(i);
+    if (cateClub.length === 0) {
+      setNaviList([1]);
+      setTotalPage(1);
+    } else {
+      const newNaviList: number[] = [];
+      for (let i = newStartPage; i <= newEndPage; i++) {
+        newNaviList.push(i);
+      }
+      setNaviList(newNaviList);
     }
-    setNaviList(newNaviList);
   };
 
   const moveRightPage = () => {
@@ -144,8 +150,6 @@ const CategoryIndex = () => {
               </button>
             </div>
           </div>
-
-          {/* 여기에 페이지 네비게이션 */}
         </div>
       </div>
     </>

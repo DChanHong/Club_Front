@@ -27,6 +27,9 @@ const SearchList = () => {
   useEffect(() => {
     selectSearchClub();
   }, []);
+  useEffect(() => {
+    selectSearchClub();
+  }, [searchData]);
   return (
     <div>
       <div className="flex flex-wrap ml-6 ">

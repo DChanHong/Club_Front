@@ -585,9 +585,9 @@ const AttendUser = () => {
             </p>
           </div>
 
-          <div className=" h-full ">
+          <div>
             {join ? (
-              <div className="h-full ">
+              <div className="h-[40rem] overflow-auto ">
                 {sdata.map((item, index) => (
                   <div
                     key={index}

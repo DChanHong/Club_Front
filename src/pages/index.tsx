@@ -4,13 +4,12 @@ import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
 import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
 import MakeClubModal from "@/components/modals/MakeClubModal";
-
 export default function Home() {
   const data = ["스포츠", "문화생활", "스터디", "게임", "기타"];
 
   const [testData, setTest] = useState("");
   const test = async () => {
-    const result = await axiosInstance.get("http://52.78.175.137/test");
+    const result = await axiosInstance.get("/test");
     setTest(result.data);
   };
   // console.log(testData);
@@ -20,7 +19,7 @@ export default function Home() {
       <div className="flex flex-start ">
         <div className="w-1/6 ">
           <div>
-            <LeftSideBar />
+            <LeftSideBar data="홈" />
           </div>
         </div>
 
@@ -29,6 +28,7 @@ export default function Home() {
             <button type="button" onClick={test}>
               테스트 버튼2222
             </button>
+
             <div>{testData}</div>
           </div>
           <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">

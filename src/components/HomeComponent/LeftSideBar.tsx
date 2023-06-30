@@ -2,13 +2,17 @@ import { AiOutlineHome } from "react-icons/ai";
 import { MdSportsVolleyball } from "react-icons/md";
 import { TbBuildingCircus } from "react-icons/tb";
 import { BsBook } from "react-icons/bs";
+import { BiBookOpen } from "react-icons/bi";
+
 import { FaGamepad } from "react-icons/fa";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useRouter } from "next/router";
 
 const LeftSideBar = (data: any) => {
+  // console.log(data.data);
   const cateList = [
     // { id: 1, name: "홈", icon: <AiOutlineHome /> },
+
     { id: 1, name: "스포츠", icon: <MdSportsVolleyball /> },
     { id: 2, name: "문화생활", icon: <TbBuildingCircus /> },
     { id: 3, name: "스터디", icon: <BsBook /> },
@@ -16,9 +20,7 @@ const LeftSideBar = (data: any) => {
     { id: 5, name: "기타", icon: <IoMdAddCircleOutline /> },
   ];
 
-  // console.log(data);
   const router = useRouter();
-  // console.log(data.data);
 
   const moveCateIndex = (data: string) => {
     // console.log(data);
@@ -30,6 +32,12 @@ const LeftSideBar = (data: any) => {
   const goHome = () => {
     router.push({
       pathname: "/",
+    });
+  };
+
+  const goAllClubListPage = () => {
+    router.push({
+      pathname: "/AllClubList",
     });
   };
 
@@ -45,7 +53,7 @@ const LeftSideBar = (data: any) => {
           <button
             type="button"
             className={`hover:bg-[#EFF6FF] w-full h-full ${
-              data.data === undefined ? "bg-[#EFF6FF]" : ""
+              data.data === "홈" ? "bg-[#EFF6FF]" : ""
             } `}
             onClick={() => goHome()}
           >
@@ -54,6 +62,20 @@ const LeftSideBar = (data: any) => {
                 <AiOutlineHome />
               </p>
               <p className="pl-4">홈</p>
+            </div>
+          </button>
+          <button
+            type="button"
+            className={`hover:bg-[#EFF6FF] w-full h-full ${
+              data.data === "전체" ? "bg-[#EFF6FF]" : ""
+            } `}
+            onClick={() => goAllClubListPage()}
+          >
+            <div className="flex py-3.5">
+              <p className="pt-1 pl-12">
+                <BiBookOpen />
+              </p>
+              <p className="pl-4">전체</p>
             </div>
           </button>
         </div>
