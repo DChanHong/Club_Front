@@ -53,9 +53,7 @@ const CateClubList = ({ data }: { data: string }) => {
           </div>
           <div className="mt-2">
             <Skeleton count={1} width={200} className="mt-3" />
-
             <Skeleton count={1} width={200} />
-
             <Skeleton count={1} width={200} className="mt-2" />
             <Skeleton count={1} width={80} className="mt-2" />
           </div>

@@ -60,34 +60,6 @@ const TextBox = (S_IDX: any) => {
   useEffect(() => {}, [temporaryContext]);
 
   // 댓글 박스 useRef
-  /* 
-  이거는 document 사용한거
-
-  const inputAddRef = useRef<HTMLDivElement>(null);
-
-  const AddContextBox = () => {
-    const inputText = insertText.current?.value;
-
-    if (inputAddRef.current && inputText && userName !== "") {
-      // console.log(inputAddRef.current);
-      const newDiv = document.createElement("div");
-      newDiv.textContent = `${userName} : ${inputText}`;
-      newDiv.className = classNames(
-        "border-2",
-        "py-2",
-        "pl-3",
-        "my-1",
-        "text-[14px]",
-        "border-y-gray-100",
-        "border-x-white",
-        "border-t-white"
-      );
-      inputAddRef.current.appendChild(newDiv);
-    }
-  };
-  */
-
-  //댓글 박스 버전 2
 
   //로그인 유저 이름 가져오기
 
@@ -125,7 +97,7 @@ const TextBox = (S_IDX: any) => {
   const contextRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const addHidden = (id: string) => {
-    console.log(id);
+    // console.log(id);
     const contextElement = contextRef.current[id];
     if (contextElement) {
       contextElement.hidden = true;
@@ -133,10 +105,10 @@ const TextBox = (S_IDX: any) => {
   };
 
   //임시 댓글창 삭제 버튼
-  const deleteTemporaryContext = (data: any) => {
-    const axiosData = { CO_IDX: data };
+  const deleteTemporaryContext = (data: number) => {
     try {
-      const result = axiosInstance.delete("/delete/schedule/context", {
+      // console.log(data);
+      const result = axiosInstance.delete("/club/delete/schedule/context", {
         data: { CO_IDX: data },
       });
       temAddHidden(data);
@@ -148,7 +120,7 @@ const TextBox = (S_IDX: any) => {
   //임시 댓글 useRef
   const temContextref = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-  const temAddHidden = (id: string) => {
+  const temAddHidden = (id: number) => {
     const contextElement = contextRef.current[id];
     if (contextElement) {
       contextElement.hidden = true;

@@ -16,7 +16,7 @@ import { IoAddOutline } from "react-icons/io5";
 import { GrFormClose, GrSchedulePlay, GrUpdate } from "react-icons/gr";
 import ClubContext from "./ClubContext";
 import { ImExit } from "react-icons/im";
-import { hostInfo } from "@/Types";
+
 import { FaMicrophoneAlt } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 
@@ -27,10 +27,14 @@ import { MdSend } from "react-icons/md";
 import io, { Socket } from "socket.io-client";
 import { chatInfo } from "@/Types";
 import { getAllChatInfo } from "@/Types";
+import ClubDetailSideBarHostInfo from "./ClubDetailSideBarHostInfo";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const AttendUser = () => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
+  const [clubDetailLoading, setClubDetailLoading] = useState<boolean>(false);
   const { C_IDX } = router.query;
 
   // 가입 , 탈퇴
@@ -53,8 +57,8 @@ const AttendUser = () => {
     getClubDetailUserList();
   }, []);
   useEffect(() => {
-    getClubDetailUserList();
-  }, [join]);
+    setClubDetailLoading(true);
+  }, [clubDetail]);
 
   // 유저의 동아리 가입여부를 true false로 가져온다.
   const clubJoinUserCheck = async () => {
@@ -119,19 +123,12 @@ const AttendUser = () => {
   //일정 불러오기
   const [sdata, setSdata] = useState<scheduleInfo[]>([]);
   const [loginIdx, setloginIdx] = useState<number>(0);
+  const [sDataLoading, setSdataLoading] = useState<boolean>(false);
 
+  //로인한 아이디 들고오기 + 입장한 유저 ID 들고오기
   const callClubSchedule = async () => {
     const axiosData = { C_IDX: C_IDX };
-    try {
-      const result = await axiosInstance.get("/club/schedule/information", {
-        params: axiosData,
-      });
-      setSdata(result.data);
-    } catch (error) {
-      console.log(error);
-    }
 
-    //로인한 아이디 들고오기
     try {
       const result2 = await axiosInstance.get("/club/u-idx");
       const result = await axiosInstance.get("/club/schedule/information", {
@@ -145,6 +142,13 @@ const AttendUser = () => {
 
     // console.log(sdata);
   };
+  useEffect(() => {
+    callClubSchedule();
+  }, []);
+
+  useEffect(() => {
+    setSdataLoading(true);
+  }, [sdata]);
 
   // 모임 일정 지우는 버튼 유무
 
@@ -187,27 +191,6 @@ const AttendUser = () => {
       scheduleElement.hidden = true;
     }
   };
-
-  // 사이드바 여기에 추가
-  const [hostInfodata, setHostInfoData] = useState<hostInfo[]>([]);
-
-  const getHostInfo = async () => {
-    const axiosData = { C_IDX };
-    try {
-      const result = await axiosInstance.get("/club/host/information", {
-        params: axiosData,
-      });
-
-      setHostInfoData(result.data);
-      // console.log(hostInfodata);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getHostInfo();
-  }, []);
 
   // 왼쪽 바 Notice 버튼 클릭
   const [pageNumber, setPageNumber] = useState(0);
@@ -363,19 +346,6 @@ const AttendUser = () => {
       console.log(error);
     }
   };
-  // const test = async () => {
-  //   try {
-  //     if (chatHistory2) {
-  //       console.log(chatHistory2);
-  //       const result = await axiosInstance.post(
-  //         "/chat/post/context/chatting",
-  //         chatHistory2
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   //6. 모든 채팅내역 불러오기
 
@@ -401,24 +371,7 @@ const AttendUser = () => {
     <div className="flex justify-center md:flex">
       {/* 왼쪽 바 시작 부분 */}
       <div className="hidden md:block border-2 w-2/12 drop-shadow-lg">
-        {hostInfodata.map((item) => (
-          <div key={item.U_IDX} className="ml-3 mt-4">
-            <div className="rounded-full p-1 w-[80px]  border-2">
-              <Image
-                className="rounded-full w-full h-full"
-                src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
-                alt={`${item.U_IDX}`}
-                width="50"
-                height="50"
-                unoptimized={true}
-              />
-            </div>
-            <div className=" ml-4 mt-2 text-slate-400 text-[13px] ">host</div>
-            <div className=" ml-4 font-bold text-[16px] text-[#82888F]">
-              {item.U_NAME}
-            </div>
-          </div>
-        ))}
+        <ClubDetailSideBarHostInfo />
         <div className="my-10 flex flex-col ">
           <div>
             <button
@@ -466,26 +419,7 @@ const AttendUser = () => {
         </button>
         {burgerMenuState ? (
           <div className="absolute z-100 w-[10rem] border-2 bg-white shadow-xl rounded-xl">
-            {hostInfodata.map((item) => (
-              <div key={item.U_IDX} className="ml-3 mt-4">
-                <div className="rounded-full p-1 w-[80px]  border-2">
-                  <Image
-                    className="rounded-full w-full h-full"
-                    src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
-                    alt={`${item.U_IDX}`}
-                    width="50"
-                    height="50"
-                    unoptimized={true}
-                  />
-                </div>
-                <div className=" ml-4 mt-2 text-slate-400 text-[13px] ">
-                  host
-                </div>
-                <div className=" ml-4 font-bold text-[16px] text-[#82888F]">
-                  {item.U_NAME}
-                </div>
-              </div>
-            ))}
+            <ClubDetailSideBarHostInfo />
             <div className="my-4 flex flex-col ">
               <div>
                 <button
@@ -540,16 +474,13 @@ const AttendUser = () => {
             <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Meeting</p>
             {/*  */}
             {join ? (
-              <div className="flex">
-                <div>
-                  <button
-                    className="bg-[#E00050] border-2 p-1 shadow-lg rounded-full text-white mt-1 mx-1"
-                    onClick={showModal}
-                  >
-                    <IoAddOutline />
-                  </button>
-                </div>
-                <p className="text-[14px] text-[#BDC3CC] pr-1 pt-2">sort ▼</p>
+              <div>
+                <button
+                  className="bg-[#E00050] border-2 p-1 shadow-lg rounded-full text-white mt-1 mx-1"
+                  onClick={showModal}
+                >
+                  <IoAddOutline />
+                </button>
               </div>
             ) : (
               <div></div>
@@ -586,98 +517,128 @@ const AttendUser = () => {
           </div>
 
           <div>
-            {join ? (
-              <div className="h-[40rem] overflow-auto ">
-                {sdata.map((item, index) => (
+            {!sDataLoading ? (
+              <div className="h-[40rem] overflow-auto">
+                {Array.from({ length: 3 }).map((_, index) => (
                   <div
                     key={index}
-                    ref={(ref) =>
-                      (scheduleRef.current[String(item.S_IDX)] = ref)
-                    }
                     className="border-2 m-3 mx-5 p-5 bg-white shadow-lg "
                   >
-                    <div className="flex justify-between">
-                      <p></p>
-                      <p className="text-center font-bold">{item.S_HEAD}</p>
-                      <p>
-                        {item.U_IDX === loginIdx ? (
-                          <button
-                            type="button"
-                            onClick={() => deleteSchedule(item.S_IDX)}
-                          >
-                            <GrFormClose />
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                      </p>
+                    <div className="flex justify-center">
+                      <Skeleton width={100} />
                     </div>
-                    <div className="flex">
-                      <div className="rounded-full p-1 w-[50px]  border-2">
-                        <Image
-                          className="rounded-full w-full h-full"
-                          src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
-                          alt={`${item.U_IDX}`}
-                          width="50"
-                          height="50"
-                          unoptimized={true}
-                        />
-                      </div>
-                      <div className="mx-4 mt-2 text-[16px] flex flex-col ">
-                        <p>{item.U_NAME}</p>
-                        <p className="text-[13px] text-[#D2D5D9]">
-                          Date : {`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
-                        </p>
+                    <div className="flex mt-4">
+                      <Skeleton width={45} height={45} circle={true} />
+                      <div className="ml-4">
+                        <Skeleton width={40} />
+                        <Skeleton width={120} />
                       </div>
                     </div>
-                    <p className=" my-4">{item.S_SUBH}</p>
-                    <p className="flex">
-                      <button className="text-gray-400 text-[13px]">
-                        <div className="flex">
-                          <AiFillLike
-                            className="mr-1"
-                            color="#946CEE"
-                            size={16}
-                          />
-                          <div className="text-[#946CEE] font-bold mr-12">
-                            좋아요
-                          </div>
-                        </div>
-                      </button>
-                      <button className="text-[13px]">
-                        <div className="flex">
-                          <AiOutlineComment
-                            className="ml-2 mt-0.4 mr-1"
-                            color="#946CEE"
-                            size={16}
-                          />
-                          <div
-                            className="text-[#946CEE] font-bold "
-                            onClick={() =>
-                              handleCommentClick(String(item.S_IDX))
-                            }
-                          >
-                            댓글
-                          </div>
-                        </div>
-                      </button>
-                    </p>
-                    <div
-                      ref={(ref) =>
-                        (commetRef.current[String(item.S_IDX)] = ref)
-                      }
-                      className={`mt-4 overflow-y-auto transition-max-height 
-                    duration-300 ease-in-out max-h-0
-
-                    `}
-                    >
-                      <TextBox S_IDX={item.S_IDX} />
+                    <Skeleton width={400} className="mt-4" />
+                    <div className="flex mt-2 mb-4">
+                      <Skeleton width={80} className="mr-10" />
+                      <Skeleton width={80} />
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div></div>
+              <>
+                {join ? (
+                  <div className="h-[40rem] overflow-auto ">
+                    {sdata.map((item, index) => (
+                      <div
+                        key={index}
+                        ref={(ref) =>
+                          (scheduleRef.current[String(item.S_IDX)] = ref)
+                        }
+                        className="border-2 m-3 mx-5 p-5 bg-white shadow-lg "
+                      >
+                        <div className="flex justify-between">
+                          <p></p>
+                          <p className="text-center font-bold">{item.S_HEAD}</p>
+                          <p>
+                            {item.U_IDX === loginIdx ? (
+                              <button
+                                type="button"
+                                onClick={() => deleteSchedule(item.S_IDX)}
+                              >
+                                <GrFormClose />
+                              </button>
+                            ) : (
+                              ""
+                            )}
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <div className="rounded-full p-1 w-[50px]  border-2">
+                            <Image
+                              className="rounded-full w-full h-full"
+                              src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                              alt={`${item.U_IDX}`}
+                              width="50"
+                              height="50"
+                              unoptimized={true}
+                            />
+                          </div>
+                          <div className="mx-4 mt-2 text-[16px] flex flex-col ">
+                            <p>{item.U_NAME}</p>
+                            <p className="text-[13px] text-[#D2D5D9]">
+                              Date :{" "}
+                              {`${moment(item.S_DATE).format("YYYY-MM-DD")}`}
+                            </p>
+                          </div>
+                        </div>
+                        <p className=" my-4">{item.S_SUBH}</p>
+                        <p className="flex">
+                          <button className="text-gray-400 text-[13px]">
+                            <div className="flex">
+                              <AiFillLike
+                                className="mr-1"
+                                color="#946CEE"
+                                size={16}
+                              />
+                              <div className="text-[#946CEE] font-bold mr-12">
+                                좋아요
+                              </div>
+                            </div>
+                          </button>
+                          <button className="text-[13px]">
+                            <div className="flex">
+                              <AiOutlineComment
+                                className="ml-2 mt-0.4 mr-1"
+                                color="#946CEE"
+                                size={16}
+                              />
+                              <div
+                                className="text-[#946CEE] font-bold "
+                                onClick={() =>
+                                  handleCommentClick(String(item.S_IDX))
+                                }
+                              >
+                                댓글
+                              </div>
+                            </div>
+                          </button>
+                        </p>
+                        <div
+                          ref={(ref) =>
+                            (commetRef.current[String(item.S_IDX)] = ref)
+                          }
+                          className={`mt-4 overflow-y-auto transition-max-height 
+                    duration-300 ease-in-out max-h-0
+
+                    `}
+                        >
+                          <TextBox S_IDX={item.S_IDX} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -869,23 +830,36 @@ const AttendUser = () => {
             border-x-white border-b-white overflow-auto
           "
         >
-          {clubDetail?.map((item, index) => (
-            <div key={index} className="flex pl-4 my-2">
-              <div className="rounded-full p-1 w-[40px] h-[40px] border-2">
-                <Image
-                  className="rounded-full"
-                  src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
-                  alt={`${item.U_IDX}`}
-                  width="50"
-                  height="50"
-                  unoptimized={true}
-                />
-              </div>
-              <div className=" ml-4 mt-2 text-[16px] text-center">
-                {item.U_NAME}
-              </div>
-            </div>
-          ))}
+          {!clubDetailLoading ? (
+            <>
+              {Array.from({ length: 8 }).map((_, index) => (
+                <div className="flex ml-4 my-2" key={index}>
+                  <Skeleton width={35} height={35} circle={true} />
+                  <Skeleton width={60} height={18} className="mt-3 ml-4" />
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {clubDetail?.map((item, index) => (
+                <div key={index} className="flex pl-4 my-2">
+                  <div className="rounded-full p-1 w-[40px] h-[40px] border-2">
+                    <Image
+                      className="rounded-full"
+                      src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                      alt={`${item.U_IDX}`}
+                      width="50"
+                      height="50"
+                      unoptimized={true}
+                    />
+                  </div>
+                  <div className=" ml-4 mt-2 text-[16px] text-center">
+                    {item.U_NAME}
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
 
