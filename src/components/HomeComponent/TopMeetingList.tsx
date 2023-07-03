@@ -8,6 +8,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 import SliderModal from "@/components/modals/SliderModal";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import { BsFillHeartFill } from "react-icons/bs";
 import { RootState } from "@/store/store";
@@ -28,10 +30,10 @@ const TopMeetingList = () => {
   };
   useEffect(() => {
     getTopClubList();
-    if (imgList.length > 0) {
-      setLoading(true);
-    }
   }, []);
+  useEffect(() => {
+    setLoading(true);
+  }, [imgList]);
 
   // 슬라이더
   const sliderRef = useRef<Slider>(null);
@@ -96,11 +98,48 @@ const TopMeetingList = () => {
           </p>
           <p className="ml-4">인기 동아리 리스트</p>
         </div>
-        <div className="flex justify-start w-auto mx-auto ">
+        {!loading ? (
+          <>
+            <div className="flex">
+              <Skeleton height={200} width={250} className="mx-4" />
+              <Skeleton height={200} width={250} className="mx-4" />
+              <Skeleton height={200} width={250} className="mx-4" />
+              <Skeleton height={200} width={250} className="mx-4" />
+              <Skeleton height={200} width={250} className="mx-4" />
+              <Skeleton height={200} width={250} className="mx-4" />
+            </div>
+          </>
+        ) : (
+          <div className="flex justify-start w-auto mx-auto ">
+            <button onClick={handlePrevClick} className="mr-6">
+              <AiFillCaretLeft />
+            </button>
+            <Slider className=" w-[1028px] mt-4" ref={sliderRef} {...settings}>
+              {imgList?.map((item) => (
+                <div key={item.U_IDX}>
+                  <div className="w-full h-full">
+                    <Image
+                      onClick={() => showModal(item.C_IDX)}
+                      className="w-[14rem] h-[12rem] border-4 rounded-2xl cursor-pointer"
+                      src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                      alt={`${item?.U_IDX}`}
+                      width={50}
+                      height={100}
+                      unoptimized={true}
+                    />
+                  </div>
+                </div>
+              ))}
+            </Slider>
+            <button onClick={handleNextClick}>
+              <AiFillCaretRight />
+            </button>
+          </div>
+        )}
+        {/* <div className="flex justify-start w-auto mx-auto ">
           <button onClick={handlePrevClick} className="mr-6">
             <AiFillCaretLeft />
           </button>
-
           <Slider className=" w-[1028px] mt-4" ref={sliderRef} {...settings}>
             {imgList?.map((item) => (
               <div key={item.U_IDX}>
@@ -121,7 +160,7 @@ const TopMeetingList = () => {
           <button onClick={handleNextClick}>
             <AiFillCaretRight />
           </button>
-        </div>
+        </div> */}
       </div>
 
       {showComponent && modalIndex > 0 && <SliderModal data={modalIndex} />}

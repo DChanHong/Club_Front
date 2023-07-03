@@ -14,16 +14,24 @@ import { FaBirthdayCake } from "react-icons/fa";
 import { BiMaleFemale } from "react-icons/bi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 const Profile = () => {
   const router = useRouter();
   const [userinfo, setUserInfo] = useState<userInfo | null>(null);
   const [imageUpdateState, setImageUpdateState] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
   const getUserInfo = async () => {
     const userInfo = await axiosInstance.get("/mypage/user/information");
     setUserInfo(userInfo.data[0]);
     // console.log(userInfo);
   };
-  const dispatch = useAppDispatch();
+  useEffect(() => {
+    setIsLoading(true);
+  }, [userinfo]);
+
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -85,78 +93,99 @@ const Profile = () => {
       <div className="flex  w-7/12 ">
         {/* 내 프로필 부분 */}
         {/* 960px 이상일 경우 */}
-        <div className="hidden md:block rounded-lg bg-[#131827] w-3/12">
-          <div className="text-[#fb7185] text-center p-5 text-[24px]">
-            My Profile
-          </div>
-          <div className="mx-6">
-            <Image
-              className="border-4 border-current border-indigo-200 rounded-full"
-              src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
-              alt={`${userinfo?.U_EMAIL}`}
-              width={400}
-              height={400}
-              unoptimized={true}
-            />
-          </div>
-          <div>
-            {imageUpdateState ? (
-              <div className="absolute border-2 rounded-xl mt-14 ml-4 p-2 flex bg-white">
-                <form onSubmit={handleSubmit}>
-                  <div className="flex flex-col">
-                    <input
-                      className=""
-                      type="file"
-                      onChange={handleFileChange}
-                    />
-                    <button
-                      className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
-                      type="submit"
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </form>
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
-          <div className="flex flex-row-reverse mt-2">
-            <button className="flex" onClick={handleUpdateBox}>
-              <p className="mt-2 text-[#62656B]">Update</p>
-              <CiImageOn className="mr-2" color="#62656B" size={40} />
-            </button>
-          </div>
-
-          <div className="mt-2 flex flex-col">
-            <div className="flex ml-6 my-3 text-[#AFB2B5] ">
-              <BiUser size={24} />
-              <p className="ml-2">{userinfo?.U_NAME}</p>
+        {!isLoading ? (
+          <div className="hidden md:block rounded-lg bg-[#131827] w-3/12">
+            <div className="text-[#fb7185] text-center p-5 text-[24px]">
+              My Profile
             </div>
-            <div className="flex ml-6 my-3 text-[#AFB2B5] ">
-              <AiOutlineMail size={22} />
-              <p className="ml-2">{userinfo?.U_EMAIL}</p>
+            <div className="flex justify-center">
+              <Skeleton width={125} height={120} circle={true} className="" />
             </div>
-            <div className="flex ml-6 my-3 text-[#AFB2B5] ">
-              <FaBirthdayCake size={18} />
-              <p className="ml-2">{`${moment(userinfo?.U_BIRTH).format(
-                "YYYY-MM-DD"
-              )}`}</p>
+            <div className="flex flex-row-reverse my-2 mx-2">
+              <Skeleton width={60} />
             </div>
-            <div className="flex ml-6 my-3 text-[#AFB2B5] ">
-              <BiMaleFemale size={20} />
-              <p className="ml-2">{userinfo?.U_GENDER}</p>
+            <div className="flex justify-center mt-4">
+              <Skeleton width={140} height={25} count={4} className="my-2" />
+            </div>
+            <div className="flex flex-row-reverse my-2 mx-2">
+              <Skeleton width={60} />
             </div>
           </div>
-          <div className="text-[#3E4249] flex flex-row-reverse">
-            <div className="mr-4 mb-2">
-              <button type="button" onClick={withdrawalUser}>
-                탈퇴하기
+        ) : (
+          <div className="hidden md:block rounded-lg bg-[#131827] w-3/12">
+            <div className="text-[#fb7185] text-center p-5 text-[24px]">
+              My Profile
+            </div>
+            <div className="mx-6">
+              <Image
+                className="border-4 border-current border-indigo-200 rounded-full"
+                src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
+                alt={`${userinfo?.U_EMAIL}`}
+                width={400}
+                height={400}
+                unoptimized={true}
+              />
+            </div>
+            <div>
+              {imageUpdateState ? (
+                <div className="absolute border-2 rounded-xl mt-14 ml-4 p-2 flex bg-white">
+                  <form onSubmit={handleSubmit}>
+                    <div className="flex flex-col">
+                      <input
+                        className=""
+                        type="file"
+                        onChange={handleFileChange}
+                      />
+                      <button
+                        className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
+                        type="submit"
+                      >
+                        Upload
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="flex flex-row-reverse mt-2">
+              <button className="flex" onClick={handleUpdateBox}>
+                <p className="mt-2 text-[#62656B]">Update</p>
+                <CiImageOn className="mr-2" color="#62656B" size={40} />
               </button>
             </div>
+
+            <div className="mt-2 flex flex-col">
+              <div className="flex ml-6 my-3 text-[#AFB2B5] ">
+                <BiUser size={24} />
+                <p className="ml-2">{userinfo?.U_NAME}</p>
+              </div>
+              <div className="flex ml-6 my-3 text-[#AFB2B5] ">
+                <AiOutlineMail size={22} />
+                <p className="ml-2">{userinfo?.U_EMAIL}</p>
+              </div>
+              <div className="flex ml-6 my-3 text-[#AFB2B5] ">
+                <FaBirthdayCake size={18} />
+                <p className="ml-2">{`${moment(userinfo?.U_BIRTH).format(
+                  "YYYY-MM-DD"
+                )}`}</p>
+              </div>
+              <div className="flex ml-6 my-3 text-[#AFB2B5] ">
+                <BiMaleFemale size={20} />
+                <p className="ml-2">{userinfo?.U_GENDER}</p>
+              </div>
+            </div>
+            <div className="text-[#3E4249] flex flex-row-reverse">
+              <div className="mr-4 mb-2">
+                <button type="button" onClick={withdrawalUser}>
+                  탈퇴하기
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+
         {/* 960px 이하일 경우 */}
         <div className="block md:hidden">
           <button type="button" className="mr-2" onClick={handldeSideState}>
