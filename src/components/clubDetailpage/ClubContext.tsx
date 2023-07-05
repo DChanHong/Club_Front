@@ -6,11 +6,25 @@ import { useEffect, useState } from "react";
 import { clubDetailInfo } from "@/Types";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
+
+import { userClubHistoryList } from "@/Types";
+import { ADD_CLUB_ENTRANCE } from "@/store/slice/EntranceHistorySlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
+
 const ClubContext = () => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { C_IDX } = router.query;
+
+  //
+  const [entranceHistory, setEntranceHistory] = useState<userClubHistoryList[]>(
+    []
+  );
+
+  // 일단 여기서 써볼려고 들오곰
+  const dispatch = useAppDispatch();
 
   const getClubDetailUserList = async () => {
     const axiosData = { data: C_IDX };
@@ -22,6 +36,7 @@ const ClubContext = () => {
       }
     );
     setClubDetail(result.data);
+    setEntranceHistory(result.data);
   };
   useEffect(() => {
     getClubDetailUserList();
@@ -29,6 +44,9 @@ const ClubContext = () => {
   useEffect(() => {
     setLoading(true);
   }, [clubDetail]);
+  useEffect(() => {
+    dispatch(ADD_CLUB_ENTRANCE(entranceHistory));
+  }, [entranceHistory]);
 
   return (
     <>

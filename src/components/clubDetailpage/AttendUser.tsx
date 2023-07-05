@@ -33,6 +33,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const AttendUser = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
   const [clubDetailLoading, setClubDetailLoading] = useState<boolean>(false);
   const { C_IDX } = router.query;
@@ -108,7 +109,7 @@ const AttendUser = () => {
   };
   // 모달
   const [showComponent, setShowComponent] = useState(false);
-  const dispatch = useAppDispatch();
+
   const showMoalState = useAppSelector(
     (state: RootState) => state.isScheduleModal.isScheduleModal
   );

@@ -4,6 +4,7 @@ import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
 import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
 import MakeClubModal from "@/components/modals/MakeClubModal";
+import EntranceHistory from "@/components/HomeComponent/EntranceHistory";
 export default function Home() {
   const data = ["스포츠", "문화생활", "스터디", "게임", "기타"];
 
@@ -12,7 +13,6 @@ export default function Home() {
     const result = await axiosInstance.get("/test");
     setTest(result.data);
   };
-  // console.log(testData);
 
   return (
     <>
@@ -20,6 +20,9 @@ export default function Home() {
         <div className="w-1/6 ">
           <div>
             <LeftSideBar data="홈" />
+          </div>
+          <div>
+            <EntranceHistory />
           </div>
         </div>
 

@@ -193,3 +193,13 @@ export interface getAllChatInfo {
   userName: string | undefined;
   _id: string | undefined;
 }
+
+// 홈 화면 카테고리별 동아리 인터페이스
+export interface userClubHistoryList {
+  C_IDX: number | undefined;
+  C_CATEGORY: string | undefined;
+  C_CATE_DETAIL: string | undefined;
+  C_NAME: string | undefined;
+  C_AREA: string | undefined;
+  C_IMAGE: string | undefined;
+}
