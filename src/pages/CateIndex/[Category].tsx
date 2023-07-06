@@ -97,6 +97,7 @@ const CategoryIndex = () => {
 
   useEffect(() => {
     selectCategoryClub();
+    setSelectedPage(1);
   }, [Category]);
 
   return (

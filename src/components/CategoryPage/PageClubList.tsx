@@ -23,7 +23,7 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
         { params: axiosData }
       );
       setCateClub(result.data);
-      console.log(cateClub);
+      // console.log(cateClub);
     } catch (error) {
       console.log(error);
     }
@@ -44,8 +44,11 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
   }, [cateClub]);
   useEffect(() => {
     selectCategoryPage();
-  }, [pageNumber, Category]);
+  }, [pageNumber]);
 
+  useEffect(() => {
+    selectCategoryPage();
+  }, [Category]);
   const ClubMoveSkeletonBox = () => {
     return (
       <div className="flex border-4 rounded-xl w-[26rem] mr-4 my-2">
