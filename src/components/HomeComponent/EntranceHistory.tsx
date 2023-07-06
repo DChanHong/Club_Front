@@ -35,7 +35,7 @@ const EntranceHistory = () => {
         border-x-white border-b-neutral-100"
           >
             {clubEntranceHistory.map((item, index) => (
-              <div key={index} className="flex my-5">
+              <div key={index} className="flex my-5 w-full border-">
                 <button
                   className="flex"
                   onClick={() => moveClub(Number(item.C_IDX))}
@@ -50,9 +50,9 @@ const EntranceHistory = () => {
                       className="rounded-full w-full h-full"
                     />
                   </div>
-                  <div className="flex-col ml-2">
-                    <p>{item?.C_NAME}</p>
-                    <div className="text-slate-500 text-[12px]">
+                  <div className="flex-col ml-1 mt-2 w-[8rem]">
+                    <p className="text-[11px]">{item?.C_NAME}</p>
+                    <div className="text-slate-500 text-[8px]">
                       #{item?.C_CATEGORY}&nbsp;#{item.C_CATE_DETAIL}
                     </div>
                   </div>
