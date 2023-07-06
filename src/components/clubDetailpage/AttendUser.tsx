@@ -52,7 +52,25 @@ const AttendUser = () => {
       console.log(error);
     }
   };
+  // console.log(C_IDX);
+  //호스트 체크
+  const [hostCheck, setHostCheck] = useState<string>("");
+  const checkHost = async () => {
+    const axiosData = { data: C_IDX };
+    try {
+      const result = await axiosInstance.get("/club/host/check-info", {
+        params: axiosData,
+      });
+      setHostCheck(result.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // console.log(hostCheck);
 
+  useEffect(() => {
+    checkHost();
+  }, []);
   // 가입된 유저 리스트를 가져온다.
   useEffect(() => {
     getClubDetailUserList();
@@ -302,10 +320,6 @@ const AttendUser = () => {
 
   // 4. 내가 쓴 글은 오른쪽 , 상대방이 쓴 글은 왼쪽으로 되게 만드는 함수
   const renderChat = (item: chatInfo) => {
-    // const className =
-    //   chat.U_IDX === loginIdx
-    //     ? "flex flex-row-reverse border-2"
-    //     : "flex flex-row border2";
     return (
       <div
         className={` ${
@@ -478,7 +492,7 @@ const AttendUser = () => {
           <div className="flex justify-between mx-4 p-1 my-4">
             <p className="text-[22px] pl-1 text-[#6A7D7C] font-bold">Meeting</p>
             {/*  */}
-            {join ? (
+            {join || hostCheck === "host" ? (
               <div>
                 <button
                   className="bg-[#E00050] border-2 p-1 shadow-lg rounded-full text-white mt-1 mx-1"
@@ -497,7 +511,7 @@ const AttendUser = () => {
               <ClubContext />
             </div>
             <div className="text-center p-1 ml-6">
-              {join ? (
+              {join || hostCheck === "host" ? (
                 <button type="button" onClick={LeaveClub} className="flex  ">
                   <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
                   <div className=" mr-1 text-[#D2D5D9] text-[15px]">
@@ -515,7 +529,7 @@ const AttendUser = () => {
               )}
             </div>
           </div>
-          <div className="border-2 p-2 py-3 bg-white pl-4 mx-5 text-[14px]">
+          <div className="border-2 p-2 py-3 bg-white pl-4 mr-9 mx-5 text-[14px]">
             <p className="text-[#C6CACF] text-[11px]">
               Comment on the club schedule you want to participate in
             </p>
@@ -549,7 +563,7 @@ const AttendUser = () => {
               </div>
             ) : (
               <>
-                {join ? (
+                {join || hostCheck === "host" ? (
                   <div className="h-[40rem] overflow-auto ">
                     {sdata.map((item, index) => (
                       <div
@@ -666,7 +680,7 @@ const AttendUser = () => {
             </div>
 
             <div className="text-center p-1 ml-6">
-              {join ? (
+              {join || hostCheck === "host" ? (
                 <button type="button" onClick={LeaveClub} className="flex  ">
                   <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
                   <div className=" mr-1 text-[#D2D5D9] text-[15px]">
@@ -684,7 +698,7 @@ const AttendUser = () => {
               )}
             </div>
           </div>
-          {join ? (
+          {join || hostCheck === "host" ? (
             <div className="w-[40rem]">
               <UpdateNoticeModal data={Number(C_IDX)} />
             </div>
@@ -707,7 +721,7 @@ const AttendUser = () => {
               <ClubContext />
             </div>
             <div className="text-center p-1 ml-6">
-              {join ? (
+              {join || hostCheck === "host" ? (
                 <button type="button" onClick={LeaveClub} className="flex">
                   <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
                   <div className=" mr-1 text-[#D2D5D9] text-[15px]">
@@ -726,7 +740,7 @@ const AttendUser = () => {
             </div>
           </div>
           {/* 메신저 단톡방 */}
-          {join ? (
+          {join || hostCheck === "host" ? (
             <>
               <div className="border-4 p-4 mx-4 rounded-xl bg-white overflow-auto h-[38rem]">
                 {/* 이전 채팅 내역 보여줄 부분  bg-[#30C3C1] */}
@@ -813,7 +827,7 @@ const AttendUser = () => {
         </div>
         <div className="p-1 mx-2">
           <div className="text-center">
-            {join ? (
+            {join || hostCheck === "host" ? (
               <button type="button" onClick={LeaveClub} className="flex  ">
                 <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
                 <div className=" mr-1 text-[#D2D5D9] text-[15px]">

@@ -136,31 +136,6 @@ const TopMeetingList = () => {
             </button>
           </div>
         )}
-        {/* <div className="flex justify-start w-auto mx-auto ">
-          <button onClick={handlePrevClick} className="mr-6">
-            <AiFillCaretLeft />
-          </button>
-          <Slider className=" w-[1028px] mt-4" ref={sliderRef} {...settings}>
-            {imgList?.map((item) => (
-              <div key={item.U_IDX}>
-                <div className="w-full h-full">
-                  <Image
-                    onClick={() => showModal(item.C_IDX)}
-                    className="w-[14rem] h-[12rem] border-4 rounded-2xl cursor-pointer"
-                    src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
-                    alt={`${item?.U_IDX}`}
-                    width={50}
-                    height={100}
-                    unoptimized={true}
-                  />
-                </div>
-              </div>
-            ))}
-          </Slider>
-          <button onClick={handleNextClick}>
-            <AiFillCaretRight />
-          </button>
-        </div> */}
       </div>
 
       {showComponent && modalIndex > 0 && <SliderModal data={modalIndex} />}

@@ -17,17 +17,19 @@ const UpdateNoticeModal = (data: { data: Number }) => {
       transform: "translate(-50%, -50%)",
     },
   };
-
+  // console.log(data);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const showModal = () => {
     setModalIsOpen(!modalIsOpen);
   };
 
   //호스트인지 구분을 위한 과정
-  const [hostCheck, setHostCheck] = useState("");
+  const [hostCheck, setHostCheck] = useState<string>("");
+  // console.log(data.data);
   const selectHost = async () => {
-    const axiosData = { data };
+    const axiosData = { data: data.data };
     // console.log(axiosData);
+
     try {
       const result = await axiosInstance.get("/club/host/check-info", {
         params: axiosData,
@@ -38,6 +40,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
       console.log(error);
     }
   };
+  // console.log(hostCheck);
   useEffect(() => {
     selectHost();
   }, []);
@@ -76,13 +79,6 @@ const UpdateNoticeModal = (data: { data: Number }) => {
     }
   };
 
-  // gpt 답변 내용
-  // 문제는 setTempUpdateText 함수를 사용해 상태를 업데이트할 때 발생합니다.
-  //  React 상태 업데이트는 비동기적으로 이루어지기 때문에 상태를 업데이트하고
-  //  바로 읽어오려면 이전 값이 반환될 수 있습니다.
-  //  setTempUpdateText를 사용하기 보다는 updateTextref.current?.value를 여러 번 참조하는 대신
-  //   이 값을 로컬 변수에 저장한 후 사용하면 이 문제를 해결할 수 있습니다.
-
   // 제출 버튼
   const handleUpdateSubmit = async () => {
     console.log(updateTextref.current?.value);
@@ -113,38 +109,6 @@ const UpdateNoticeModal = (data: { data: Number }) => {
       }
     }
   };
-
-  // const handleUpdateSubmit = async () => {
-  //   const inputValue = updateTextref.current?.value;
-  //   if (inputValue === "") {
-  //     alert("내용을 다시 확인해주세요");
-  //   } else {
-  //     try {
-  //       if (inputValue) {
-  //         setTempUpdateText(updateTextref.current?.value);
-  //       }
-
-  //       const C_TEXT = inputValue?.replaceAll(/\n/g, "Enter");
-  //       // console.log(C_TEXT);
-  //       if (C_TEXT) {
-  //         const axiosData = {
-  //           C_IDX: data.data,
-  //           C_TEXT: C_TEXT,
-  //         };
-  //         // console.log(axiosData);
-  //         // 공지사항 수정
-  //         const result = await axiosInstance.put("/club/notice/host/text", {
-  //           params: axiosData,
-  //         });
-
-  //         showModal();
-  //         setNoticeText([]);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
 
   return (
     <>

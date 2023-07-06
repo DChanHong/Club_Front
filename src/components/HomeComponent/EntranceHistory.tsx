@@ -31,11 +31,12 @@ const EntranceHistory = () => {
           <div className="ml-5 mt-5">방문 Club</div>
           <div
             className="hidden md:block
-        border-2 border-t-white
-        border-x-white border-b-neutral-100"
+            border-2 border-t-white
+            border-x-white border-b-neutral-100
+            overflow-auto h-[20rem]"
           >
             {clubEntranceHistory.map((item, index) => (
-              <div key={index} className="flex my-5 w-full border-">
+              <div key={index} className="flex my-5 w-full">
                 <button
                   className="flex"
                   onClick={() => moveClub(Number(item.C_IDX))}
