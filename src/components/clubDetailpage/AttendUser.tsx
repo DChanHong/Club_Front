@@ -107,6 +107,10 @@ const AttendUser = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getClubDetailUserList();
+  }, [join]);
   // 모달
   const [showComponent, setShowComponent] = useState(false);
 
@@ -804,6 +808,7 @@ const AttendUser = () => {
       {/* 960px 이상일 경우에 나올 화면 */}
       <div className="hidden md:block w-2/12 border-2 shadow-lg ">
         <div>
+          {/* 동아리 info */}
           <ClubContext />
         </div>
         <div className="p-1 mx-2">
