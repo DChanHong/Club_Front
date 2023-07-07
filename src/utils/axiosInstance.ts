@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  // baseURL: "https://chanhong.site/api",
-  baseURL: "http://52.78.175.136/api",
+  baseURL: "https://chanhong.site/api",
+  // baseURL: "http://52.78.175.136/api",
   withCredentials: true,
 });
 
