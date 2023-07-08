@@ -273,7 +273,7 @@ const AttendUser = () => {
   //2. 소켓 연결
   const socketRef = useRef<Socket | null>(null);
 
-  const SOCKET_SERVER_URL = "http://localhost:4000";
+  const SOCKET_SERVER_URL = `${imageURL}`;
   useEffect(() => {
     // 웹소켓 socket.io 연결
     socketRef.current = io(SOCKET_SERVER_URL); // -> 이거 env로 고쳐봐야될듯

@@ -116,7 +116,8 @@ const ClubContext = () => {
               <div className="w-[100px]">
                 <Image
                   className="border-2 rounded-xl w-full h-full "
-                  src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                  // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                  src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                   alt={`${item?.C_IDX}`}
                   width={100}
                   height={100}
