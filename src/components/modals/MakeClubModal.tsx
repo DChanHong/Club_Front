@@ -5,6 +5,7 @@ import { GrFormClose } from "react-icons/gr";
 import axiosInstance from "@/utils/axiosInstance";
 import { tempClub } from "@/Types";
 import Image from "next/image";
+import imageURL from "@/utils/imageUrl";
 import { useRouter } from "next/router";
 import { IoAddOutline, IoPeopleSharp } from "react-icons/io5";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -274,7 +275,8 @@ const MakeClubModal = () => {
               <div className="m-3 w-[8rem] ">
                 <Image
                   className="w-[7rem] h-[6rem] border-2 rounded-xl"
-                  src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                  // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                  src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                   alt={`${index}`}
                   width={100}
                   height={100}

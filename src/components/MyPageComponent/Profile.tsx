@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { userInfo } from "@/Types";
 import Image from "next/image";
+import imageURL from "@/utils/imageUrl";
 import MyAttendingClub from "./MyAttendingClub";
 import MyPageHostList from "./MyPageHostList";
 import { useRouter } from "next/router";
@@ -119,7 +120,8 @@ const Profile = () => {
             <div className="mx-6">
               <Image
                 className="border-4 border-current border-indigo-200 rounded-full"
-                src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
+                // src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
+                src={`${imageURL}/api/image/${userinfo?.U_IMAGE}`}
                 alt={`${userinfo?.U_EMAIL}`}
                 width={400}
                 height={400}

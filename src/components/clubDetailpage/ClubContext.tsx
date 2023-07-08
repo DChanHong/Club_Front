@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { clubDetailInfo } from "@/Types";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
+import imageURL from "@/utils/imageUrl";
 
 import { userClubHistoryList } from "@/Types";
 import { ADD_CLUB_ENTRANCE } from "@/store/slice/EntranceHistorySlice";
@@ -82,7 +83,8 @@ const ClubContext = () => {
                 <div className="mx-5">
                   <Image
                     className="border-2 rounded-xl "
-                    src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                    // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                    src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                     alt={`${item?.C_IDX}`}
                     width={270}
                     height={100}

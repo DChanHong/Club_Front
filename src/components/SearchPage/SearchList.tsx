@@ -3,6 +3,7 @@ import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import imageURL from "@/utils/imageUrl";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -85,7 +86,8 @@ const SearchList = () => {
                 <div className="m-3 w-[8rem]">
                   <Image
                     className="w-[7rem] h-[6rem] border-2 rounded-xl"
-                    src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                    // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                    src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                     alt={`${item?.U_IDX}`}
                     width={100}
                     height={100}

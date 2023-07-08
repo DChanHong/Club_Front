@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "@/store/hooks";
 import { CLOSE_SLIDER_MODAL } from "@/store/slice/isSliderModalSlice";
+import imageURL from "@/utils/imageUrl";
 
 const SliderModal = (C_IDX: any) => {
   const [clubInfo, setClubInfo] = useState<cateClubInfo[]>([]);
@@ -127,7 +128,8 @@ const SliderModal = (C_IDX: any) => {
                         <div className="w-[12rem] rounded-xl mx-2">
                           <Image
                             className="w-[12rem h-[10rem] rounded-xl"
-                            src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                            // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                            src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                             alt={`${item.C_IDX}`}
                             width="250"
                             height="10"

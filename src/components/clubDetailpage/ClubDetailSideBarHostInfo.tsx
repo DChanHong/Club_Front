@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import imageURL from "@/utils/imageUrl";
 
 const ClubDetailSideBarHostInfo = () => {
   const router = useRouter();
@@ -56,7 +57,8 @@ const ClubDetailSideBarHostInfo = () => {
               <div className="rounded-full p-1 w-[80px]  border-2">
                 <Image
                   className="rounded-full w-full h-full"
-                  src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                  // src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                  src={`${imageURL}/api/image/${item?.U_IMAGE}`}
                   alt={`${item.U_IDX}`}
                   width="50"
                   height="50"
