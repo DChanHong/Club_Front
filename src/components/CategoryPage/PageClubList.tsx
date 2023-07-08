@@ -5,6 +5,8 @@ import Image from "next/image";
 import { cateClubInfo } from "@/Types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import imageURL from "@/utils/imageUrl";
+
 interface Props {
   pageNumber: number;
   Category: string;
@@ -14,6 +16,7 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
   const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+
   const selectCategoryPage = async () => {
     // console.log(Category);
     try {
@@ -94,7 +97,8 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
                 <div className="m-3 w-[8rem]">
                   <Image
                     className="w-[7rem] h-[6rem] border-2 rounded-xl"
-                    src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                    // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                    src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                     alt={`${item?.U_IDX}`}
                     width={100}
                     height={100}

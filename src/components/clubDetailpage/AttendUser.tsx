@@ -16,6 +16,7 @@ import { IoAddOutline } from "react-icons/io5";
 import { GrFormClose, GrSchedulePlay, GrUpdate } from "react-icons/gr";
 import ClubContext from "./ClubContext";
 import { ImExit } from "react-icons/im";
+import imageURL from "@/utils/imageUrl";
 
 import { FaMicrophoneAlt } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -593,7 +594,8 @@ const AttendUser = () => {
                           <div className="rounded-full p-1 w-[50px]  border-2">
                             <Image
                               className="rounded-full w-full h-full"
-                              src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                              // src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                              src={`${imageURL}/api/image/${item?.U_IMAGE}`}
                               alt={`${item.U_IDX}`}
                               width="50"
                               height="50"
@@ -866,7 +868,8 @@ const AttendUser = () => {
                   <div className="rounded-full p-1 w-[40px] h-[40px] border-2">
                     <Image
                       className="rounded-full"
-                      src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                      // src={`http://localhost:4000/api/image/${item?.U_IMAGE}`}
+                      src={`${imageURL}/api/image/${item?.U_IMAGE}`}
                       alt={`${item.U_IDX}`}
                       width="50"
                       height="50"

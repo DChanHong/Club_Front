@@ -6,6 +6,8 @@ import { REMOVE_CLUB_ENTRANCE } from "@/store/slice/EntranceHistorySlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import imageURL from "@/utils/imageUrl";
+
 const EntranceHistory = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -43,7 +45,8 @@ const EntranceHistory = () => {
                 >
                   <div className="border-2 rounded-full w-[45px] h-[45px] ml-2">
                     <Image
-                      src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                      // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                      src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                       alt={`${item?.C_IDX}`}
                       width={40}
                       height={50}

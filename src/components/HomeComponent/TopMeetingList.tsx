@@ -16,6 +16,7 @@ import { RootState } from "@/store/store";
 import { useAppDispatch } from "@/store/hooks";
 import { useAppSelector } from "@/store/hooks";
 import { OPEN_SLIDER_MODAL } from "@/store/slice/isSliderModalSlice";
+import imageURL from "@/utils/imageUrl";
 
 const TopMeetingList = () => {
   const [imgList, setImages] = useState<slideInfo[]>([]);
@@ -121,7 +122,8 @@ const TopMeetingList = () => {
                     <Image
                       onClick={() => showModal(item.C_IDX)}
                       className="w-[14rem] h-[12rem] border-4 rounded-2xl cursor-pointer"
-                      src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                      // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                      src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                       alt={`${item?.U_IDX}`}
                       width={50}
                       height={100}
