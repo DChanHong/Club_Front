@@ -1,8 +1,13 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://chanhong.site/api",
+  // baseURL: "https://chanhong.site/api",
   // baseURL: "http://52.78.175.136/api",
+  baseURL: "http://localhost:4000/api",
+  headers: {
+    "Access-Control-Allow-Origin": `https://club-front.vercel.app`,
+    "Access-Control-Allow-Credentials": "true",
+  },
   withCredentials: true,
 });
 
