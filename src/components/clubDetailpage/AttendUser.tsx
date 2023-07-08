@@ -359,7 +359,7 @@ const AttendUser = () => {
   // 5. 댓글 MongoDB insert함수
   const pushChatting = async (message: any) => {
     try {
-      console.log(message);
+      // console.log(message);
       const result = await axiosInstance.post("/chat/insertchatting", message);
       // console.log("인설트 성공");
     } catch (error) {
