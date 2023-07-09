@@ -31,6 +31,7 @@ import { getAllChatInfo } from "@/Types";
 import ClubDetailSideBarHostInfo from "./ClubDetailSideBarHostInfo";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { CiImageOn } from "react-icons/ci";
 
 const AttendUser = () => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const AttendUser = () => {
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
   const [clubDetailLoading, setClubDetailLoading] = useState<boolean>(false);
   const { C_IDX } = router.query;
+  const [imgUploadState, setImgUploadState] = useState<boolean>(false); //이미지 업로드 토글용
 
   // 가입 , 탈퇴
   const [join, setJoin] = useState(false); //true : 가입된 상태 , false: 틸퇴 상태 0을 주는것이 좋다.
@@ -387,11 +389,85 @@ const AttendUser = () => {
     getAllchattingList();
   }, []);
 
+  /* 7.동아리 배경화면 바꾸기 기능 */
+
+  const [files, setFiles] = useState<File | null>(null);
+
+  const toggleImgState = () => {
+    // 호스트 이미지 업로드 토글 함수  setImgUploadState
+    setImgUploadState(!imgUploadState);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setFiles(event.target.files[0]);
+    }
+  };
+  // console.log(C_IDX);
+  const backImgHandleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    const formData = new FormData();
+    if (files && C_IDX) {
+      formData.append("file", files);
+      formData.append("C_IDX", C_IDX?.toString());
+    }
+
+    try {
+      const response = await axiosInstance.post(
+        "/club/background/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("submit 완료");
+      toggleImgState();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex justify-center md:flex">
       {/* 왼쪽 바 시작 부분 */}
       <div className="hidden md:block border-2 w-2/12 drop-shadow-lg">
         <ClubDetailSideBarHostInfo />
+        {/* {hostCheck === "host" ? (
+          <div>
+            <div className="flex flex-row-reverse mr-2">
+              <button>
+                <CiImageOn onClick={() => toggleImgState()} size={25} />
+              </button>
+            </div>
+            {imgUploadState ? (
+              <div className="border-2 absolute bg-white p-2 rounded-xl">
+                <div className="text-center mb-1 font-bold">
+                  배경이미지 변경
+                </div>
+                <form onSubmit={backImgHandleSubmit}>
+                  <input type="file" onChange={handleFileChange} />
+
+                  <div className="flex flex-row-reverse mr-2">
+                    <button
+                      className="outline rounded-xl px-2 mt-2"
+                      type="submit"
+                    >
+                      upload
+                    </button>
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        ) : (
+          <></>
+        )} */}
         <div className="my-10 flex flex-col ">
           <div>
             <button
@@ -509,7 +585,7 @@ const AttendUser = () => {
           {/* 960px이하로 줄어들 때 클럽 가입하기 넣어줄 부분 */}
           <div className="md:hidden">
             <div>
-              <ClubContext />
+              <ClubContext hostCheck={hostCheck} />
             </div>
             <div className="text-center p-1 ml-6">
               {join || hostCheck === "host" ? (
@@ -678,7 +754,7 @@ const AttendUser = () => {
           </div>
           <div className="md:hidden">
             <div>
-              <ClubContext />
+              <ClubContext hostCheck={hostCheck} />
             </div>
 
             <div className="text-center p-1 ml-6">
@@ -720,7 +796,7 @@ const AttendUser = () => {
           </div>
           <div className="md:hidden">
             <div>
-              <ClubContext />
+              <ClubContext hostCheck={hostCheck} />
             </div>
             <div className="text-center p-1 ml-6">
               {join || hostCheck === "host" ? (
@@ -825,7 +901,7 @@ const AttendUser = () => {
       <div className="hidden md:block w-2/12 border-2 shadow-lg ">
         <div>
           {/* 동아리 info */}
-          <ClubContext />
+          <ClubContext hostCheck={hostCheck} />
         </div>
         <div className="p-1 mx-2">
           <div className="text-center">

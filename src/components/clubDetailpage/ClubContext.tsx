@@ -12,8 +12,13 @@ import { userClubHistoryList } from "@/Types";
 import { ADD_CLUB_ENTRANCE } from "@/store/slice/EntranceHistorySlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
+import { CiImageOn } from "react-icons/ci";
 
-const ClubContext = () => {
+interface Props {
+  hostCheck: string;
+}
+
+const ClubContext: React.FC<Props> = ({ hostCheck }) => {
   const router = useRouter();
   const [clubDetail, setClubDetail] = useState<clubDetailInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -27,7 +32,7 @@ const ClubContext = () => {
   // 일단 여기서 써볼려고 들오곰
   const dispatch = useAppDispatch();
 
-  const getClubDetailUserList = async () => {
+  const getClubDetailInfo = async () => {
     const axiosData = { data: C_IDX };
 
     const result = await axiosInstance.get(
@@ -40,7 +45,7 @@ const ClubContext = () => {
     setEntranceHistory(result.data);
   };
   useEffect(() => {
-    getClubDetailUserList();
+    getClubDetailInfo();
   }, []);
   useEffect(() => {
     setLoading(true);
@@ -48,6 +53,47 @@ const ClubContext = () => {
   useEffect(() => {
     dispatch(ADD_CLUB_ENTRANCE(entranceHistory));
   }, [entranceHistory]);
+
+  const [files, setFiles] = useState<File | null>(null);
+  const [imgUploadState, setImgUploadState] = useState<boolean>(false); //이미지 업로드 토글용
+  const toggleImgState = () => {
+    // 호스트 이미지 업로드 토글 함수  setImgUploadState
+    setImgUploadState(!imgUploadState);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setFiles(event.target.files[0]);
+    }
+  };
+  // console.log(C_IDX);
+  const backImgHandleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    const formData = new FormData();
+    if (files && C_IDX) {
+      formData.append("file", files);
+      formData.append("C_IDX", C_IDX?.toString());
+    }
+
+    try {
+      const response = await axiosInstance.post(
+        "/club/background/image/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      // console.log("submit 완료");
+      toggleImgState();
+      getClubDetailInfo();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -102,6 +148,38 @@ const ClubContext = () => {
                 </div>
               </div>
             ))}
+            {hostCheck === "host" ? (
+              <div>
+                <div className="flex flex-row-reverse mr-2">
+                  <button>
+                    <CiImageOn onClick={() => toggleImgState()} size={25} />
+                  </button>
+                </div>
+                {imgUploadState ? (
+                  <div className="border-2 absolute bg-white p-2 rounded-xl">
+                    <div className="text-center mb-1 font-bold">
+                      배경이미지 변경
+                    </div>
+                    <form onSubmit={backImgHandleSubmit}>
+                      <input type="file" onChange={handleFileChange} />
+
+                      <div className="flex flex-row-reverse mr-2">
+                        <button
+                          className="outline rounded-xl px-2 mt-2"
+                          type="submit"
+                        >
+                          upload
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            ) : (
+              <></>
+            )}
           </>
         )}
       </div>

@@ -133,11 +133,7 @@ const Profile = () => {
                 <div className="absolute border-2 rounded-xl mt-14 ml-4 p-2 flex bg-white">
                   <form onSubmit={handleSubmit}>
                     <div className="flex flex-col">
-                      <input
-                        className=""
-                        type="file"
-                        onChange={handleFileChange}
-                      />
+                      <input type="file" onChange={handleFileChange} />
                       <button
                         className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
                         type="submit"
