@@ -62,7 +62,7 @@ const ClubDetailSideBarHostInfo = () => {
                   alt={`${item.U_IDX}`}
                   width="50"
                   height="50"
-                  unoptimized={true}
+                  // unoptimized={true}
                 />
               </div>
               <div className=" ml-4 mt-2 text-slate-400 text-[13px] ">host</div>

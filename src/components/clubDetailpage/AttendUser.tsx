@@ -674,7 +674,7 @@ const AttendUser = () => {
                               alt={`${item.U_IDX}`}
                               width="50"
                               height="50"
-                              unoptimized={true}
+                              // unoptimized={true}
                             />
                           </div>
                           <div className="mx-4 mt-2 text-[16px] flex flex-col ">
@@ -948,7 +948,7 @@ const AttendUser = () => {
                       alt={`${item.U_IDX}`}
                       width="50"
                       height="50"
-                      unoptimized={true}
+                      // unoptimized={true}
                     />
                   </div>
                   <div className=" ml-4 mt-2 text-[16px] text-center">

@@ -125,7 +125,7 @@ const Profile = () => {
                 alt={`${userinfo?.U_EMAIL}`}
                 width={400}
                 height={400}
-                unoptimized={true}
+                // unoptimized={true}
               />
             </div>
             <div>
@@ -203,7 +203,7 @@ const Profile = () => {
                   alt={`${userinfo?.U_EMAIL}`}
                   width={400}
                   height={400}
-                  unoptimized={true}
+                  // unoptimized={true}
                 />
               </div>
               <div className="mt-2 flex flex-col ">

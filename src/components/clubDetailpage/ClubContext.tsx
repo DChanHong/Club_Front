@@ -134,7 +134,7 @@ const ClubContext: React.FC<Props> = ({ hostCheck }) => {
                     alt={`${item?.C_IDX}`}
                     width={270}
                     height={100}
-                    unoptimized={true}
+                    // unoptimized={true}
                   />
                 </div>
                 <div className="flex mx-5 mt-1 text-[15px]">
@@ -199,7 +199,7 @@ const ClubContext: React.FC<Props> = ({ hostCheck }) => {
                   alt={`${item?.C_IDX}`}
                   width={100}
                   height={100}
-                  unoptimized={true}
+                  // unoptimized={true}
                 />
               </div>
               <div className="ml-2">

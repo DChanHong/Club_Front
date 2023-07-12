@@ -133,7 +133,7 @@ const SliderModal = (C_IDX: any) => {
                             alt={`${item.C_IDX}`}
                             width="250"
                             height="10"
-                            unoptimized={true}
+                            // unoptimized={true}
                           />
                         </div>
                         <div className=" ">
