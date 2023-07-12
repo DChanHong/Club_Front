@@ -127,7 +127,7 @@ const TopMeetingList = () => {
                       alt={`${item?.U_IDX}`}
                       width={50}
                       height={100}
-                      // unoptimized={true}
+                      unoptimized={true}
                     />
                   </div>
                 </div>
