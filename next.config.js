@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    domains: [
+      "https://chanhong.site",
+      "https://api.chanhong.site",
+      "localhost",
+    ],
     remotePatterns: [
       {
         protocol: "http",
