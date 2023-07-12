@@ -122,8 +122,8 @@ const TopMeetingList = () => {
                     <Image
                       onClick={() => showModal(item.C_IDX)}
                       className="w-[14rem] h-[12rem] border-4 rounded-2xl cursor-pointer"
-                      src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
-                      // src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
+                      // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                      src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
                       alt={`${item?.U_IDX}`}
                       width={50}
                       height={100}
