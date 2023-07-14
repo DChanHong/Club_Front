@@ -125,7 +125,7 @@ const Profile = () => {
                 alt={`${userinfo?.U_EMAIL}`}
                 width={400}
                 height={400}
-                priority
+
                 // unoptimized={true}
               />
             </div>
