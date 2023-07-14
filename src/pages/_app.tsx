@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import Header from "@/components/EssentialComponent/Header";
 import Head from "next/head";
 import React from "react";
+import { Inter } from "next/font/google";
 
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -15,6 +16,8 @@ export default function App({ Component, pageProps }: AppProps) {
   // useState lazy init을 사용해  QueryClient 인스턴스를 생성해 QueryClientProvider의 client 값으로 전달해준다.
   const [queryClient] = useState(() => new QueryClient());
 
+  // If loading a variable font, you don't need to specify the font weight
+  const inter = Inter({ subsets: ["latin"] });
   return (
     <Provider store={store}>
       {/* persistGate 컴포넌트는 Redux store가 영구적으로 저장되고 애플리케이션이 새로고침될 떄를 대비해 사용한다.
@@ -31,7 +34,9 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
 
         <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
+          <main className={inter.className}>
+            <Component {...pageProps} />
+          </main>
         </QueryClientProvider>
       </PersistGate>
     </Provider>
