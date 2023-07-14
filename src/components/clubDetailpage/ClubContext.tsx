@@ -134,6 +134,7 @@ const ClubContext: React.FC<Props> = ({ hostCheck }) => {
                     alt={`${item?.C_IDX}`}
                     width={270}
                     height={100}
+                    priority
                     // unoptimized={true}
                   />
                 </div>
@@ -199,6 +200,7 @@ const ClubContext: React.FC<Props> = ({ hostCheck }) => {
                   alt={`${item?.C_IDX}`}
                   width={100}
                   height={100}
+                  priority
                   // unoptimized={true}
                 />
               </div>

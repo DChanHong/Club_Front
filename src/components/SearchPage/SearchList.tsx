@@ -91,6 +91,7 @@ const SearchList = () => {
                     alt={`${item?.U_IDX}`}
                     width={100}
                     height={100}
+                    priority
                     // unoptimized={true}
                   />
                 </div>

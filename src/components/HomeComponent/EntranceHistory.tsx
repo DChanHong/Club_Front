@@ -50,6 +50,7 @@ const EntranceHistory = () => {
                       alt={`${item?.C_IDX}`}
                       width={40}
                       height={50}
+                      priority
                       // unoptimized={true}
 
                       className="rounded-full w-full h-full"

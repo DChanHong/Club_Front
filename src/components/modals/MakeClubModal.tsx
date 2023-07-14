@@ -280,6 +280,7 @@ const MakeClubModal = () => {
                   alt={`${index}`}
                   width={100}
                   height={100}
+                  priority
                   // unoptimized={true}
                 />
               </div>

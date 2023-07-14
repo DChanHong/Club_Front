@@ -127,8 +127,7 @@ const TopMeetingList = () => {
                       alt={`${item?.U_IDX}`}
                       width={50}
                       height={100}
-                      placeholder="blur"
-                      blurDataURL="ss"
+                      priority
                     />
                   </div>
                 </div>

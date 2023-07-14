@@ -674,6 +674,7 @@ const AttendUser = () => {
                               alt={`${item.U_IDX}`}
                               width="50"
                               height="50"
+                              priority
                               // unoptimized={true}
                             />
                           </div>
@@ -948,6 +949,7 @@ const AttendUser = () => {
                       alt={`${item.U_IDX}`}
                       width="50"
                       height="50"
+                      priority
                       // unoptimized={true}
                     />
                   </div>

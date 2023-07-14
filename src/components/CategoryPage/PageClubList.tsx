@@ -103,6 +103,7 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
                     width={100}
                     height={100}
                     // unoptimized={true}
+                    priority
                   />
                 </div>
                 <div>
