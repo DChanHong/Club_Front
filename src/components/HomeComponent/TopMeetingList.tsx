@@ -127,7 +127,8 @@ const TopMeetingList = () => {
                       alt={`${item?.U_IDX}`}
                       width={50}
                       height={100}
-                      // unoptimized={true}
+                      placeholder="blur"
+                      blurDataURL="ss"
                     />
                   </div>
                 </div>

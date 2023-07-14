@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    formats: ["image/avif", "image/webp"],
     domains: ["chanhong.site", "api.chanhong.site", "localhost"],
     remotePatterns: [
       {
