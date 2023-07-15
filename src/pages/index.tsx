@@ -5,7 +5,6 @@ import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
 import MakeClubModal from "@/components/modals/MakeClubModal";
 import EntranceHistory from "@/components/HomeComponent/EntranceHistory";
-import { GetServerSideProps } from "next";
 
 export default function Home() {
   const data = ["스포츠", "문화생활", "스터디", "게임", "기타"];
@@ -52,12 +51,3 @@ export default function Home() {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const data = params;
-  return {
-    props: {
-      data,
-    },
-  };
-};
