@@ -2,6 +2,8 @@ import SearchList from "@/components/SearchPage/SearchList";
 import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
 import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
 
+import { GetServerSideProps } from "next";
+
 const PostPage = () => {
   return (
     <>
@@ -23,3 +25,12 @@ const PostPage = () => {
 };
 
 export default PostPage;
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const data = params;
+  return {
+    props: {
+      data,
+    },
+  };
+};

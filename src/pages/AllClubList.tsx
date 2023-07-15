@@ -2,6 +2,7 @@ import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
 import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
 import React from "react";
 import InfiniteScrollClubList from "@/components/SearchPage/InfiniteScrollClubList";
+import { GetServerSideProps } from "next";
 
 const AllClubList = () => {
   return (
@@ -25,3 +26,12 @@ const AllClubList = () => {
 };
 
 export default AllClubList;
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const data = params;
+  return {
+    props: {
+      data,
+    },
+  };
+};

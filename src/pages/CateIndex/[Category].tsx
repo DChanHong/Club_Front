@@ -12,6 +12,9 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { RxDoubleArrowRight } from "react-icons/rx";
 import { BiLastPage } from "react-icons/bi";
 import { BiFirstPage } from "react-icons/bi";
+
+import { GetServerSideProps } from "next";
+
 const CategoryIndex = () => {
   const router = useRouter();
   const { Category } = router.query;
@@ -158,3 +161,12 @@ const CategoryIndex = () => {
 };
 
 export default CategoryIndex;
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const data = params;
+  return {
+    props: {
+      data,
+    },
+  };
+};
