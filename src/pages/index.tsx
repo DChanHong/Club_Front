@@ -28,13 +28,6 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col w-5/6">
-          {/* <div>
-            <button type="button" onClick={test}>
-              테스트 버튼2222
-            </button>
-
-            <div>{testData}</div>
-          </div> */}
           <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">
             <TopMeetingList />
           </div>
