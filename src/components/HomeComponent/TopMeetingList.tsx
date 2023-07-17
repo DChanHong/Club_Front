@@ -52,21 +52,10 @@ const TopMeetingList = () => {
     slidesToScroll: 2,
     responsive: [
       {
-        breakpoint: 1028,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
         breakpoint: 640,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
+          slideToScroll: 1,
         },
       },
     ],
@@ -111,11 +100,16 @@ const TopMeetingList = () => {
             </div>
           </>
         ) : (
-          <div className="flex justify-start w-auto mx-auto ">
-            <button onClick={handlePrevClick} className="mr-6">
+          <div className="flex w-auto mx-auto ">
+            <button onClick={handlePrevClick} className="hidden md:block mr-6">
               <AiFillCaretLeft />
             </button>
-            <Slider className=" w-[1028px] mt-4" ref={sliderRef} {...settings}>
+
+            <Slider
+              className="w-[480px]   sm:w-[650px] md:w-[1028px] mt-4"
+              ref={sliderRef}
+              {...settings}
+            >
               {imgList?.map((item) => (
                 <div key={item.U_IDX}>
                   <div className="w-full h-full z-0">
@@ -138,6 +132,18 @@ const TopMeetingList = () => {
             </button>
           </div>
         )}
+        <div className="flex block mt-2 md:hidden">
+          <div>
+            <button onClick={handlePrevClick} className="p-2">
+              <AiFillCaretLeft />
+            </button>
+          </div>
+          <div>
+            <button className="p-2" onClick={handleNextClick}>
+              <AiFillCaretRight />
+            </button>
+          </div>
+        </div>
       </div>
 
       {showComponent && modalIndex > 0 && <SliderModal data={modalIndex} />}
