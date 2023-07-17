@@ -118,7 +118,7 @@ const TopMeetingList = () => {
             <Slider className=" w-[1028px] mt-4" ref={sliderRef} {...settings}>
               {imgList?.map((item) => (
                 <div key={item.U_IDX}>
-                  <div className="w-full h-full">
+                  <div className="w-full h-full z-0">
                     <Image
                       onClick={() => showModal(item.C_IDX)}
                       className="w-[14rem] h-[12rem] border-4 rounded-2xl cursor-pointer"
