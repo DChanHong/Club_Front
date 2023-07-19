@@ -435,38 +435,7 @@ const AttendUser = () => {
       {/* 왼쪽 바 시작 부분 */}
       <div className="hidden md:block border-2 w-2/12 drop-shadow-lg">
         <ClubDetailSideBarHostInfo />
-        {/* {hostCheck === "host" ? (
-          <div>
-            <div className="flex flex-row-reverse mr-2">
-              <button>
-                <CiImageOn onClick={() => toggleImgState()} size={25} />
-              </button>
-            </div>
-            {imgUploadState ? (
-              <div className="border-2 absolute bg-white p-2 rounded-xl">
-                <div className="text-center mb-1 font-bold">
-                  배경이미지 변경
-                </div>
-                <form onSubmit={backImgHandleSubmit}>
-                  <input type="file" onChange={handleFileChange} />
 
-                  <div className="flex flex-row-reverse mr-2">
-                    <button
-                      className="outline rounded-xl px-2 mt-2"
-                      type="submit"
-                    >
-                      upload
-                    </button>
-                  </div>
-                </form>
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
-        ) : (
-          <></>
-        )} */}
         <div className="my-10 flex flex-col ">
           <div>
             <button

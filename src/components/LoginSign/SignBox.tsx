@@ -164,9 +164,9 @@ const SignBox = () => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="my-2 mt-6 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg"
+                className="mt-6 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg"
               >
-                가입하기
+                <p className="text-white">가입하기</p>
               </button>
             </div>
           </form>

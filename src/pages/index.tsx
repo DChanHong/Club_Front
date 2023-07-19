@@ -9,12 +9,6 @@ import EntranceHistory from "@/components/HomeComponent/EntranceHistory";
 export default function Home() {
   const data = ["스포츠", "문화생활", "스터디", "게임", "기타"];
 
-  const [testData, setTest] = useState("");
-  const test = async () => {
-    const result = await axiosInstance.get("/test");
-    setTest(result.data);
-  };
-
   return (
     <>
       <div className="flex flex-start ">
