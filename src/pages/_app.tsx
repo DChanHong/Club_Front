@@ -24,24 +24,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <PersistGate loading={null} persistor={persistor}>
         <Head>
           <title>Gathering Site</title>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
-
-          {/* <script
-            src="https://developers.kakao.com/sdk/js/kakao.js"
-            defer
-          ></script> */}
         </Head>
         <div className=" max-w-[2520px] mx-auto">
           <Header />
         </div>
 
         <QueryClientProvider client={queryClient}>
-          {/* <SessionProvider session={pageProps.session}> */}
           <Component {...pageProps} />
-          {/* </SessionProvider> */}
         </QueryClientProvider>
       </PersistGate>
     </Provider>

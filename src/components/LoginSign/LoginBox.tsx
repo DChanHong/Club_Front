@@ -6,9 +6,7 @@ import { loginFormData } from "@/Types";
 import { useRouter } from "next/router";
 import { SET_IS_LOGIN } from "@/store/slice/isLoginSlice";
 import { useAppDispatch } from "@/store/hooks";
-import { useEffect } from "react";
 import { SiNaver } from "react-icons/si";
-import { useSession, signIn } from "next-auth/react";
 
 const LoginBox = () => {
   const router = useRouter();
@@ -42,6 +40,10 @@ const LoginBox = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const goGoogleLogin = () => {
+    window.location.href = "http://localhost:4000/auth/google";
   };
 
   return (
@@ -92,19 +94,14 @@ const LoginBox = () => {
         </div>
         <div className=" flex justify-center ">
           <button
-            name="naverSignBtn"
+            name="googleSignBtn"
             className="flex justify-center border-2 p-2 mt-2 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg bg-[#19C425]"
-            onClick={() =>
-              signIn("naver", {
-                redirect: true,
-                callbackUrl: "/",
-              })
-            }
+            onClick={() => goGoogleLogin()}
           >
             <p className="mt-1 mr-4">
               <SiNaver color="white" />
             </p>
-            <p className="text-white">Sign in with Naver</p>
+            <p className="text-white">Sign in with Google</p>
           </button>
         </div>
       </div>
