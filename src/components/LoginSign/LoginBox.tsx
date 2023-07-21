@@ -113,10 +113,10 @@ const LoginBox = () => {
             <button>회원가입</button>
           </Link>
         </div>
-        <div className=" flex justify-center ">
+        <div className="rounded-2xl flex justify-center bg-[#23B814]">
           <button
             name="googleSignBtn"
-            className="flex justify-center  p-2 mt-2 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg bg-[#23B814]"
+            className="flex justify-center  p-2  rounded-2xl w-80 py-3 px-3 text-lg "
             onClick={() => goNaverLogin()}
           >
             <p className="mt-1 mr-4">
