@@ -46,7 +46,7 @@ const LoginBox = () => {
   // NAVER Oauth 구현
 
   const CLIENT_ID = "VDL7dKDgnrOYEJFkIly6";
-  const CALLBACK_URL = "http://localhost:4000/naver/callback/oauth";
+  const CALLBACK_URL = "https://api.chanhong.site/naver/callback/oauth";
 
   const goNaverLogin = () => {
     window.location.href =
@@ -57,6 +57,15 @@ const LoginBox = () => {
       "&state=" +
       "asd2222222";
   };
+  useEffect(() => {
+    console.log(router.query);
+    const login = router.query;
+    if (login.login === "true") {
+      dispatch(SET_IS_LOGIN(true));
+      localStorage.setItem("login", "true");
+      router.push("/");
+    }
+  }, [router]);
 
   return (
     <div className="flex justify-start">
@@ -94,7 +103,7 @@ const LoginBox = () => {
             </div>
           )}
           <div className="flex justify-center">
-            <button className="my-2 bg-blue-600 rounded-2xl w-60 py-3 px-3 text-lg">
+            <button className="my-2 bg-blue-600 rounded-2xl w-60 py-3 px-3 text-lg text-white">
               로그인
             </button>
           </div>
@@ -107,7 +116,7 @@ const LoginBox = () => {
         <div className=" flex justify-center ">
           <button
             name="googleSignBtn"
-            className="flex justify-center border-2 p-2 mt-2 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg bg-[#19C425]"
+            className="flex justify-center  p-2 mt-2 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg bg-[#1AC049]"
             onClick={() => goNaverLogin()}
           >
             <p className="mt-1 mr-4">
