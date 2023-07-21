@@ -29,15 +29,19 @@
 <div>- 네브바 전체 버튼 클릭 시 , 무한 스크롤로 구현 , 6개씩 데이터 추가로 불러오기</div>
 <div>- 네브바 나머지 버튼 클릭 시 , 각 페이지별로 6개씩 데이터 보여주기 , 한 스크롤당 3개페이지 구성</div>
 <div>- 카루셀 슬라이더는 slick-slider 라이브러리 사용 및 이미지 클릭 시 css 조절을 통한 모달 창 생성</div>
-<br/>
+<br/>![스크린샷 2023-07-21 오후 9 31 38]()
+
+
+
 2. Login/Sign
 <div align="center">
   <img src="https://github.com/DChanHong/Club_Front/assets/99067250/99b0e7c3-1a69-4f57-b52f-0e3cbb116184" width="300" height="400"/>
-  <img src="https://github.com/DChanHong/Club_Front/assets/99067250/01d83cb4-d620-4cfc-b1ce-f8f4800c8906" width="300" height="400"/>
+  <img src="https://github.com/DChanHong/Club_Front/assets/99067250/e4b9913a-4a87-4e24-ae6c-63975fd35c30" width="300" height="400"/>
 </div>
 <br/>
 <div>- react-hook-form을 이용해 유효성 검사</div>
 <div>- 로그인 성공 시 , JWT 토큰 생성 및 localStorage 및 redux를 이용해 로그인 확인</div>
+<div>- Oauth2.0(naver)제공</div>
 <br/>
 
 
