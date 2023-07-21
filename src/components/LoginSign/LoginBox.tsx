@@ -116,13 +116,13 @@ const LoginBox = () => {
         <div className=" flex justify-center ">
           <button
             name="googleSignBtn"
-            className="flex justify-center  p-2 mt-2 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg bg-[#1AC049]"
+            className="flex justify-center  p-2 mt-2 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg bg-[#23B814]"
             onClick={() => goNaverLogin()}
           >
             <p className="mt-1 mr-4">
               <SiNaver color="white" />
             </p>
-            <p className="text-white">Sign in with Google</p>
+            <p className="text-white">Sign in with Naver</p>
           </button>
         </div>
       </div>
