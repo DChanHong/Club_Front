@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { SET_IS_LOGIN } from "@/store/slice/isLoginSlice";
 import { useAppDispatch } from "@/store/hooks";
 import { SiNaver } from "react-icons/si";
+import { useEffect } from "react";
 
 const LoginBox = () => {
   const router = useRouter();
@@ -42,8 +43,19 @@ const LoginBox = () => {
     }
   };
 
-  const goGoogleLogin = () => {
-    window.location.href = "http://localhost:4000/auth/google";
+  // NAVER Oauth 구현
+
+  const CLIENT_ID = "VDL7dKDgnrOYEJFkIly6";
+  const CALLBACK_URL = "http://localhost:4000/naver/callback/oauth";
+
+  const goNaverLogin = () => {
+    window.location.href =
+      "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" +
+      CLIENT_ID +
+      "&redirect_uri=" +
+      CALLBACK_URL +
+      "&state=" +
+      "asd2222222";
   };
 
   return (
@@ -96,7 +108,7 @@ const LoginBox = () => {
           <button
             name="googleSignBtn"
             className="flex justify-center border-2 p-2 mt-2 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg bg-[#19C425]"
-            onClick={() => goGoogleLogin()}
+            onClick={() => goNaverLogin()}
           >
             <p className="mt-1 mr-4">
               <SiNaver color="white" />
