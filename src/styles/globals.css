@@ -1,8 +1,12 @@
 @font-face {
-  font-family: "CustomFontFamily";
+  font-family: "Slick";
   src: url("/node_modules/slick-carousel/slick/fonts/slick.woff") format("woff");
   font-display: swap;
 }
+.slick-font-classname .slick-slider {
+  font-family: "Slick-Font", sans-serif;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

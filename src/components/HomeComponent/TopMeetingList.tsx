@@ -80,7 +80,7 @@ const TopMeetingList = () => {
   };
 
   return (
-    <div className="mb-10 mt-2 flex flex-row mx-auto">
+    <div className="mb-10 mt-2 flex flex-row mx-auto slick-font-classname">
       <div className="ml-4">
         <div className="flex flex-start text-[22px] py-2 ml-4 ">
           <p className="mt-2 ">
