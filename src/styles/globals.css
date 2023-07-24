@@ -1,13 +1,16 @@
-/* @font-face {
+@font-face {
   font-family: "Slick";
   src: url("/static/media/slick.653a4cbb.woff") format("woff");
   font-display: swap;
-} */
-@font-face {
+}
+.slick-font {
+  font-family: "Slick", sans-serif;
+}
+/* @font-face {
   font-family: "Slick";
   src: url("/.next/static/media/slick.653a4cbb.woff") format("woff");
   font-display: swap;
-}
+} */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
