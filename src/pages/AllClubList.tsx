@@ -1,5 +1,5 @@
 import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
-import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
+// import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
 import React from "react";
 import InfiniteScrollClubList from "@/components/SearchPage/InfiniteScrollClubList";
 
@@ -15,7 +15,7 @@ const AllClubList = () => {
 
         <div className="flex flex-col w-5/6">
           <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">
-            <TopMeetingList />
+            {/* <TopMeetingList /> */}
           </div>
           <InfiniteScrollClubList />
         </div>
