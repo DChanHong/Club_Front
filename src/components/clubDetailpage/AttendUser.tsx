@@ -31,6 +31,7 @@ import { getAllChatInfo } from "@/Types";
 import ClubDetailSideBarHostInfo from "./ClubDetailSideBarHostInfo";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useCallback, useMemo } from "react";
 
 const AttendUser = () => {
   const router = useRouter();
@@ -42,7 +43,7 @@ const AttendUser = () => {
 
   // 가입 , 탈퇴
   const [join, setJoin] = useState(false); //true : 가입된 상태 , false: 틸퇴 상태 0을 주는것이 좋다.
-  const getClubDetailUserList = async () => {
+  const getClubDetailUserList = useCallback(async () => {
     const axiosData = { data: C_IDX };
 
     try {
@@ -53,11 +54,14 @@ const AttendUser = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [C_IDX]);
   // console.log(C_IDX);
+
   //호스트 체크
   const [hostCheck, setHostCheck] = useState<string>("");
-  const checkHost = async () => {
+
+  //C_IDX가 변경될 때마다 해당 함수가 새로 생성된다.
+  const checkHost = useCallback(async () => {
     const axiosData = { data: C_IDX };
     try {
       const result = await axiosInstance.get("/club/host/check-info", {
@@ -67,8 +71,7 @@ const AttendUser = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-  // console.log(hostCheck);
+  }, [C_IDX]);
 
   useEffect(() => {
     checkHost();

@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import imageURL from "@/utils/imageUrl";
+import { useCallback } from "react";
 
 const EntranceHistory = () => {
   const router = useRouter();
@@ -20,11 +21,11 @@ const EntranceHistory = () => {
   };
   useEffect(() => {}, [removeHistoryClub]);
 
-  const moveClub = (data: number) => {
+  const moveClub = useCallback((data: number) => {
     router.push({
       pathname: `/clubDetailPage/${data}`,
     });
-  };
+  }, []);
 
   return (
     <>

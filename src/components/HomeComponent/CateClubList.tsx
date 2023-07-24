@@ -8,6 +8,8 @@ import { BiRightArrow } from "react-icons/bi";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import imageURL from "@/utils/imageUrl";
+import { useCallback, useMemo } from "react";
+
 const CateClubList = ({ data }: { data: string }) => {
   const propsdata = data;
 
@@ -32,36 +34,41 @@ const CateClubList = ({ data }: { data: string }) => {
   //
   const router = useRouter();
 
-  const clubRouterButton = (data: string) => {
-    router.push({
-      pathname: `/clubDetailPage/${data}`,
-    });
-  };
+  const clubRouterButton = useCallback(
+    (data: string) => {
+      router.push({
+        pathname: `/clubDetailPage/${data}`,
+      });
+    },
+    [router]
+  );
 
-  const moveCateIndex = (data: string) => {
+  const moveCateIndex = useCallback((data: string) => {
     router.push({
       pathname: `/CateIndex/${data}`,
     });
-  };
+  }, []);
 
   // 동아리 입장 박스 스켈레톤
-  const ClubMoveSkeletonBox = () => {
-    return (
-      <div className="flex border-4 rounded-xl w-[26rem] mr-4 my-2">
-        <div className="flex">
-          <div className="m-3 w-[8rem] ">
-            <Skeleton count={1} className=" h-[6rem]" />
-          </div>
-          <div className="mt-2">
-            <Skeleton count={1} width={200} className="mt-3" />
-            <Skeleton count={1} width={200} />
-            <Skeleton count={1} width={200} className="mt-2" />
-            <Skeleton count={1} width={80} className="mt-2" />
+  const ClubMoveSkeletonBox = () =>
+    useMemo(
+      () => (
+        <div className="flex border-4 rounded-xl w-[26rem] mr-4 my-2">
+          <div className="flex">
+            <div className="m-3 w-[8rem] ">
+              <Skeleton count={1} className=" h-[6rem]" />
+            </div>
+            <div className="mt-2">
+              <Skeleton count={1} width={200} className="mt-3" />
+              <Skeleton count={1} width={200} />
+              <Skeleton count={1} width={200} className="mt-2" />
+              <Skeleton count={1} width={80} className="mt-2" />
+            </div>
           </div>
         </div>
-      </div>
+      ),
+      []
     );
-  };
 
   return (
     <div
