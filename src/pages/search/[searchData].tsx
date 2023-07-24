@@ -1,5 +1,5 @@
 import SearchList from "@/components/SearchPage/SearchList";
-import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
+// import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
 import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
 
 const PostPage = () => {
@@ -11,7 +11,7 @@ const PostPage = () => {
         </div>
         <div className="flex flex-col w-5/6">
           <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">
-            <TopMeetingList />
+            {/* <TopMeetingList /> */}
           </div>
           <div>
             <SearchList />
