@@ -15,19 +15,19 @@ const nextConfig = {
       },
     ],
   },
-  // async headers() {
-  //   return [
-  //     {
-  //       source: "/(.*)",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "public, max-age=31536000, immutable", // 1 year in seconds
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable", // 1 year in seconds
+          },
+        ],
+      },
+    ];
+  },
   webpack(config, options) {
     return config;
   },
