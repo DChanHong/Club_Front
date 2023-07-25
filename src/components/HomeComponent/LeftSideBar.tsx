@@ -68,7 +68,7 @@ const LeftSideBar = (data: any) => {
                   data.data === "홈" ? "bg-[#EFF6FF]" : ""
                 } `}
                 onClick={() => goHome()}
-                id="HomeButton"
+                name="HomeButton"
               >
                 <div className="flex py-3.5">
                   <p className="pt-1 pl-12">
@@ -83,7 +83,7 @@ const LeftSideBar = (data: any) => {
                   data.data === "전체" ? "bg-[#EFF6FF]" : ""
                 } `}
                 onClick={() => goAllClubListPage()}
-                id="allClubShowButton"
+                name="allClubShowButton"
               >
                 <div className="flex py-3.5">
                   <p className="pt-1 pl-12">
@@ -101,7 +101,7 @@ const LeftSideBar = (data: any) => {
                   className={`hover:bg-[#EFF6FF] w-full h-full ${
                     item.name === data.data ? "bg-[#EFF6FF]" : ""
                   } `}
-                  id={`${item.name}button`}
+                  name={`${item.name}button`}
                 >
                   <div className="flex py-3.5">
                     <p className="pt-1 pl-12">{item.icon}</p>
@@ -126,7 +126,7 @@ const LeftSideBar = (data: any) => {
               data.data === "홈" ? "bg-[#EFF6FF]" : ""
             } `}
             onClick={() => goHome()}
-            id="homeButton"
+            name="homeButton"
           >
             <div className="flex py-3.5">
               <p className="pt-1 pl-12">
@@ -141,7 +141,7 @@ const LeftSideBar = (data: any) => {
               data.data === "전체" ? "bg-[#EFF6FF]" : ""
             } `}
             onClick={() => goAllClubListPage()}
-            id="showAllClubButton"
+            name="showAllClubButton"
           >
             <div className="flex py-3.5">
               <p className="pt-1 pl-12">
@@ -159,7 +159,7 @@ const LeftSideBar = (data: any) => {
               className={`hover:bg-[#EFF6FF] w-full h-full ${
                 item.name === data.data ? "bg-[#EFF6FF]" : ""
               } `}
-              id={`${item.name}button`}
+              name={`${item.name}button`}
             >
               <div className="flex py-3.5">
                 <p className="pt-1 pl-12">{item.icon}</p>

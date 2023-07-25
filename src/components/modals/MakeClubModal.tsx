@@ -229,7 +229,7 @@ const MakeClubModal = () => {
                   type="button"
                   onClick={handleSubmit}
                   className="bg-blue-600 text-white p-2 rounded-xl border-2 w-[22rem] "
-                  id="makeId"
+                  name="makeId"
                 >
                   생성하기
                 </button>

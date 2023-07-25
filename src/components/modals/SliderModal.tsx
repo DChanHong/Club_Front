@@ -122,7 +122,7 @@ const SliderModal = (C_IDX: any) => {
                       <button
                         type="button"
                         onClick={closeModal}
-                        id="closeModal"
+                        name="closeModal"
                       >
                         <IoMdClose size={18} />
                       </button>
@@ -155,7 +155,7 @@ const SliderModal = (C_IDX: any) => {
                               className="mt-1"
                               type="button"
                               onClick={() => clubRouterButton(item?.C_IDX)}
-                              id="clubEntranceButton"
+                              name="clubEntranceButton"
                             >
                               <p className="bg-blue-600 border-2 border-blue-600  rounded-xl text-white text-[14px] h-[25px] ">
                                 입장하기
