@@ -17,8 +17,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { useAppSelector } from "@/store/hooks";
 import { OPEN_SLIDER_MODAL } from "@/store/slice/isSliderModalSlice";
 import imageURL from "@/utils/imageUrl";
-import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
+
 const TopMeetingList = () => {
   const [imgList, setImages] = useState<slideInfo[]>([]);
   const [loading, setLoading] = useState(false);
@@ -81,7 +80,7 @@ const TopMeetingList = () => {
   };
 
   return (
-    <div className={`mb-10 mt-2 flex flex-row mx-auto ${inter.className}`}>
+    <div className="mb-10 mt-2 flex flex-row mx-auto">
       <div className="ml-4">
         <div className="flex flex-start text-[22px] py-2 ml-4 ">
           <p className="mt-2 ">

@@ -9,7 +9,8 @@ import React from "react";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { PersistGate } from "redux-persist/integration/react";
-
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"] });
 export default function App({ Component, pageProps }: AppProps) {
   // useState lazy init을 사용해  QueryClient 인스턴스를 생성해 QueryClientProvider의 client 값으로 전달해준다.
   const [queryClient] = useState(() => new QueryClient());
@@ -25,7 +26,9 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
 
         <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
+          <main className={inter.className}>
+            <Component {...pageProps} />
+          </main>
         </QueryClientProvider>
       </PersistGate>
     </Provider>
