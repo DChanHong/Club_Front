@@ -9,15 +9,11 @@ import { Inter } from "next/font/google";
 
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { PersistGate } from "redux-persist/integration/react";
-import { SessionProvider } from "next-auth/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   // useState lazy init을 사용해  QueryClient 인스턴스를 생성해 QueryClientProvider의 client 값으로 전달해준다.
   const [queryClient] = useState(() => new QueryClient());
-
-  // If loading a variable font, you don't need to specify the font weight
 
   return (
     <Provider store={store}>
