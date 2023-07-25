@@ -18,7 +18,7 @@ import { useAppSelector } from "@/store/hooks";
 import { OPEN_SLIDER_MODAL } from "@/store/slice/isSliderModalSlice";
 import imageURL from "@/utils/imageUrl";
 import { Inter } from "next/font/google";
-
+const inter = Inter({ subsets: ["latin"] });
 const TopMeetingList = () => {
   const [imgList, setImages] = useState<slideInfo[]>([]);
   const [loading, setLoading] = useState(false);
@@ -79,8 +79,6 @@ const TopMeetingList = () => {
     setMoadlIndex(C_IDX);
     dispatch(OPEN_SLIDER_MODAL(true));
   };
-
-  const inter = Inter({ subsets: ["latin"] });
 
   return (
     <div className={`mb-10 mt-2 flex flex-row mx-auto ${inter.className}`}>

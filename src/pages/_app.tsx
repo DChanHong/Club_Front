@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import Header from "@/components/EssentialComponent/Header";
 import Head from "next/head";
 import React from "react";
-import { Inter } from "next/font/google";
 
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
