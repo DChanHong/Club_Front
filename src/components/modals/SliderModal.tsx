@@ -119,7 +119,11 @@ const SliderModal = (C_IDX: any) => {
                 <div className="relative">
                   <div className="pb-2 ">
                     <div className=" flex flex-row-reverse mb-2">
-                      <button type="button" onClick={closeModal}>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        name="closeModal"
+                      >
                         <IoMdClose size={18} />
                       </button>
                     </div>
@@ -133,17 +137,10 @@ const SliderModal = (C_IDX: any) => {
                             alt={`${item.C_IDX}`}
                             width="250"
                             height="10"
-
-                            // unoptimized={true}
                           />
                         </div>
                         <div className=" ">
                           <div className="flex flex-col  w-[18rem] h-[10rem]">
-                            {/* <div className="flex flex-row-reverse">
-                              <button type="button" onClick={closeModal}>
-                                <IoMdClose size={18} />
-                              </button>
-                            </div> */}
                             <p className="text-[17px] text-center border-2 rounded-xl mb-1 h-[30px] ">
                               {" "}
                               {item.C_NAME}
@@ -158,6 +155,7 @@ const SliderModal = (C_IDX: any) => {
                               className="mt-1"
                               type="button"
                               onClick={() => clubRouterButton(item?.C_IDX)}
+                              name="clubEntranceButton"
                             >
                               <p className="bg-blue-600 border-2 border-blue-600  rounded-xl text-white text-[14px] h-[25px] ">
                                 입장하기

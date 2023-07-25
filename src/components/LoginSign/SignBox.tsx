@@ -165,6 +165,7 @@ const SignBox = () => {
               <button
                 type="submit"
                 className="mt-6 bg-blue-600 rounded-2xl w-80 py-3 px-3 text-lg"
+                name="signButton"
               >
                 <p className="text-white">가입하기</p>
               </button>

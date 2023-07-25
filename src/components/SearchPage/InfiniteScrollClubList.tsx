@@ -177,6 +177,7 @@ const InfiniteScrollClubList = () => {
                         className="  mb-2 "
                         type="button"
                         onClick={() => clubRouterButton(String(item?.C_IDX))}
+                        name="clubEntranceButton"
                       >
                         <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                           입장하기

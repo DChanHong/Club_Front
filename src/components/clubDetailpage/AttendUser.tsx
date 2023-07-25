@@ -446,6 +446,7 @@ const AttendUser = () => {
               onClick={() => moveSideBar(0)}
               className="flex pl-4 mb-6
               "
+              name="firstPage"
             >
               <p className="pt-1.5 ">
                 <GrSchedulePlay />
@@ -458,6 +459,7 @@ const AttendUser = () => {
               type="button"
               onClick={() => moveSideBar(1)}
               className="flex mb-6 pl-4"
+              name="noticePage"
             >
               <p className="pt-1.5 ">
                 <FaMicrophoneAlt />
@@ -470,6 +472,7 @@ const AttendUser = () => {
               type="button"
               onClick={() => moveSideBar(2)}
               className="flex mb-6 pl-4"
+              name="messagePage"
             >
               <p className="pt-1.5 ">
                 <BsMessenger />
@@ -481,7 +484,7 @@ const AttendUser = () => {
       </div>
       {/* 960px 이하일 경우 사이드바 뛰어 주는 부분 */}
       <div className="mr-2 md:hidden">
-        <button type="button" onClick={sideBurgetHandle}>
+        <button type="button" onClick={sideBurgetHandle} name="sideBugerBar">
           <RxHamburgerMenu size={34} />
         </button>
         {burgerMenuState ? (
@@ -494,6 +497,7 @@ const AttendUser = () => {
                   onClick={() => moveSideBar(0)}
                   className="flex my-2 pl-4
               "
+                  name="firstPage"
                 >
                   <p className="pt-1.5 ">
                     <GrSchedulePlay />
@@ -506,6 +510,7 @@ const AttendUser = () => {
                   type="button"
                   onClick={() => moveSideBar(1)}
                   className="flex my-2 pl-4"
+                  name="noticePage"
                 >
                   <p className="pt-1.5 ">
                     <FaMicrophoneAlt />
@@ -518,6 +523,7 @@ const AttendUser = () => {
                   type="button"
                   onClick={() => moveSideBar(2)}
                   className="flex my-2 pl-4"
+                  name="messagePage"
                 >
                   <p className="pt-1.5 ">
                     <BsMessenger />
@@ -545,6 +551,7 @@ const AttendUser = () => {
                 <button
                   className="bg-[#E00050] border-2 p-1 shadow-lg rounded-full text-white mt-1 mx-1"
                   onClick={showModal}
+                  name="updateButton"
                 >
                   <IoAddOutline />
                 </button>
@@ -560,7 +567,12 @@ const AttendUser = () => {
             </div>
             <div className="text-center p-1 ml-6">
               {join || hostCheck === "host" ? (
-                <button type="button" onClick={LeaveClub} className="flex  ">
+                <button
+                  type="button"
+                  onClick={LeaveClub}
+                  className="flex"
+                  name=""
+                >
                   <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
                   <div className=" mr-1 text-[#D2D5D9] text-[15px]">
                     exit
@@ -731,7 +743,12 @@ const AttendUser = () => {
 
             <div className="text-center p-1 ml-6">
               {join || hostCheck === "host" ? (
-                <button type="button" onClick={LeaveClub} className="flex  ">
+                <button
+                  type="button"
+                  onClick={LeaveClub}
+                  className="flex"
+                  name="leaveClubButton"
+                >
                   <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
                   <div className=" mr-1 text-[#D2D5D9] text-[15px]">
                     exit
@@ -742,6 +759,7 @@ const AttendUser = () => {
                   type="button"
                   onClick={JoinClub}
                   className="w-full h-full my-2 bg-blue-500 text-white outline outline-slate-200 rounded-xl"
+                  name="JoinClubButton"
                 >
                   가입하기
                 </button>
@@ -772,7 +790,12 @@ const AttendUser = () => {
             </div>
             <div className="text-center p-1 ml-6">
               {join || hostCheck === "host" ? (
-                <button type="button" onClick={LeaveClub} className="flex">
+                <button
+                  type="button"
+                  onClick={LeaveClub}
+                  className="flex"
+                  name="leaveClubButton"
+                >
                   <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
                   <div className=" mr-1 text-[#D2D5D9] text-[15px]">
                     exit
@@ -783,6 +806,7 @@ const AttendUser = () => {
                   type="button"
                   onClick={JoinClub}
                   className="w-full h-full my-2 bg-blue-500 text-white outline outline-slate-200 rounded-xl"
+                  name="joinClubButton"
                 >
                   가입하기
                 </button>
@@ -856,7 +880,11 @@ const AttendUser = () => {
                   placeholder="채팅을 입력해주세요"
                   ref={chatRef}
                 />
-                <button className=" mx-2 rounded-xl" onClick={() => sendChat()}>
+                <button
+                  className=" mx-2 rounded-xl"
+                  onClick={() => sendChat()}
+                  name="sendChattingButton"
+                >
                   <MdSend />
                 </button>
               </div>
@@ -878,7 +906,12 @@ const AttendUser = () => {
         <div className="p-1 mx-2">
           <div className="text-center">
             {join || hostCheck === "host" ? (
-              <button type="button" onClick={LeaveClub} className="flex  ">
+              <button
+                type="button"
+                onClick={LeaveClub}
+                className="flex"
+                name="leaveClubButton"
+              >
                 <ImExit className="pt-1.5" color="#D2D5D9" size={20} />
                 <div className=" mr-1 text-[#D2D5D9] text-[15px]">
                   exit
@@ -889,6 +922,7 @@ const AttendUser = () => {
                 type="button"
                 onClick={JoinClub}
                 className="w-full h-full my-2 bg-blue-500 text-white outline outline-slate-200 rounded-xl"
+                name="joinClubButton"
               >
                 가입하기
               </button>

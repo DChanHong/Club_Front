@@ -152,7 +152,7 @@ const ClubContext: React.FC<Props> = ({ hostCheck }) => {
             {hostCheck === "host" ? (
               <div>
                 <div className="flex flex-row-reverse mr-2">
-                  <button>
+                  <button type="button" name="imgChangeStateButton">
                     <CiImageOn onClick={() => toggleImgState()} size={25} />
                   </button>
                 </div>
@@ -168,6 +168,7 @@ const ClubContext: React.FC<Props> = ({ hostCheck }) => {
                         <button
                           className="outline rounded-xl px-2 mt-2"
                           type="submit"
+                          name="imgUploadButton"
                         >
                           upload
                         </button>

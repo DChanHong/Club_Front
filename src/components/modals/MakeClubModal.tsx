@@ -244,6 +244,8 @@ const MakeClubModal = () => {
             <button
               className="bg-[#E00050] p-1 rounded-full text-white mt-1 mx-1 "
               onClick={showModal}
+              type="button"
+              name="clubModalToggleButton"
             >
               <IoAddOutline size={26} />
             </button>
@@ -303,6 +305,7 @@ const MakeClubModal = () => {
                     className="mb-2"
                     type="button"
                     onClick={() => clubRouterButton(Number(item?.C_IDX))}
+                    name="clubEntranceButton"
                   >
                     <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                       입장하기

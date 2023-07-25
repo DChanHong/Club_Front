@@ -92,7 +92,7 @@ const Navbar = () => {
         </div>
         <div className="ml-[58rem]">
           <input type="text" className="m-2 border-2" ref={clubSearch} />
-          <button type="button" onClick={routeSearchPage}>
+          <button type="button" onClick={routeSearchPage} name="searchButton">
             검색
           </button>
         </div>

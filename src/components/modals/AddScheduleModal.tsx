@@ -121,7 +121,11 @@ const AddScheduleModal = (data: any) => {
                 <div>
                   <div className="flex flex-col ">
                     <div className=" flex flex-row-reverse mb-2">
-                      <button type="button" onClick={closeModal}>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        name="modalScheduleButton"
+                      >
                         <IoMdClose size={18} />
                       </button>
                     </div>
@@ -157,16 +161,15 @@ const AddScheduleModal = (data: any) => {
                           날짜 선택
                         </div>
                         <div>
-                          <button type="button" onClick={handleCalenderButton}>
+                          <button
+                            type="button"
+                            onClick={handleCalenderButton}
+                            name="closeButton"
+                          >
                             <GrFormCalendar size={40} />
                           </button>
                         </div>
                         <div className="">
-                          {/* <input
-                            className="mt-2 ml-2 text-[18px]"
-                            type="text"
-                            defaultValue={selectedDate}
-                          /> */}
                           <div className="mt-2 ml-2 text-[18px]">
                             {moment(selectedDate).format("YYYY-MM-DD")}
                           </div>
@@ -185,6 +188,7 @@ const AddScheduleModal = (data: any) => {
                           type="button"
                           onClick={handleSubmit}
                           className="bg-blue-600 text-white p-2 rounded-xl border-2 w-[22rem] "
+                          name="makeScheduleButton"
                         >
                           {" "}
                           생성하기{" "}

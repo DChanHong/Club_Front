@@ -142,6 +142,7 @@ const TextBox = (S_IDX: any) => {
               type="button"
               className="mx-1 px-2 rounded-xl"
               onClick={handleSubmit}
+              name="ChatContextSubmitButton"
             >
               <MdSend />
             </button>
@@ -166,6 +167,8 @@ const TextBox = (S_IDX: any) => {
                 <p>
                   <button
                     onClick={() => deleteTemporaryContext(Number(item.id))}
+                    type="button"
+                    name="deleteContextButton"
                   >
                     <GrFormClose />
                   </button>
@@ -193,7 +196,11 @@ const TextBox = (S_IDX: any) => {
                 {item.U_NAME} :&nbsp; {item.CO_CONTEXT}
               </p>
               {item.U_NAME === userName ? (
-                <button onClick={() => deleteContext(Number(item.CO_IDX))}>
+                <button
+                  onClick={() => deleteContext(Number(item.CO_IDX))}
+                  type="button"
+                  name="deleteContextButton"
+                >
                   <GrFormClose />
                 </button>
               ) : (

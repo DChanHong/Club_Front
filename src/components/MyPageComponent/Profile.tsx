@@ -125,8 +125,6 @@ const Profile = () => {
                 alt={`${userinfo?.U_EMAIL}`}
                 width={400}
                 height={400}
-
-                // unoptimized={true}
               />
             </div>
             <div>
@@ -138,6 +136,7 @@ const Profile = () => {
                       <button
                         className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
                         type="submit"
+                        name="changeImgButton"
                       >
                         Upload
                       </button>
@@ -149,7 +148,12 @@ const Profile = () => {
               )}
             </div>
             <div className="flex flex-row-reverse mt-2">
-              <button className="flex" onClick={handleUpdateBox}>
+              <button
+                className="flex"
+                onClick={handleUpdateBox}
+                type="button"
+                name="updateImgButton"
+              >
                 <p className="mt-2 text-[#62656B]">Update</p>
                 <CiImageOn className="mr-2" color="#62656B" size={40} />
               </button>
@@ -177,7 +181,11 @@ const Profile = () => {
             </div>
             <div className="text-[#3E4249] flex flex-row-reverse">
               <div className="mr-4 mb-2">
-                <button type="button" onClick={withdrawalUser}>
+                <button
+                  type="button"
+                  onClick={withdrawalUser}
+                  name="withrwalButton"
+                >
                   탈퇴하기
                 </button>
               </div>
@@ -187,7 +195,12 @@ const Profile = () => {
 
         {/* 960px 이하일 경우 */}
         <div className="block md:hidden">
-          <button type="button" className="mr-2" onClick={handldeSideState}>
+          <button
+            type="button"
+            className="mr-2"
+            onClick={handldeSideState}
+            name="sideToggleButton"
+          >
             <RxHamburgerMenu size={20} />
           </button>
           {sideState ? (

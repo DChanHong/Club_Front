@@ -103,14 +103,20 @@ const LoginBox = () => {
             </div>
           )}
           <div className="flex justify-center">
-            <button className="my-2 bg-blue-600 rounded-2xl w-60 py-3 px-3 text-lg text-white">
+            <button
+              className="my-2 bg-blue-600 rounded-2xl w-60 py-3 px-3 text-lg text-white"
+              type="button"
+              name="loginButton"
+            >
               로그인
             </button>
           </div>
         </form>
         <div className="flex flex-row-reverse m-4 w-60">
           <Link href="/UserSign">
-            <button>회원가입</button>
+            <button type="button" name="moveSignFormButton">
+              회원가입
+            </button>
           </Link>
         </div>
         <div className="rounded-2xl flex justify-center bg-[#23B814]">

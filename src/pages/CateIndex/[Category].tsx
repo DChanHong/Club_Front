@@ -124,10 +124,18 @@ const CategoryIndex = () => {
           </div>
           <div>
             <div className="flex justify-center mr-40 my-10">
-              <button onClick={moveFirstPage}>
+              <button
+                onClick={moveFirstPage}
+                type="button"
+                name="movePageFirtButton"
+              >
                 <BiFirstPage size={30} color="#8F92B3" />
               </button>
-              <button onClick={moveLeftpage}>
+              <button
+                onClick={moveLeftpage}
+                type="button"
+                name="pageLeftButton"
+              >
                 <MdOutlineArrowBackIosNew color="#8F92B3" size={20} />
               </button>
               {naviList.map((item, index) => (
@@ -138,16 +146,28 @@ const CategoryIndex = () => {
                     item === selectedPage ? "bg-[#5CE8D7]" : ""
                   }`}
                 >
-                  <button type="button" className=" w-full h-full ">
+                  <button
+                    type="button"
+                    className=" w-full h-full"
+                    name={`${index}button`}
+                  >
                     {item}
                   </button>
                 </div>
               ))}
 
-              <button onClick={moveRightPage}>
+              <button
+                onClick={moveRightPage}
+                type="button"
+                name="pageRightButton"
+              >
                 <MdOutlineArrowForwardIos color="#8F92B3" size={20} />
               </button>
-              <button onClick={moveLastPage}>
+              <button
+                onClick={moveLastPage}
+                type="button"
+                name="moveLastPageButton"
+              >
                 <BiLastPage color="#8F92B3" size={30} />
               </button>
             </div>

@@ -101,7 +101,12 @@ const TopMeetingList = () => {
           </>
         ) : (
           <div className="flex w-auto mx-auto ">
-            <button onClick={handlePrevClick} className="hidden md:block mr-6">
+            <button
+              onClick={handlePrevClick}
+              className="hidden md:block mr-6"
+              type="button"
+              name="carouselLeftButton"
+            >
               <AiFillCaretLeft />
             </button>
 
@@ -127,19 +132,33 @@ const TopMeetingList = () => {
                 </div>
               ))}
             </Slider>
-            <button onClick={handleNextClick}>
+            <button
+              onClick={handleNextClick}
+              type="button"
+              name="carouselMoveButton"
+            >
               <AiFillCaretRight />
             </button>
           </div>
         )}
         <div className="flex block mt-2 md:hidden">
           <div>
-            <button onClick={handlePrevClick} className="p-2">
+            <button
+              onClick={handlePrevClick}
+              className="p-2"
+              type="button"
+              name="carouselLeftButton"
+            >
               <AiFillCaretLeft />
             </button>
           </div>
           <div>
-            <button className="p-2" onClick={handleNextClick}>
+            <button
+              className="p-2"
+              onClick={handleNextClick}
+              type="button"
+              name="carouselMoveButton"
+            >
               <AiFillCaretRight />
             </button>
           </div>

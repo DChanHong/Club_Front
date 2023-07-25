@@ -87,6 +87,7 @@ const CateClubList = ({ data }: { data: string }) => {
           type="button"
           className="flex"
           onClick={() => moveCateIndex(String(propsdata))}
+          name="clubTotalShwoButton"
         >
           <p className=" ml-4 mt-2 ">
             <BiRightArrow size={20} color="#BDC3CC" />
@@ -146,6 +147,7 @@ const CateClubList = ({ data }: { data: string }) => {
                       className="  mb-2 "
                       type="button"
                       onClick={() => clubRouterButton(String(item?.C_IDX))}
+                      name="clubEntranceButton"
                     >
                       <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                         입장하기
