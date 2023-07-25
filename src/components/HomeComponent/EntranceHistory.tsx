@@ -44,7 +44,7 @@ const EntranceHistory = () => {
                   className="flex"
                   onClick={() => moveClub(Number(item.C_IDX))}
                   type="button"
-                  name="clubEntranceButton"
+                  id="clubEntranceButton"
                 >
                   <div className="border-2 rounded-full w-[45px] h-[45px] ml-2">
                     <Image
@@ -68,7 +68,7 @@ const EntranceHistory = () => {
                 <button
                   onClick={() => removeHistoryClub(Number(item.C_IDX))}
                   type="button"
-                  name="removeHistoryButton"
+                  id="removeHistoryButton"
                 >
                   <IoIosClose className="mb-7 ml-2" />
                 </button>

@@ -94,7 +94,7 @@ const Header = () => {
                 type="button"
                 onClick={routeSearchPage}
                 className="px-1 "
-                name="searchPageButton"
+                id="searchPageButton"
               >
                 <p>
                   <BiSearch size={25} />
@@ -120,7 +120,7 @@ const Header = () => {
               <div className="text-[#946CEE] mt-1">회원가입</div>
             </Link>
           ) : (
-            <button type="button" onClick={logout} name="logoutButton">
+            <button type="button" onClick={logout} id="logoutButton">
               <div className="text-[14px] text-slate-400 pb-2">로그아웃</div>
             </button>
           )}

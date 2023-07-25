@@ -105,7 +105,7 @@ const TopMeetingList = () => {
               onClick={handlePrevClick}
               className="hidden md:block mr-6"
               type="button"
-              name="carouselLeftButton"
+              id="carouselLeftButton"
             >
               <AiFillCaretLeft />
             </button>
@@ -135,7 +135,7 @@ const TopMeetingList = () => {
             <button
               onClick={handleNextClick}
               type="button"
-              name="carouselMoveButton"
+              id="carouselMoveButton"
             >
               <AiFillCaretRight />
             </button>
@@ -147,7 +147,7 @@ const TopMeetingList = () => {
               onClick={handlePrevClick}
               className="p-2"
               type="button"
-              name="carouselLeftButton"
+              id="carouselLeftButton"
             >
               <AiFillCaretLeft />
             </button>
@@ -157,7 +157,7 @@ const TopMeetingList = () => {
               className="p-2"
               onClick={handleNextClick}
               type="button"
-              name="carouselMoveButton"
+              id="carouselMoveButton"
             >
               <AiFillCaretRight />
             </button>

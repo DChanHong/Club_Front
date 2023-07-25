@@ -117,7 +117,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
           <p className="text-[#C6CACF] text-[11px]">Update Notice</p>
           <p></p>
           {hostCheck === "host" ? (
-            <button type="button" onClick={showModal} name="showModalButton">
+            <button type="button" onClick={showModal} id="showModalButton">
               <GrUpdate />
             </button>
           ) : (
@@ -165,7 +165,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
               <div className="flex justify-between">
                 <div></div>
                 <div className="ml-4 my-2 font-bold">Notice Update</div>
-                <button type="button" name="closeModalButton">
+                <button type="button" id="closeModalButton">
                   <GrFormClose size={20} onClick={showModal} />
                 </button>
               </div>
@@ -184,7 +184,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
                 className="mr-4 mt-2 border-2 text-white bg-blue-500 p-1 rounded-xl px-2"
                 type="button"
                 onClick={handleUpdateSubmit}
-                name="noticeUpdateButton"
+                id="noticeUpdateButton"
               >
                 업데이트하기
               </button>
