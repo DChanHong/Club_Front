@@ -24,7 +24,7 @@ const LoginBox = () => {
       email: data.email,
       password: data.password,
     };
-
+    console.log(">>>>>");
     const loginValid = await axiosInstance.post(`/customer/login`, loginData, {
       withCredentials: true,
     });
@@ -58,7 +58,7 @@ const LoginBox = () => {
       "asd2222222";
   };
   useEffect(() => {
-    console.log(router.query);
+    // console.log(router.query);
     const login = router.query;
     if (login.login === "true") {
       dispatch(SET_IS_LOGIN(true));
@@ -90,7 +90,7 @@ const LoginBox = () => {
           <div className="flex justify-center ">
             <input
               {...register("password", {
-                required: "비밀먼호를 입력해주세요",
+                required: "비밀번호를 입력해주세요",
               })}
               className="border-2 w-60 py-3 rounded-2xl px-3 text-lg"
               type="password"
@@ -105,8 +105,7 @@ const LoginBox = () => {
           <div className="flex justify-center">
             <button
               className="my-2 bg-blue-600 rounded-2xl w-60 py-3 px-3 text-lg text-white"
-              type="button"
-              name="loginButton"
+              type="submit"
             >
               로그인
             </button>
