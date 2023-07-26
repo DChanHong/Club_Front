@@ -9,6 +9,8 @@ import { BiRightArrow } from "react-icons/bi";
 import { IoPeopleSharp } from "react-icons/io5";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
 
 interface ClubApiResponse {
   items: cateClubInfo[];
@@ -18,12 +20,20 @@ interface ClubApiResponse {
 const InfiniteScrollClubList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-
-  const clubRouterButton = (data: string) => {
-    router.push({
-      pathname: `/clubDetailPage/${data}`,
-    });
-  };
+  const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
+  const clubRouterButton = useCallback(
+    (data: string) => {
+      if (login === true) {
+        router.push({
+          pathname: `/clubDetailPage/${data}`,
+        });
+      } else {
+        alert("로그인이 필요합니다.");
+        router.push({ pathname: "/Login" });
+      }
+    },
+    [router]
+  );
 
   const selectInfiniteClubList = async ({
     pageParam = 0,

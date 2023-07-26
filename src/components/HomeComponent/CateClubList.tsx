@@ -3,14 +3,19 @@ import axiosInstance from "@/utils/axiosInstance";
 import { cateClubInfo } from "@/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { IoPeopleSharp } from "react-icons/io5";
+import { IoEllipseSharp, IoPeopleSharp } from "react-icons/io5";
 import { BiRightArrow } from "react-icons/bi";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import imageURL from "@/utils/imageUrl";
 import { useCallback, useMemo } from "react";
 
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
+
 const CateClubList = ({ data }: { data: string }) => {
+  const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
+
   const propsdata = data;
 
   const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
@@ -36,9 +41,14 @@ const CateClubList = ({ data }: { data: string }) => {
 
   const clubRouterButton = useCallback(
     (data: string) => {
-      router.push({
-        pathname: `/clubDetailPage/${data}`,
-      });
+      if (login === true) {
+        router.push({
+          pathname: `/clubDetailPage/${data}`,
+        });
+      } else {
+        alert("로그인이 필요합니다.");
+        router.push({ pathname: "/Login" });
+      }
     },
     [router]
   );

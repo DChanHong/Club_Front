@@ -4,7 +4,8 @@ import axiosInstance from "@/utils/axiosInstance";
 import { cateClubInfo } from "@/Types";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
 import { CLOSE_SLIDER_MODAL } from "@/store/slice/isSliderModalSlice";
 import imageURL from "@/utils/imageUrl";
 
@@ -32,10 +33,17 @@ const SliderModal = (C_IDX: any) => {
     dispatch(CLOSE_SLIDER_MODAL(false));
   };
 
+  const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
+
   const clubRouterButton = (data: any) => {
-    router.push({
-      pathname: `/clubDetailPage/${data}`,
-    });
+    if (login === true) {
+      router.push({
+        pathname: `/clubDetailPage/${data}`,
+      });
+    } else {
+      alert("로그인이 필요합니다.");
+      router.push({ pathname: "/Login" });
+    }
   };
 
   return (

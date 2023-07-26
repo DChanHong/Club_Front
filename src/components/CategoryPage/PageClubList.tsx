@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
 import axiosInstance from "@/utils/axiosInstance";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { cateClubInfo } from "@/Types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import imageURL from "@/utils/imageUrl";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
 
 interface Props {
   pageNumber: number;
@@ -32,11 +34,20 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
     }
   };
 
-  const clubRouterButton = (data: any) => {
-    router.push({
-      pathname: `/clubDetailPage/${data}`,
-    });
-  };
+  const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
+  const clubRouterButton = useCallback(
+    (data: string) => {
+      if (login === true) {
+        router.push({
+          pathname: `/clubDetailPage/${data}`,
+        });
+      } else {
+        alert("로그인이 필요합니다.");
+        router.push({ pathname: "/Login" });
+      }
+    },
+    [router]
+  );
 
   useEffect(() => {
     selectCategoryPage();
@@ -123,7 +134,7 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
                     <button
                       className="  mb-2 "
                       type="button"
-                      onClick={() => clubRouterButton(item?.C_IDX)}
+                      onClick={() => clubRouterButton(String(item?.C_IDX))}
                     >
                       <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                         입장하기

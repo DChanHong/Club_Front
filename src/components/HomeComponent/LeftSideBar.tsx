@@ -11,10 +11,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 const LeftSideBar = (data: any) => {
-  // console.log(data.data);
   const cateList = [
-    // { id: 1, name: "홈", icon: <AiOutlineHome /> },
-
     { id: 1, name: "스포츠", icon: <MdSportsVolleyball /> },
     { id: 2, name: "문화생활", icon: <TbBuildingCircus /> },
     { id: 3, name: "스터디", icon: <BsBook /> },
@@ -25,7 +22,6 @@ const LeftSideBar = (data: any) => {
   const router = useRouter();
 
   const moveCateIndex = (data: string) => {
-    // console.log(data);
     setSlideBurger(false);
     router.push({
       pathname: `/CateIndex/${data}`,
