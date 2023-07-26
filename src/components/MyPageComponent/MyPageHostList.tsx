@@ -47,26 +47,32 @@ const MyPageHostList = () => {
           </>
         ) : (
           <>
-            {hostList.map((item) => (
-              <div
-                className="flex border-2 border-gray-300 bg-white  rounded-lg my-4 py-3 pl-4 pr-4"
-                key={item.C_IDX}
-              >
-                <div className="my-1">
-                  <BsFilePersonFill size={30} />
-                </div>
-                <div>
-                  <div>
-                    <p className="text-[18px] font-bold">{item.C_NAME}</p>
+            {hostList.length === 0 ? (
+              <div className="mx-4 mt-4">내가 만든 동아리가 없습니다.</div>
+            ) : (
+              <>
+                {hostList.map((item) => (
+                  <div
+                    className="flex border-2 border-gray-300 bg-white  rounded-lg my-4 py-3 pl-4 pr-4"
+                    key={item.C_IDX}
+                  >
+                    <div className="my-1">
+                      <BsFilePersonFill size={30} />
+                    </div>
+                    <div>
+                      <div>
+                        <p className="text-[18px] font-bold">{item.C_NAME}</p>
+                      </div>
+                      <div className="flex text-[12px]">
+                        <p>#{item.C_CATEGORY}&nbsp;</p>
+                        <p>#{item.C_CATE_DETAIL}&nbsp;</p>
+                        <p>#{item.C_AREA}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex text-[12px]">
-                    <p>#{item.C_CATEGORY}&nbsp;</p>
-                    <p>#{item.C_CATE_DETAIL}&nbsp;</p>
-                    <p>#{item.C_AREA}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+                ))}
+              </>
+            )}
           </>
         )}
       </div>

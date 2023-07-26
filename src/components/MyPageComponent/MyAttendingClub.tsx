@@ -47,27 +47,33 @@ const MyAttendingClub: React.FC = () => {
           </>
         ) : (
           <>
-            {data.map((item) => (
-              <div
-                className="flex border-2 border-gray-300 bg-white 
+            {data.length === 0 ? (
+              <div className="mx-4 mt-4">가입한 동아리가 없습니다.</div>
+            ) : (
+              <>
+                {data.map((item) => (
+                  <div
+                    className="flex border-2 border-gray-300 bg-white 
             rounded-lg my-4 py-3 pl-4 px-4"
-                key={item.C_IDX}
-              >
-                <div className="mx-2 my-1 ">
-                  <FiUsers size={25} />
-                </div>
-                <div>
-                  <div>
-                    <p className="text-[18px] font-bold">{item.C_NAME}</p>
+                    key={item.C_IDX}
+                  >
+                    <div className="mx-2 my-1 ">
+                      <FiUsers size={25} />
+                    </div>
+                    <div>
+                      <div>
+                        <p className="text-[18px] font-bold">{item.C_NAME}</p>
+                      </div>
+                      <div className="flex text-[12px]">
+                        <p>#{item.C_CATEGORY}&nbsp;</p>
+                        <p>#{item.C_CATE_DETAIL}&nbsp;</p>
+                        <p>#{item.C_AREA}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex text-[12px]">
-                    <p>#{item.C_CATEGORY}&nbsp;</p>
-                    <p>#{item.C_CATE_DETAIL}&nbsp;</p>
-                    <p>#{item.C_AREA}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+                ))}
+              </>
+            )}
           </>
         )}
       </div>

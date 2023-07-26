@@ -24,12 +24,11 @@ const LoginBox = () => {
       email: data.email,
       password: data.password,
     };
-    console.log(">>>>>");
+
     const loginValid = await axiosInstance.post(`/customer/login`, loginData, {
       withCredentials: true,
     });
     try {
-      // console.log(loginValid);
       if (!loginValid.data.data) {
         dispatch(SET_IS_LOGIN(loginValid.data.login));
         localStorage.setItem("login", `${loginValid.data.login}`);
