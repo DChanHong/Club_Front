@@ -1,11 +1,11 @@
 "댓글 박스";
-import classNames from "classnames";
+
 import axiosInstance from "@/utils/axiosInstance";
 import { useEffect, useState, useRef } from "react";
 import { shceduleContext } from "@/Types";
 import { GrFormClose } from "react-icons/gr";
 import { MdSend } from "react-icons/md";
-import { temporaryContextInfo } from "@/Types";
+
 import { temporaryContextInfo2 } from "@/Types";
 
 const TextBox = (S_IDX: any) => {
