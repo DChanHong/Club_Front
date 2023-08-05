@@ -23,6 +23,7 @@ const SliderModal = (C_IDX: any) => {
       const result = await axiosInstance.get("/home/club/modal/information", {
         params: axiosData,
       });
+
       setClubInfo(result.data);
     } catch (error) {
       console.error(error);

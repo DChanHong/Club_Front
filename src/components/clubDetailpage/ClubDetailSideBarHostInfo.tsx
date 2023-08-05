@@ -16,12 +16,12 @@ const ClubDetailSideBarHostInfo = () => {
   const getHostInfo = async () => {
     const axiosData = { C_IDX };
     try {
-      if (typeof C_IDX === null || undefined)
+      if (typeof C_IDX === null || C_IDX === undefined)
         throw Error("C_IDX가 Null , undefined이다.");
       const result = await axiosInstance.get("/club/host/information", {
         params: axiosData,
       });
-
+      // console.log(result);
       setHostInfoData(result.data);
     } catch (error) {
       console.error(error);
