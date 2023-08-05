@@ -25,10 +25,21 @@ const LoginBox = () => {
       password: data.password,
     };
 
-    const loginValid = await axiosInstance.post(`/customer/login`, loginData, {
-      withCredentials: true,
-    });
     try {
+      if (
+        loginData.email === null ||
+        undefined ||
+        loginData.password === null ||
+        undefined
+      )
+        throw Error("email 및 password가 제대로 입력되지 않았습니다.");
+      const loginValid = await axiosInstance.post(
+        `/customer/login`,
+        loginData,
+        {
+          withCredentials: true,
+        }
+      );
       if (!loginValid.data.data) {
         dispatch(SET_IS_LOGIN(loginValid.data.login));
         localStorage.setItem("login", `${loginValid.data.login}`);

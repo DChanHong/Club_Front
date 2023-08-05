@@ -24,9 +24,14 @@ const SignBox = () => {
     const data = {
       email: email,
     };
-    const isvalid = await axiosInstance.post(`/customer/check-id`, data);
-    if (!isvalid.data.data) {
-      return "중복된 아이디 입니다.";
+    try {
+      if (data.email.length < 1) throw Error("email이 입력되지 않았습니다.");
+      const isvalid = await axiosInstance.post(`/customer/check-id`, data);
+      if (!isvalid.data.data) {
+        return "중복된 아이디 입니다.";
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
