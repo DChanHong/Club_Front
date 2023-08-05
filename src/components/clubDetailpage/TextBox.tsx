@@ -97,7 +97,6 @@ const TextBox = (S_IDX: any) => {
   const contextRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const addHidden = (id: string) => {
-    // console.log(id);
     const contextElement = contextRef.current[id];
     if (contextElement) {
       contextElement.hidden = true;
@@ -107,7 +106,6 @@ const TextBox = (S_IDX: any) => {
   //임시 댓글창 삭제 버튼
   const deleteTemporaryContext = (data: number) => {
     try {
-      // console.log(data);
       const result = axiosInstance.delete("/club/delete/schedule/context", {
         data: { CO_IDX: data },
       });

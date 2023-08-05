@@ -1,4 +1,3 @@
-
 import { hostInfo } from "@/Types";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
@@ -17,13 +16,15 @@ const ClubDetailSideBarHostInfo = () => {
   const getHostInfo = async () => {
     const axiosData = { C_IDX };
     try {
+      if (typeof C_IDX === null || undefined)
+        throw Error("C_IDX가 Null , undefined이다.");
       const result = await axiosInstance.get("/club/host/information", {
         params: axiosData,
       });
 
       setHostInfoData(result.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

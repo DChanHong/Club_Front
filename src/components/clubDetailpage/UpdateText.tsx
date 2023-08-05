@@ -9,11 +9,14 @@ const UpdateText = () => {
   const [clubDetail, setClubDetail] = useState<clubTextInfo[]>([]);
   const getClubDetailUserList = async () => {
     const axiosData = { data: C_IDX };
-    // console.log(axiosData);
-    const result = await axiosInstance.get("/club/information/notice", {
-      params: axiosData,
-    });
-    setClubDetail(result.data);
+    try {
+      if (typeof C_IDX === null || undefined)
+        throw Error("C_IDX가 Null이거나 undefined이다.");
+      const result = await axiosInstance.get("/club/information/notice", {
+        params: axiosData,
+      });
+      setClubDetail(result.data);
+    } catch (error) {}
   };
   useEffect(() => {
     getClubDetailUserList();
