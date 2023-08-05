@@ -23,10 +23,11 @@ const TopMeetingList = () => {
   const [loading, setLoading] = useState(false);
 
   const getTopClubList = async () => {
-    const result = await axiosInstance.get("/home/club/top/list");
-
-    if (result) {
+    try {
+      const result = await axiosInstance.get("/home/club/top/list");
       setImages(result.data);
+    } catch (error) {
+      console.error(error);
     }
   };
   useEffect(() => {

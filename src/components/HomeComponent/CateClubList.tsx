@@ -10,7 +10,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import imageURL from "@/utils/imageUrl";
 import { useCallback, useMemo } from "react";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
 
 const CateClubList = ({ data }: { data: string }) => {
@@ -22,10 +22,17 @@ const CateClubList = ({ data }: { data: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const getCateClubList = async () => {
     const axiosData = { data: propsdata };
-    const result = await axiosInstance.get("/home/club/category/limit/list", {
-      params: axiosData,
-    });
-    setCateClub(result.data);
+
+    try {
+      if (propsdata === null || undefined)
+        throw Error("propsdata아 null이거나 undefined이다.");
+      const result = await axiosInstance.get("/home/club/category/limit/list", {
+        params: axiosData,
+      });
+      setCateClub(result.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
