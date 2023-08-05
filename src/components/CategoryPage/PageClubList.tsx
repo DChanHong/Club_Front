@@ -20,8 +20,8 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
   const router = useRouter();
 
   const selectCategoryPage = async () => {
+    const axiosData = { pageNumber, Category };
     try {
-      const axiosData = { pageNumber, Category };
       const result = await axiosInstance.get(
         "/search-page/get/user/category/page/club",
         { params: axiosData }

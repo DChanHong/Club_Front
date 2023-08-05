@@ -1,5 +1,4 @@
-import { GrSchedulePlay } from "react-icons/gr";
-import { FaMicrophoneAlt } from "react-icons/fa";
+
 import { hostInfo } from "@/Types";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";

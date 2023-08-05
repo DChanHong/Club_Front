@@ -81,7 +81,6 @@ const UpdateNoticeModal = (data: { data: Number }) => {
 
   // 제출 버튼
   const handleUpdateSubmit = async () => {
-    console.log(updateTextref.current?.value);
     if (updateTextref.current?.value === "") {
       alert("내용을 다시 확인해주세요");
     } else {

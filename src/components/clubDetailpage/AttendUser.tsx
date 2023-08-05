@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
-import { clubDetailInfo, clubTextInfo } from "@/Types";
+import { clubDetailInfo } from "@/Types";
 import Image from "next/image";
 import AddScheduleModal from "../modals/AddScheduleModal";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -13,7 +13,7 @@ import { AiFillLike } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
 import TextBox from "./TextBox";
 import { IoAddOutline } from "react-icons/io5";
-import { GrFormClose, GrSchedulePlay, GrUpdate } from "react-icons/gr";
+import { GrFormClose, GrSchedulePlay } from "react-icons/gr";
 import ClubContext from "./ClubContext";
 import { ImExit } from "react-icons/im";
 import imageURL from "@/utils/imageUrl";
@@ -31,7 +31,7 @@ import { getAllChatInfo } from "@/Types";
 import ClubDetailSideBarHostInfo from "./ClubDetailSideBarHostInfo";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 
 const AttendUser = () => {
   const router = useRouter();
@@ -44,15 +44,17 @@ const AttendUser = () => {
   // 가입 , 탈퇴
   const [join, setJoin] = useState(false); //true : 가입된 상태 , false: 틸퇴 상태 0을 주는것이 좋다.
   const getClubDetailUserList = useCallback(async () => {
-    const axiosData = { data: C_IDX };
+    const axiosData = { data: Number(C_IDX) };
 
     try {
+      if (typeof axiosData?.data !== "number")
+        throw Error(" 클럽IDX 타입이 number가 아닙니다.");
       const result = await axiosInstance.get("/club/user/entrance/list", {
         params: axiosData,
       });
       setClubDetail(result.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }, [C_IDX]);
   // console.log(C_IDX);
@@ -62,8 +64,9 @@ const AttendUser = () => {
 
   //C_IDX가 변경될 때마다 해당 함수가 새로 생성된다.
   const checkHost = useCallback(async () => {
-    const axiosData = { data: C_IDX };
+    const axiosData = { data: Number(C_IDX) };
     try {
+      if (typeof axiosData.data !== "number") throw Error("C_IDX type Error");
       const result = await axiosInstance.get("/club/host/check-info", {
         params: axiosData,
       });
@@ -95,7 +98,7 @@ const AttendUser = () => {
       });
       setJoin(result.data.data); //true면 이미 가입된거
     } catch (erorr) {
-      console.log(erorr);
+      console.error(erorr);
     }
   };
 
@@ -104,8 +107,9 @@ const AttendUser = () => {
   }, []);
 
   const JoinClub = async () => {
+    const axiosData = { data: Number(C_IDX) };
     try {
-      const axiosData = { data: C_IDX };
+      if (typeof axiosData.data !== "number") throw Error("C_IDX type Error");
       await axiosInstance.post("/club/user/join-club", axiosData, {
         withCredentials: true,
       });
@@ -119,7 +123,7 @@ const AttendUser = () => {
 
   const LeaveClub = async () => {
     try {
-      // const axiosData = { data: C_IDX };
+      if (typeof Number(C_IDX) !== "number") throw Error("C_IDX Type Error");
       await axiosInstance.delete("/club/delete/leave-club", {
         data: { data: C_IDX },
         withCredentials: true,
@@ -156,8 +160,9 @@ const AttendUser = () => {
   //로인한 아이디 들고오기 + 입장한 유저 ID 들고오기
   const callClubSchedule = async () => {
     const axiosData = { C_IDX: C_IDX };
-
     try {
+      if (typeof Number(axiosData.C_IDX) !== "number")
+        throw Error("C_IDX Type Error");
       const result2 = await axiosInstance.get("/club/u-idx");
       const result = await axiosInstance.get("/club/schedule/information", {
         params: axiosData,
@@ -165,7 +170,7 @@ const AttendUser = () => {
       setSdata(result.data);
       setloginIdx(result2.data.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     // console.log(sdata);
@@ -197,8 +202,8 @@ const AttendUser = () => {
 
   //스케쥴 삭제하기
   const deleteSchedule = (data: any) => {
-    const axiosData = { S_IDX: data };
     try {
+      if (typeof data === null || undefined) throw Error("S_IDX Type Error");
       axiosInstance
         .delete("/club/delete/schedule", { data: { S_IDX: data } })
         .then((res) => {
@@ -206,7 +211,7 @@ const AttendUser = () => {
           addHidden(data);
         });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -226,28 +231,6 @@ const AttendUser = () => {
     setPageNumber(data);
     setBurgetMenuState(false);
   };
-
-  //2번 페이지 (Notice) 데이터
-  const [noticeText, setNoticeText] = useState<temporaryContextInfo[]>([]);
-  const selectNotice = async () => {
-    const axiosData = { C_IDX };
-    try {
-      const result = await axiosInstance.get("/club/notice/text", {
-        params: axiosData,
-      });
-      setNoticeText(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    selectNotice();
-  }, []);
-
-  // 왼쪽 바 위에 호스트 정보
-
-  //  공지사항 업데이트 기능
-  const updateNotice = () => {};
 
   // 사이드바 버거 메뉴 버튼 핸들
   const [burgerMenuState, setBurgetMenuState] = useState(false);
@@ -377,6 +360,8 @@ const AttendUser = () => {
 
   const getAllchattingList = async () => {
     try {
+      if (typeof Number(C_IDX) === null || undefined)
+        throw Error("C_IDX Tpye Error");
       const axiosData = { C_IDX };
       const result = await axiosInstance.get("/chat/selectAllChatting", {
         params: axiosData,
@@ -640,7 +625,9 @@ const AttendUser = () => {
                             {item.U_IDX === loginIdx ? (
                               <button
                                 type="button"
-                                onClick={() => deleteSchedule(item.S_IDX)}
+                                onClick={() =>
+                                  deleteSchedule(Number(item.S_IDX))
+                                }
                               >
                                 <GrFormClose />
                               </button>
