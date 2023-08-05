@@ -11,7 +11,6 @@ import imageURL from "@/utils/imageUrl";
 import { userClubHistoryList } from "@/Types";
 import { ADD_CLUB_ENTRANCE } from "@/store/slice/EntranceHistorySlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { RootState } from "@/store/store";
 import { CiImageOn } from "react-icons/ci";
 
 interface Props {
@@ -78,6 +77,8 @@ const ClubContext: React.FC<Props> = ({ hostCheck }) => {
     }
 
     try {
+      if (typeof formData === null || undefined)
+        throw Error("formData이 null or undefined 이다.");
       const response = await axiosInstance.post(
         "/club/background/image/upload",
         formData,
