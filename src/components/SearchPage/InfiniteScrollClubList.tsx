@@ -38,7 +38,6 @@ const InfiniteScrollClubList = () => {
   const selectInfiniteClubList = async ({
     pageParam = 0,
   }): Promise<ClubApiResponse> => {
-    // console.log(pageParam);
     const result = await axiosInstance.get(
       "/search-page/get/user/category/page/total-club",
       {

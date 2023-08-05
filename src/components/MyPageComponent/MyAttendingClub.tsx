@@ -20,8 +20,12 @@ const MyAttendingClub: React.FC = () => {
   const [data, setData] = useState<myPageAttInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const getMyAttClubList = async () => {
-    const result = await axiosInstance.get("/mypage/participation/club/list");
-    setData(result.data);
+    try {
+      const result = await axiosInstance.get("/mypage/participation/club/list");
+      setData(result.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
   useEffect(() => {
     getMyAttClubList();

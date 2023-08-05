@@ -14,14 +14,19 @@ const SearchList = () => {
   const selectSearchClub = async () => {
     const { searchData } = router.query;
     const axiosData = { data: searchData };
-
-    const result = await axiosInstance.get(
-      "/search-page/user/club/search-word",
-      {
-        params: axiosData,
-      }
-    );
-    setSearchData(result.data);
+    try {
+      if (searchData === null || undefined)
+        throw Error("searchData null or undefined Error");
+      const result = await axiosInstance.get(
+        "/search-page/user/club/search-word",
+        {
+          params: axiosData,
+        }
+      );
+      setSearchData(result.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const clubRouterButton = (data: string) => {

@@ -20,8 +20,12 @@ const MyPageHostList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getMyHostClubList = async () => {
-    const result = await axiosInstance.get("/mypage/host/club/list");
-    setHostList(result.data);
+    try {
+      const result = await axiosInstance.get("/mypage/host/club/list");
+      setHostList(result.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
   useEffect(() => {
     setIsLoading(true);
