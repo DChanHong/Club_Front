@@ -17,7 +17,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
       transform: "translate(-50%, -50%)",
     },
   };
-  // console.log(data);
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const showModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -25,22 +25,20 @@ const UpdateNoticeModal = (data: { data: Number }) => {
 
   //호스트인지 구분을 위한 과정
   const [hostCheck, setHostCheck] = useState<string>("");
-  // console.log(data.data);
+
   const selectHost = async () => {
     const axiosData = { data: data.data };
-    // console.log(axiosData);
-
     try {
+      if (data.data === null || undefined) throw Error("data.data type Error");
       const result = await axiosInstance.get("/club/host/check-info", {
         params: axiosData,
       });
       setHostCheck(result.data.data);
-      // console.log(hostCheck);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
-  // console.log(hostCheck);
+
   useEffect(() => {
     selectHost();
   }, []);
@@ -51,6 +49,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
   const selectNotice = async () => {
     const axiosData = { C_IDX: data.data };
     try {
+      if (data.data === null || undefined) throw Error("data.data type Error");
       const result = await axiosInstance.get("/club/notice/text", {
         params: axiosData,
       });
@@ -88,13 +87,13 @@ const UpdateNoticeModal = (data: { data: Number }) => {
         setTempUpdateText(updateTextref.current?.value || "");
 
         const C_TEXT = updateTextref.current?.value.replaceAll(/\n/g, "Enter");
-        // console.log(C_TEXT);
+
         if (C_TEXT) {
           const axiosData = {
             C_IDX: data.data,
             C_TEXT: C_TEXT,
           };
-          // console.log(axiosData);
+
           // 공지사항 수정
           const result = await axiosInstance.put("/club/notice/host/text", {
             params: axiosData,
@@ -104,7 +103,7 @@ const UpdateNoticeModal = (data: { data: Number }) => {
           setNoticeText([]);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };

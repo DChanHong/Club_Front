@@ -122,11 +122,9 @@ const MakeClubModal = () => {
         C_INTRO: clubIntroRef.current?.value,
         C_AREA: RegionRef.current?.value,
       };
-      //   console.log(axiosData);
-
       try {
         const result = await axiosInstance.post("/home/new-club", axiosData);
-        // console.log(result);
+
         const newAddClub = {
           C_IDX: Number(result.data.insertId),
           C_CATEGORY: selectCategoryRef.current?.value,
@@ -136,8 +134,6 @@ const MakeClubModal = () => {
           C_AREA: RegionRef.current?.value,
           C_IMAGE: "default_background.png",
         };
-
-        // console.log(newAddClub);
         setTempClub((prevClub) => [...prevClub, newAddClub]);
         setShowTempCLubState(true);
         setModalIsOpen(false);

@@ -9,7 +9,6 @@ import { GrFormCalendar } from "react-icons/gr";
 import moment from "moment";
 
 const AddScheduleModal = (data: any) => {
-  // console.log(data);
   const dispatch = useAppDispatch();
   const closeModal = () => {
     dispatch(CLOSE_SCHEDULE_MODAL(false));
@@ -28,7 +27,6 @@ const AddScheduleModal = (data: any) => {
   const handleDateChange = (date: any) => {
     const value = moment(date).format("YYYY-MM-DD");
     setSelectedDate(value);
-    // console.log(selectedDate);
   };
 
   const [title, setTitle] = useState<string>("");
@@ -36,11 +34,9 @@ const AddScheduleModal = (data: any) => {
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
-    // console.log(title);
   };
   const handleContext = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContext(e.target.value);
-    // console.log(context);
   };
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,10 +47,24 @@ const AddScheduleModal = (data: any) => {
       S_SUBH: context,
       S_DATE: selectedDate,
     };
-    // console.log(axiosData);
-    const result = axiosInstance.post("/club/i-schedule", axiosData);
-    alert("일정이 생성되었습니다.");
-    dispatch(CLOSE_SCHEDULE_MODAL(false));
+    try {
+      if (
+        axiosData.C_IDX === null ||
+        undefined ||
+        axiosData.S_HEAD === null ||
+        undefined ||
+        axiosData.S_SUBH === null ||
+        undefined ||
+        axiosData.S_DATE === null ||
+        undefined
+      )
+        throw Error("Schedule Data가 채워지지 않았습니다.");
+      const result = axiosInstance.post("/club/i-schedule", axiosData);
+      alert("일정이 생성되었습니다.");
+      dispatch(CLOSE_SCHEDULE_MODAL(false));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

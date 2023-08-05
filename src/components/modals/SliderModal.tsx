@@ -18,11 +18,15 @@ const SliderModal = (C_IDX: any) => {
 
   const getSliderModalInfo = async () => {
     const axiosData = C_IDX;
-    // console.log(axiosData);
-    const result = await axiosInstance.get("/home/club/modal/information", {
-      params: axiosData,
-    });
-    setClubInfo(result.data);
+    try {
+      if (Number(C_IDX) === null || undefined) throw Error("C_IDX type Error");
+      const result = await axiosInstance.get("/home/club/modal/information", {
+        params: axiosData,
+      });
+      setClubInfo(result.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
