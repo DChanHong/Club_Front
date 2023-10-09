@@ -5,9 +5,11 @@ import axiosInstance from "@/utils/axiosInstance";
 import { useState } from "react";
 import MakeClubModal from "@/components/modals/MakeClubModal";
 import EntranceHistory from "@/components/HomeComponent/EntranceHistory";
+import { useTestProps } from "./provider/TestProvider";
 
 export default function Home() {
   const data = ["스포츠", "문화생활", "스터디", "게임", "기타"];
+  const testProviderProps = useTestProps();
 
   return (
     <>
