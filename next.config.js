@@ -1,4 +1,5 @@
 const withImages = require("next-images");
+const { i18n } = require("./next-i18next.config");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,22 +16,13 @@ const nextConfig = {
       },
     ],
   },
-  // async headers() {
-  //   return [
-  //     {
-  //       source: "/(.*)",
-  //       headers: [
-  //         {
-  //           key: "Cache-Control",
-  //           value: "public, max-age=31536000, immutable", // 1 year in seconds
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+
   webpack(config, options) {
     return config;
   },
+  // debug: process.env.NODE_ENV === "development",
+  // i18n,
+  // reloadOnPrerender: process.env.NODE_ENV === "development",
 };
 
 module.exports = withImages(nextConfig);
