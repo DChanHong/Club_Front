@@ -1,6 +1,6 @@
 import LoginBox from "@/components/LoginSign/LoginBox";
 
-const Login = () => {
+const Index = () => {
   return (
     <div>
       <div>
@@ -10,4 +10,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Index;

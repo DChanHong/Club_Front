@@ -2,7 +2,7 @@ import React from "react";
 
 import Profile from "@/components/MyPageComponent/Profile";
 
-const MyPage = () => {
+const Index = () => {
   return (
     <>
       <Profile />
@@ -10,4 +10,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default Index;

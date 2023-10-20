@@ -18,9 +18,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <div className=" max-w-[2520px] mx-auto">
-          <Header />
-        </div>
+        <Header />
         <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
         </QueryClientProvider>

@@ -3,7 +3,7 @@ import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
 import React from "react";
 import InfiniteScrollClubList from "@/components/SearchPage/InfiniteScrollClubList";
 
-const AllClubList = () => {
+const Index = () => {
   return (
     <>
       <div className="flex flex-start ">
@@ -24,4 +24,4 @@ const AllClubList = () => {
   );
 };
 
-export default AllClubList;
+export default Index;

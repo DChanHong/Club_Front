@@ -56,11 +56,8 @@ const Header = () => {
   };
 
   return (
-    <div
-      className=" w-full border-2 mb-6 py-3 
-      border-x-white border-b-neutral-100 border-t-white "
-    >
-      <div className="flex  justify-between rounded-lg  h-[60px]  ">
+    <div className=" w-full h-[80px] border-b-4 mb-6 py-3 border-b-neutral-100">
+      <div className="flex justify-between rounded-lg ">
         <Link href={"/"}>
           <div
             className="
@@ -104,18 +101,18 @@ const Header = () => {
         </div>
         <div className=" mr-10 mt-4 hidden md:flex">
           {login === false ? (
-            <Link href={"/Login"} className=" mr-6">
+            <Link href={"/login"} className=" mr-6">
               <div className="text-[#946CEE] mt-1">로그인</div>
             </Link>
           ) : (
-            <Link href={"/MyPage"}>
+            <Link href={"/mypage"}>
               <div className="outline outline-[#946CEE]  p-1 rounded-full mx-3">
                 <AiOutlineUser size={25} color="#946CEE" />
               </div>
             </Link>
           )}
           {login === false ? (
-            <Link href={"/UserSign"} className="">
+            <Link href={"/sign"} className="">
               <div className="text-[#946CEE] mt-1">회원가입</div>
             </Link>
           ) : (

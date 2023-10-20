@@ -10,14 +10,10 @@ export default function Home() {
   const router = useRouter();
   return (
     <>
-      <div className="flex flex-start ">
+      <div className="flex">
         <div className="w-1/6 ">
-          <div>
-            <LeftSideBar data="홈" />
-          </div>
-          <div>
-            <EntranceHistory />
-          </div>
+          <LeftSideBar data="홈" />
+          <EntranceHistory />
         </div>
         <div className="flex flex-col w-5/6">
           <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">

@@ -1,6 +1,6 @@
 import SignBox from "@/components/LoginSign/SignBox";
 
-const UserSign = () => {
+const Index = () => {
   return (
     <div>
       <div>
@@ -10,4 +10,4 @@ const UserSign = () => {
   );
 };
 
-export default UserSign;
+export default Index;

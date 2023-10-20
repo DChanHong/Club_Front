@@ -38,7 +38,7 @@ const LeftSideBar = (data: any) => {
   const goAllClubListPage = () => {
     setSlideBurger(false);
     router.push({
-      pathname: "/AllClubList",
+      pathname: "/allclub",
     });
   };
 
