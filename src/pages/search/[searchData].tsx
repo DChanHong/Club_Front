@@ -1,6 +1,6 @@
-import SearchList from "@/components/SearchPage/SearchList";
-import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
-import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
+import SearchList from "@/components/search/SearchList";
+import TopMeetingList from "@/components/homes/TopMeetingList";
+import LeftSideBar from "@/components/homes/LeftSideBar";
 
 const PostPage = () => {
   return (

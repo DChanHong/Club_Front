@@ -15,7 +15,7 @@ const SkeletonComponent = () => (
   </div>
 );
 
-const MyPageHostList = () => {
+const HostClub = () => {
   const [hostList, setHostList] = useState<myPageHostInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -84,4 +84,4 @@ const MyPageHostList = () => {
   );
 };
 
-export default MyPageHostList;
+export default HostClub;

@@ -1,51 +1,67 @@
-import { cateClubInfo } from "@/Types";
-import axiosInstance from "@/utils/axiosInstance";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import imageURL from "@/utils/imageUrl";
+import { cateClubInfo } from "@/Types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import imageURL from "@/utils/imageUrl";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
 
-const SearchList = () => {
+interface Props {
+  pageNumber: number;
+  Category: string;
+}
+
+const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
+  const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  const [searchData, setSearchData] = useState<cateClubInfo[]>([]);
-  const selectSearchClub = async () => {
-    const { searchData } = router.query;
-    const axiosData = { data: searchData };
+
+  const selectCategoryPage = async () => {
+    const axiosData = { pageNumber, Category };
     try {
-      if (searchData === null || undefined)
-        throw Error("searchData null or undefined Error");
       const result = await axiosInstance.get(
-        "/search-page/user/club/search-word",
-        {
-          params: axiosData,
-        }
+        "/search-page/get/user/category/page/club",
+        { params: axiosData }
       );
-      setSearchData(result.data);
+      setCateClub(result.data);
+      // console.log(cateClub);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
-  const clubRouterButton = (data: string) => {
-    router.push({ pathname: `/clubDetailPage/${data}` });
-  };
+  const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
+  const clubRouterButton = useCallback(
+    (data: string) => {
+      if (login === true) {
+        router.push({
+          pathname: `/club/${data}`,
+        });
+      } else {
+        alert("로그인이 필요합니다.");
+        router.push({ pathname: "/Login" });
+      }
+    },
+    [router]
+  );
 
   useEffect(() => {
-    selectSearchClub();
+    selectCategoryPage();
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
-  }, [searchData]);
+  }, [cateClub]);
+  useEffect(() => {
+    selectCategoryPage();
+  }, [pageNumber]);
 
   useEffect(() => {
-    selectSearchClub();
-  }, [searchData]);
-
-  // 동아리 입장 박스 스켈레톤
+    selectCategoryPage();
+  }, [Category]);
   const ClubMoveSkeletonBox = () => {
     return (
       <div className="flex border-4 rounded-xl w-[26rem] mr-4 my-2">
@@ -67,8 +83,8 @@ const SearchList = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-wrap ml-6 ">
+    <>
+      <div className="flex flex-wrap ml-6">
         {!isLoading ? (
           <>
             <ClubMoveSkeletonBox />
@@ -80,13 +96,13 @@ const SearchList = () => {
           </>
         ) : (
           <>
-            {searchData?.map((item) => (
+            {cateClub?.map((item) => (
               <div
                 key={item.C_IDX}
                 className="
-              flex flex-start 
-              border-4  rounded-3xl mr-4
-              border-slate-200 my-2 w-[26rem]"
+                flex flex-start 
+                border-4  rounded-3xl mr-4
+                border-slate-200 my-2 w-[26rem]"
               >
                 <div className="m-3 w-[8rem]">
                   <Image
@@ -96,7 +112,6 @@ const SearchList = () => {
                     alt={`${item?.U_IDX}`}
                     width={100}
                     height={100}
-
                     // unoptimized={true}
                   />
                 </div>
@@ -118,8 +133,7 @@ const SearchList = () => {
                     <button
                       className="  mb-2 "
                       type="button"
-                      onClick={() => clubRouterButton(String(item.C_IDX))}
-                      name="clubEntranceButton"
+                      onClick={() => clubRouterButton(String(item?.C_IDX))}
                     >
                       <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                         입장하기
@@ -132,8 +146,8 @@ const SearchList = () => {
           </>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
-export default SearchList;
+export default PageClubList;

@@ -145,7 +145,7 @@ const MakeClubModal = () => {
 
   const clubRouterButton = (data: number) => {
     router.push({
-      pathname: `/clubDetailPage/${data}`,
+      pathname: `/club/${data}`,
     });
   };
 

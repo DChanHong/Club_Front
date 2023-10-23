@@ -10,7 +10,6 @@ const ClubPostPage = () => {
 };
 
 export default ClubPostPage;
-
 //
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const data = params;

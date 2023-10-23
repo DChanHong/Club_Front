@@ -17,7 +17,7 @@ interface ClubApiResponse {
   nextPage: number | null;
 }
 
-const InfiniteScrollClubList = () => {
+const InfiniteScroll = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
@@ -25,7 +25,7 @@ const InfiniteScrollClubList = () => {
     (data: string) => {
       if (login === true) {
         router.push({
-          pathname: `/clubDetailPage/${data}`,
+          pathname: `/club/${data}`,
         });
       } else {
         alert("로그인이 필요합니다.");
@@ -206,4 +206,4 @@ const InfiniteScrollClubList = () => {
   );
 };
 
-export default InfiniteScrollClubList;
+export default InfiniteScroll;

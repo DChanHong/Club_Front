@@ -1,7 +1,7 @@
-import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
-import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
+import LeftSideBar from "@/components/homes/LeftSideBar";
+import TopMeetingList from "@/components/homes/TopMeetingList";
 import React from "react";
-import InfiniteScrollClubList from "@/components/SearchPage/InfiniteScrollClubList";
+import InfiniteScroll from "@/components/search/InfiniteScroll";
 
 const Index = () => {
   return (
@@ -17,7 +17,7 @@ const Index = () => {
           <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">
             <TopMeetingList />
           </div>
-          <InfiniteScrollClubList />
+          <InfiniteScroll />
         </div>
       </div>
     </>

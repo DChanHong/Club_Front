@@ -24,7 +24,7 @@ const LeftSideBar = (data: any) => {
   const moveCateIndex = (data: string) => {
     setSlideBurger(false);
     router.push({
-      pathname: `/CateIndex/${data}`,
+      pathname: `/category/${data}`,
     });
   };
 

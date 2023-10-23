@@ -1,8 +1,8 @@
-import TopMeetingList from "@/components/HomeComponent/TopMeetingList";
-import CateClubList from "@/components/HomeComponent/CateClubList";
-import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
+import TopMeetingList from "@/components/homes/TopMeetingList";
+import CateClubList from "@/components/homes/CateClubList";
+import LeftSideBar from "@/components/homes/LeftSideBar";
 import MakeClubModal from "@/components/modals/MakeClubModal";
-import EntranceHistory from "@/components/HomeComponent/EntranceHistory";
+import EntranceHistory from "@/components/homes/EntranceHistory";
 import { useRouter } from "next/router";
 
 export default function Home() {

@@ -16,7 +16,7 @@ const SkeletonComponent = () => (
   </div>
 );
 
-const MyAttendingClub: React.FC = () => {
+const AttendClub: React.FC = () => {
   const [data, setData] = useState<myPageAttInfo[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const getMyAttClubList = async () => {
@@ -85,4 +85,4 @@ const MyAttendingClub: React.FC = () => {
   );
 };
 
-export default MyAttendingClub;
+export default AttendClub;

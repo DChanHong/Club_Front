@@ -43,7 +43,7 @@ const SliderModal = (C_IDX: any) => {
   const clubRouterButton = (data: any) => {
     if (login === true) {
       router.push({
-        pathname: `/clubDetailPage/${data}`,
+        pathname: `/club/${data}`,
       });
     } else {
       alert("로그인이 필요합니다.");

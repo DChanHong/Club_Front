@@ -23,7 +23,7 @@ const EntranceHistory = () => {
 
   const moveClub = useCallback((data: number) => {
     router.push({
-      pathname: `/clubDetailPage/${data}`,
+      pathname: `/club/${data}`,
     });
   }, []);
 

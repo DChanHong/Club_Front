@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import LeftSideBar from "@/components/HomeComponent/LeftSideBar";
+import LeftSideBar from "@/components/homes/LeftSideBar";
 
 import axiosInstance from "@/utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { cateClubInfo } from "@/Types";
 
 import { BsFillHeartFill } from "react-icons/bs";
-import PageClubList from "@/components/CategoryPage/PageClubList";
+import PageClubList from "@/components/category/PageClubList";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { RxDoubleArrowRight } from "react-icons/rx";
@@ -17,7 +17,7 @@ const CategoryIndex = () => {
   const router = useRouter();
   const { Category } = router.query;
   const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
-
+  console.log(Category);
   const [totalPage, setTotalPage] = useState<number>(0);
   const selectCategoryClub = async () => {
     try {

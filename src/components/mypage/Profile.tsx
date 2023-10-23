@@ -3,8 +3,8 @@ import axiosInstance from "@/utils/axiosInstance";
 import { userInfo } from "@/Types";
 import Image from "next/image";
 import imageURL from "@/utils/imageUrl";
-import MyAttendingClub from "./MyAttendingClub";
-import MyPageHostList from "./MyPageHostList";
+import AttendClub from "./AttendClub";
+import HostClub from "./HostClub";
 import { useRouter } from "next/router";
 import { CiImageOn } from "react-icons/ci";
 import moment from "moment";
@@ -246,10 +246,10 @@ const Profile = () => {
         {/* 참여중 클럽 리스트 */}
         <div className="flex flex-wrap gap-10 justify-center bg-[#F6F7F9] w-9/12">
           <div className="">
-            <MyAttendingClub />
+            <AttendClub />
           </div>
           <div className="">
-            <MyPageHostList />
+            <HostClub />
           </div>
         </div>
       </div>

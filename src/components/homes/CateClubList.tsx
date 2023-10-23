@@ -50,7 +50,7 @@ const CateClubList = ({ data }: { data: string }) => {
     (data: string) => {
       if (login === true) {
         router.push({
-          pathname: `/clubDetailPage/${data}`,
+          pathname: `/club/${data}`,
         });
       } else {
         alert("로그인이 필요합니다.");
@@ -62,7 +62,7 @@ const CateClubList = ({ data }: { data: string }) => {
 
   const moveCateIndex = useCallback((data: string) => {
     router.push({
-      pathname: `/CateIndex/${data}`,
+      pathname: `/category/${data}`,
     });
   }, []);
 

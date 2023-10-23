@@ -1,67 +1,51 @@
-import { useRouter } from "next/router";
-import axiosInstance from "@/utils/axiosInstance";
-import { useEffect, useState, useCallback } from "react";
-import Image from "next/image";
 import { cateClubInfo } from "@/Types";
+import axiosInstance from "@/utils/axiosInstance";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import imageURL from "@/utils/imageUrl";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import imageURL from "@/utils/imageUrl";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { RootState } from "@/store/store";
 
-interface Props {
-  pageNumber: number;
-  Category: string;
-}
-
-const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
-  const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
+const SearchList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-
-  const selectCategoryPage = async () => {
-    const axiosData = { pageNumber, Category };
+  const [searchData, setSearchData] = useState<cateClubInfo[]>([]);
+  const selectSearchClub = async () => {
+    const { searchData } = router.query;
+    const axiosData = { data: searchData };
     try {
+      if (searchData === null || undefined)
+        throw Error("searchData null or undefined Error");
       const result = await axiosInstance.get(
-        "/search-page/get/user/category/page/club",
-        { params: axiosData }
+        "/search-page/user/club/search-word",
+        {
+          params: axiosData,
+        }
       );
-      setCateClub(result.data);
-      // console.log(cateClub);
+      setSearchData(result.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
-  const login = useAppSelector((state: RootState) => state.is_Login.is_Login);
-  const clubRouterButton = useCallback(
-    (data: string) => {
-      if (login === true) {
-        router.push({
-          pathname: `/clubDetailPage/${data}`,
-        });
-      } else {
-        alert("로그인이 필요합니다.");
-        router.push({ pathname: "/Login" });
-      }
-    },
-    [router]
-  );
+  const clubRouterButton = (data: string) => {
+    router.push({ pathname: `/club/${data}` });
+  };
 
   useEffect(() => {
-    selectCategoryPage();
+    selectSearchClub();
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
-  }, [cateClub]);
-  useEffect(() => {
-    selectCategoryPage();
-  }, [pageNumber]);
+  }, [searchData]);
 
   useEffect(() => {
-    selectCategoryPage();
-  }, [Category]);
+    selectSearchClub();
+  }, [searchData]);
+
+  // 동아리 입장 박스 스켈레톤
   const ClubMoveSkeletonBox = () => {
     return (
       <div className="flex border-4 rounded-xl w-[26rem] mr-4 my-2">
@@ -83,8 +67,8 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
   };
 
   return (
-    <>
-      <div className="flex flex-wrap ml-6">
+    <div>
+      <div className="flex flex-wrap ml-6 ">
         {!isLoading ? (
           <>
             <ClubMoveSkeletonBox />
@@ -96,13 +80,13 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
           </>
         ) : (
           <>
-            {cateClub?.map((item) => (
+            {searchData?.map((item) => (
               <div
                 key={item.C_IDX}
                 className="
-                flex flex-start 
-                border-4  rounded-3xl mr-4
-                border-slate-200 my-2 w-[26rem]"
+              flex flex-start 
+              border-4  rounded-3xl mr-4
+              border-slate-200 my-2 w-[26rem]"
               >
                 <div className="m-3 w-[8rem]">
                   <Image
@@ -112,6 +96,7 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
                     alt={`${item?.U_IDX}`}
                     width={100}
                     height={100}
+
                     // unoptimized={true}
                   />
                 </div>
@@ -133,7 +118,8 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
                     <button
                       className="  mb-2 "
                       type="button"
-                      onClick={() => clubRouterButton(String(item?.C_IDX))}
+                      onClick={() => clubRouterButton(String(item.C_IDX))}
+                      name="clubEntranceButton"
                     >
                       <p className="bg-[#946CEE] border-2 rounded-xl text-white p-1 text-[12px]">
                         입장하기
@@ -146,8 +132,8 @@ const PageClubList: React.FC<Props> = ({ pageNumber, Category }) => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
-export default PageClubList;
+export default SearchList;

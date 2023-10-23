@@ -1,4 +1,4 @@
-import SignBox from "@/components/LoginSign/SignBox";
+import SignBox from "@/components/login/SignBox";
 
 const Index = () => {
   return (
