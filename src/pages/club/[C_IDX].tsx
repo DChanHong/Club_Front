@@ -1,4 +1,4 @@
-import AttendUser from "@/components/clubDetailpage/AttendUser";
+import AttendUser from "@/components/club/AttendUser";
 import { GetServerSideProps } from "next";
 
 const ClubPostPage = () => {
