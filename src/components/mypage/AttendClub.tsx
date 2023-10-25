@@ -36,7 +36,7 @@ const AttendClub: React.FC = () => {
 
   return (
     <div>
-      <div className=" text-center mt-4 font-bold text-[20px] text-[#6A7D7C]">
+      <div className="text-center mt-4 font-bold text-[20px] text-[#6A7D7C]">
         활동중인 Club
       </div>
       <div

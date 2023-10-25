@@ -5,6 +5,36 @@ import MakeClubModal from "@/components/modals/MakeClubModal";
 import EntranceHistory from "@/components/homes/EntranceHistory";
 import { useRouter } from "next/router";
 
+import { GetStaticProps } from "next";
+
+// const getTopClubList = async () => {
+//   try {
+//     const result = await axiosInstance.get("/home/club/top/list");
+//     setImages(result.data);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+// const [imgList, setImages] = useState<slideInfo[]>([]);
+
+// const getCateClubList = async () => {
+//   const axiosData = { data: propsdata };
+
+//   try {
+//     if (propsdata === null || undefined)
+//       throw Error("propsdata아 null이거나 undefined이다.");
+//     const result = await axiosInstance.get("/home/club/category/limit/list", {
+//       params: axiosData,
+//     });
+//     setCateClub(result.data);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+// const [cateClub, setCateClub] = useState<cateClubInfo[]>([]);
+
 export default function Home() {
   const data = ["스포츠", "문화생활", "스터디", "게임", "기타"];
   const router = useRouter();
