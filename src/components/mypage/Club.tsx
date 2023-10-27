@@ -8,7 +8,7 @@ interface props {
 
 const Club = ({ list, type }: props) => {
   return (
-    <section className="w-1/2">
+    <section className=" sm:w-1/2 w-11/12">
       <h2 className={`text-center mt-4 font-bold text-[20px] text-[#6A7D7C]`}>
         {type === "attend" ? "활동중인 클럽" : "MY Club"}
       </h2>
