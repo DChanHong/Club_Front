@@ -10,8 +10,6 @@ import { SiNaver } from "react-icons/si";
 import { useEffect } from "react";
 import { useMutation } from "react-query";
 
-import LoginBox from "@/components/login/LoginBox";
-
 const Index = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -71,7 +69,6 @@ const Index = () => {
       "asd2222222";
   };
   useEffect(() => {
-    // console.log(router.query);
     const login = router.query;
     if (login.login === "true") {
       dispatch(SET_IS_LOGIN(true));

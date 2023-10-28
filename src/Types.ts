@@ -209,3 +209,11 @@ export interface loginDto {
   email: string;
   password: string;
 }
+
+export interface signDto {
+  email: string;
+  password: string;
+  name: string;
+  gender: string;
+  birth: string;
+}

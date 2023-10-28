@@ -100,7 +100,7 @@ const Header = () => {
           </div>
         </div>
         <div className=" mr-10 mt-4 hidden md:flex">
-          {login === false ? (
+          {!login ? (
             <Link href={"/login"} className=" mr-6">
               <div className="text-[#946CEE] mt-1">로그인</div>
             </Link>
@@ -111,8 +111,8 @@ const Header = () => {
               </div>
             </Link>
           )}
-          {login === false ? (
-            <Link href={"/sign"} className="">
+          {!login ? (
+            <Link href={"/login/sign"} className="">
               <div className="text-[#946CEE] mt-1">회원가입</div>
             </Link>
           ) : (
