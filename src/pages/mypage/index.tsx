@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { userInfo, myPageHostInfo, myPageClubInfo } from "@/Types";
 import Image from "next/image";
@@ -6,13 +6,13 @@ import imageURL from "@/utils/imageUrl";
 import { useRouter } from "next/router";
 import { CiImageOn } from "react-icons/ci";
 import moment from "moment";
-import { REMOVE_IS_LOGIN, SET_IS_LOGIN } from "@/store/slice/isLoginSlice";
+import { REMOVE_IS_LOGIN } from "@/store/slice/isLoginSlice";
 import { BiUser } from "react-icons/bi";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaBirthdayCake } from "react-icons/fa";
 import { BiMaleFemale } from "react-icons/bi";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import Club from "@/components/mypage/Club";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -20,8 +20,9 @@ import { useQueries } from "react-query";
 
 const Index = () => {
   const router = useRouter();
-  const [userinfo, setUserInfo] = useState<userInfo | null>(null);
-  const [imageUpdateState, setImageUpdateState] = useState(false);
+  const [imageUpdateState, setImageUpdateState] = useState<boolean>(false);
+  const [sideState, setSideState] = useState<boolean>(true);
+  const [files, setFiles] = useState<File | null>(null);
   const dispatch = useAppDispatch();
 
   const queryResult = useQueries([
@@ -60,9 +61,6 @@ const Index = () => {
     data: myPageClubInfo[];
     isLoading: boolean;
   };
-
-  const [files, setFiles] = useState<File | null>(null);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
@@ -75,7 +73,7 @@ const Index = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      handleUpdateBox();
+      setImageUpdateState(!imageUpdateState);
     } catch (error) {
       console.log(error);
     }
@@ -85,9 +83,7 @@ const Index = () => {
       setFiles(event.target.files[0]);
     }
   };
-  const getUserData = queryResult[0];
 
-  //회원 탈퇴하기
   const withdrawalUser = async () => {
     try {
       const result = await axiosInstance.put("/mypage/user/withdrawal");
@@ -101,22 +97,17 @@ const Index = () => {
     }
   };
 
-  //업데이트 박스 보여주기
   const handleUpdateBox = () => {
     setImageUpdateState(!imageUpdateState);
   };
 
-  //사이드 부분 프로필
-  const [sideState, setSideState] = useState(true);
   const handldeSideState = () => {
     setSideState(!sideState);
   };
 
   return (
     <div className="flex w-full h-full justify-center">
-      <div className="flex h-[80vh] border-2 max-w-6xl w-full sm:mx-4 mx-6">
-        {/* 내 프로필 부분 */}
-        {/* 960px 이상일 경우 */}
+      <section className="flex h-[80vh] border-2 max-w-6xl w-full sm:mx-4 mx-6">
         {userData.isLoading ? (
           <div className="hidden sm:block rounded-lg bg-[#131827] w-3/12">
             <p className="text-[#fb7185] text-center p-5 text-[24px]">
@@ -161,6 +152,7 @@ const Index = () => {
                       className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
                       type="submit"
                       name="changeImgButton"
+                      aria-label="Upload image"
                     >
                       Upload
                     </button>
@@ -171,7 +163,7 @@ const Index = () => {
             <div className="flex flex-row-reverse mt-2">
               <button
                 className="flex"
-                onClick={handleUpdateBox}
+                onClick={() => setImageUpdateState(!imageUpdateState)}
                 type="button"
                 name="updateImgButton"
               >
@@ -211,7 +203,6 @@ const Index = () => {
             </p>
           </div>
         )}
-        {/* 960px 이하일 경우 */}
         <div className="block sm:hidden bg-[#F6F7F9]">
           <button
             type="button"
@@ -237,9 +228,36 @@ const Index = () => {
                 alt={`${userData?.data?.U_EMAIL}`}
                 width={400}
                 height={400}
-                // unoptimized={true}
               />
             </p>
+            <p className="flex flex-row-reverse mt-2">
+              <button
+                className="flex"
+                onClick={() => setImageUpdateState(!imageUpdateState)}
+                type="button"
+                name="updateImgButton"
+              >
+                <p className="mt-2 text-[#62656B]">Update</p>
+                <CiImageOn className="mr-2" color="#62656B" size={40} />
+              </button>
+            </p>
+            {imageUpdateState ? (
+              <div className="absolute border-2 rounded-xl ml-4 p-2 flex bg-white">
+                <form onSubmit={handleSubmit}>
+                  <div className="flex flex-col">
+                    <input type="file" onChange={handleFileChange} />
+                    <button
+                      className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
+                      type="submit"
+                      name="changeImgButton"
+                      aria-label="Upload image"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                </form>
+              </div>
+            ) : null}
             <ul className="mt-2 flex flex-col ">
               <li className="flex ml-6 my-3 text-[#AFB2B5] ">
                 <BiUser size={24} />
@@ -271,12 +289,12 @@ const Index = () => {
             </ul>
           </div>
         </div>
-        {/* 참여중 클럽 리스트 */}
+
         <div className="sm:flex sm:w-9/12 sm:flex-row flex flex-col bg-[#F6F7F9] overflow-auto w-full">
           <Club list={hostList.data} type={"host"} />
           <Club list={attendList.data} type={"attend"} />
         </div>
-      </div>
+      </section>
     </div>
   );
 };
