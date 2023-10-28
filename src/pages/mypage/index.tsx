@@ -128,79 +128,83 @@ const Index = () => {
           </div>
         ) : (
           <div
-            className={`sm:block hidden sm:rounded-lg rounded-lg bg-[#131827] w-3/12`}
+            className={`sm:block sm:flex sm:flex-col sm:justify-between sm:rounded-lg hidden  h-full bg-[#131827] w-3/12`}
           >
-            <h1 className="text-[#fb7185] text-center p-5 text-[24px]">
-              My Profile
-            </h1>
-            <p className="mx-8">
-              <Image
-                className="border-4 border-current border-indigo-200 rounded-full"
-                // src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
-                src={`${imageURL}/api/image/${userData?.data?.U_IMAGE}`}
-                alt={`${userData?.data?.U_IMAGE}`}
-                width={400}
-                height={400}
-              />
-            </p>
-            {imageUpdateState ? (
-              <div className="absolute border-2 rounded-xl mt-14 ml-4 p-2 flex bg-white">
-                <form onSubmit={handleSubmit}>
-                  <div className="flex flex-col">
-                    <input type="file" onChange={handleFileChange} />
-                    <button
-                      className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
-                      type="submit"
-                      name="changeImgButton"
-                      aria-label="Upload image"
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </form>
+            <div>
+              <h1 className="text-[#fb7185] text-center p-5 text-[24px]">
+                My Profile
+              </h1>
+              <p className="mx-8">
+                <Image
+                  className="border-4 border-current border-indigo-200 rounded-full"
+                  // src={`http://localhost:4000/api/image/${userinfo?.U_IMAGE}`}
+                  src={`${imageURL}/api/image/${userData?.data?.U_IMAGE}`}
+                  alt={`${userData?.data?.U_IMAGE}`}
+                  width={400}
+                  height={400}
+                />
+              </p>
+              {imageUpdateState ? (
+                <div className="absolute border-2 rounded-xl mt-14 ml-4 p-2 flex bg-white">
+                  <form onSubmit={handleSubmit}>
+                    <div className="flex flex-col">
+                      <input type="file" onChange={handleFileChange} />
+                      <button
+                        className="border-2 mx-auto w-[5rem]  rounded-xl bg-blue-500 text-white"
+                        type="submit"
+                        name="changeImgButton"
+                        aria-label="Upload image"
+                      >
+                        Upload
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              ) : null}
+              <div className="flex flex-row-reverse mt-2">
+                <button
+                  className="flex"
+                  onClick={() => setImageUpdateState(!imageUpdateState)}
+                  type="button"
+                  name="updateImgButton"
+                >
+                  <p className="mt-2 text-[#62656B]">Update</p>
+                  <CiImageOn className="mr-2" color="#62656B" size={40} />
+                </button>
               </div>
-            ) : null}
-            <div className="flex flex-row-reverse mt-2">
-              <button
-                className="flex"
-                onClick={() => setImageUpdateState(!imageUpdateState)}
-                type="button"
-                name="updateImgButton"
-              >
-                <p className="mt-2 text-[#62656B]">Update</p>
-                <CiImageOn className="mr-2" color="#62656B" size={40} />
-              </button>
-            </div>
 
-            <ul className="mt-2 flex flex-col">
-              <li className="flex ml-6 my-3 text-[#AFB2B5] ">
-                <BiUser size={24} />
-                <span className="ml-2">{userData?.data?.U_NAME}</span>
-              </li>
-              <li className="flex ml-6 my-3 text-[#AFB2B5] ">
-                <AiOutlineMail size={22} />
-                <span className="ml-2">{userData?.data?.U_EMAIL}</span>
-              </li>
-              <li className="flex ml-6 my-3 text-[#AFB2B5] ">
-                <FaBirthdayCake size={18} />
-                <span className="ml-2">{`${moment(
-                  userData?.data?.U_BIRTH
-                ).format("YYYY-MM-DD")}`}</span>
-              </li>
-              <li className="flex ml-6 my-3 text-[#AFB2B5] ">
-                <BiMaleFemale size={20} />
-                <span className="ml-2">{userData?.data?.U_GENDER}</span>
-              </li>
-            </ul>
-            <p className="text-[#fff] p-2 flex flex-row-reverse">
-              <button
-                type="button"
-                onClick={withdrawalUser}
-                name="withrwalButton"
-              >
-                탈퇴하기
-              </button>
-            </p>
+              <ul className="mt-2 flex flex-col">
+                <li className="flex ml-6 my-3 text-[#AFB2B5] ">
+                  <BiUser size={24} />
+                  <span className="ml-2">{userData?.data?.U_NAME}</span>
+                </li>
+                <li className="flex ml-6 my-3 text-[#AFB2B5] ">
+                  <AiOutlineMail size={22} />
+                  <span className="ml-2">{userData?.data?.U_EMAIL}</span>
+                </li>
+                <li className="flex ml-6 my-3 text-[#AFB2B5] ">
+                  <FaBirthdayCake size={18} />
+                  <span className="ml-2">{`${moment(
+                    userData?.data?.U_BIRTH
+                  ).format("YYYY-MM-DD")}`}</span>
+                </li>
+                <li className="flex ml-6 my-3 text-[#AFB2B5] ">
+                  <BiMaleFemale size={20} />
+                  <span className="ml-2">{userData?.data?.U_GENDER}</span>
+                </li>
+              </ul>
+            </div>
+            <div className="h-1/12">
+              <p className="text-[#fff] p-2 flex flex-row-reverse">
+                <button
+                  type="button"
+                  onClick={withdrawalUser}
+                  name="withrwalButton"
+                >
+                  탈퇴하기
+                </button>
+              </p>
+            </div>
           </div>
         )}
         <div className="block sm:hidden bg-[#F6F7F9]">

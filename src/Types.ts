@@ -203,3 +203,9 @@ export interface userClubHistoryList {
   C_AREA: string | undefined;
   C_IMAGE: string | undefined;
 }
+
+//로그인용
+export interface loginDto {
+  email: string;
+  password: string;
+}
