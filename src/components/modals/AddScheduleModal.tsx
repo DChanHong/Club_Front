@@ -1,5 +1,5 @@
 import { IoMdClose } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { useAppDispatch } from "@/store/hooks";
 import { CLOSE_SCHEDULE_MODAL } from "@/store/slice/isScheduleModalSlice";
@@ -13,8 +13,6 @@ const AddScheduleModal = (data: any) => {
   const closeModal = () => {
     dispatch(CLOSE_SCHEDULE_MODAL(false));
   };
-
-  const [value, onChange] = useState(new Date());
   const [showCalender, setShowCalender] = useState(false);
 
   // 캘린다 ON / OFF

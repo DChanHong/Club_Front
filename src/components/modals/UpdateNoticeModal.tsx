@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { temporaryContextInfo } from "@/Types";
-import { useCallback } from "react";
 
 const UpdateNoticeModal = (data: { data: Number }) => {
   const customStyles = {

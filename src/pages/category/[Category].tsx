@@ -9,7 +9,6 @@ import { BsFillHeartFill } from "react-icons/bs";
 import PageClubList from "@/components/category/PageClubList";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { RxDoubleArrowRight } from "react-icons/rx";
 import { BiLastPage } from "react-icons/bi";
 import { BiFirstPage } from "react-icons/bi";
 

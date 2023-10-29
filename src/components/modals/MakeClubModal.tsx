@@ -8,7 +8,7 @@ import Image from "next/image";
 import imageURL from "@/utils/imageUrl";
 import { useRouter } from "next/router";
 import { IoAddOutline, IoPeopleSharp } from "react-icons/io5";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
 
 const MakeClubModal = () => {

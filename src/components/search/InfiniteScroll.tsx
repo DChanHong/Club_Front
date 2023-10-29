@@ -5,11 +5,10 @@ import { useInfiniteQuery } from "react-query";
 import Image from "next/image";
 import imageURL from "@/utils/imageUrl";
 import { useRouter } from "next/router";
-import { BiRightArrow } from "react-icons/bi";
 import { IoPeopleSharp } from "react-icons/io5";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import { RootState } from "@/store/store";
 
 interface ClubApiResponse {
@@ -132,7 +131,7 @@ const InfiniteScroll = () => {
         <p className="">
           <IoPeopleSharp size={30} />
         </p>
-        <p className="ml-4 ">Toal Club List</p>
+        <p className="ml-4 ">Total Club List</p>
       </div>
       {!isLoading ? (
         <div className="flex flex-wrap overflow-y-auto ">

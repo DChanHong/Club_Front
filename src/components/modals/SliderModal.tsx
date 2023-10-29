@@ -11,8 +11,7 @@ import imageURL from "@/utils/imageUrl";
 
 const SliderModal = (C_IDX: any) => {
   const [clubInfo, setClubInfo] = useState<cateClubInfo[]>([]);
-  // console.log(C_IDX); { data : 2}
-  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
   const dispatch = useAppDispatch();
 
