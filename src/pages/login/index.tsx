@@ -80,7 +80,7 @@ const Index = () => {
   return (
     <>
       <section className="sm:w-[30rem] w-11/12 border-2 rounded-2xl p-8 m-auto mt-10">
-        <h1 className="text-center my-3 text-2xl ">Login</h1>
+        <h1 className="text-center my-3 font-bold text-2xl ">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <ul>
             <li className="mb-2">

@@ -18,25 +18,11 @@ import { useAppSelector } from "@/store/hooks";
 import { OPEN_SLIDER_MODAL } from "@/store/slice/isSliderModalSlice";
 import imageURL from "@/utils/imageUrl";
 
-const TopMeetingList = () => {
-  const [imgList, setImages] = useState<slideInfo[]>([]);
-  const [loading, setLoading] = useState(false);
+interface propsType {
+  topList: slideInfo[];
+}
 
-  const getTopClubList = async () => {
-    try {
-      const result = await axiosInstance.get("/home/club/top/list");
-      setImages(result.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    getTopClubList();
-  }, []);
-  useEffect(() => {
-    setLoading(true);
-  }, [imgList]);
-
+const TopMeetingList = ({ topList }: propsType) => {
   // 슬라이더
   const sliderRef = useRef<Slider>(null);
   const handlePrevClick = () => {
@@ -81,92 +67,94 @@ const TopMeetingList = () => {
   };
 
   return (
-    <div className="mb-10 mt-2 flex flex-row mx-auto">
-      <div className="ml-4">
-        <div className="flex flex-start text-[22px] py-2 ml-4 ">
-          <p className="mt-2 ">
-            <BsFillHeartFill />
-          </p>
-          <p className="ml-4">인기 동아리 리스트</p>
-        </div>
-        {!loading ? (
-          <>
+    <div className="mb-4 mt-2 border-2 border-t-white border-x-white border-b-neutral-100 ">
+      <div className="mb-10 mt-2 flex flex-row mx-auto">
+        <div className="ml-4">
+          <div className="flex flex-start text-[22px] py-2 ml-4 ">
+            <p className="mt-2 ">
+              <BsFillHeartFill />
+            </p>
+            <p className="ml-4">인기 동아리 리스트</p>
+          </div>
+          {!topList ? (
             <div className="flex">
-              <Skeleton height={200} width={250} className="mx-4" />
-              <Skeleton height={200} width={250} className="mx-4" />
-              <Skeleton height={200} width={250} className="mx-4" />
-              <Skeleton height={200} width={250} className="mx-4" />
-              <Skeleton height={200} width={250} className="mx-4" />
-              <Skeleton height={200} width={250} className="mx-4" />
-            </div>
-          </>
-        ) : (
-          <div className="flex w-auto mx-auto ">
-            <button
-              onClick={handlePrevClick}
-              className="hidden md:block mr-6"
-              type="button"
-              name="carouselLeftButton"
-            >
-              <AiFillCaretLeft />
-            </button>
-
-            <Slider
-              className="w-[480px]   sm:w-[650px] md:w-[1028px] mt-4"
-              ref={sliderRef}
-              {...settings}
-            >
-              {imgList?.map((item) => (
-                <div key={item.U_IDX}>
-                  <div className="w-full h-full z-0">
-                    <Image
-                      onClick={() => showModal(item.C_IDX)}
-                      className="w-[14rem] h-[12rem] border-4 rounded-2xl cursor-pointer"
-                      // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
-                      src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
-                      alt={`${item?.U_IDX}`}
-                      width={50}
-                      height={100}
-                      priority
-                    />
-                  </div>
-                </div>
+              {Array.from({ length: 6 }).map((_, index) => (
+                <Skeleton
+                  height={200}
+                  width={250}
+                  className="mx-4"
+                  key={index}
+                />
               ))}
-            </Slider>
-            <button
-              onClick={handleNextClick}
-              type="button"
-              name="carouselMoveButton"
-            >
-              <AiFillCaretRight />
-            </button>
-          </div>
-        )}
-        <div className="flex block mt-2 md:hidden">
-          <div>
-            <button
-              onClick={handlePrevClick}
-              className="p-2"
-              type="button"
-              name="carouselLeftButton"
-            >
-              <AiFillCaretLeft />
-            </button>
-          </div>
-          <div>
-            <button
-              className="p-2"
-              onClick={handleNextClick}
-              type="button"
-              name="carouselMoveButton"
-            >
-              <AiFillCaretRight />
-            </button>
+            </div>
+          ) : (
+            <div className="flex w-auto mx-auto ">
+              <button
+                onClick={handlePrevClick}
+                className="hidden md:block mr-6"
+                type="button"
+                name="carouselLeftButton"
+              >
+                <AiFillCaretLeft />
+              </button>
+
+              <Slider
+                className="w-[480px]   sm:w-[650px] md:w-[1028px] mt-4"
+                ref={sliderRef}
+                {...settings}
+              >
+                {topList?.map((item) => (
+                  <div key={item.U_IDX}>
+                    <div className="w-full h-full z-0">
+                      <Image
+                        onClick={() => showModal(item.C_IDX)}
+                        className="w-[14rem] h-[12rem] border-4 rounded-2xl cursor-pointer"
+                        // src={`http://localhost:4000/api/image/background/${item?.C_IMAGE}`}
+                        src={`${imageURL}/api/image/background/${item?.C_IMAGE}`}
+                        alt={`${item?.U_IDX}`}
+                        width={50}
+                        height={100}
+                        priority
+                      />
+                    </div>
+                  </div>
+                ))}
+              </Slider>
+              <button
+                onClick={handleNextClick}
+                type="button"
+                name="carouselMoveButton"
+              >
+                <AiFillCaretRight />
+              </button>
+            </div>
+          )}
+          <div className="flex block mt-2 md:hidden">
+            <div>
+              <button
+                onClick={handlePrevClick}
+                className="p-2"
+                type="button"
+                name="carouselLeftButton"
+              >
+                <AiFillCaretLeft />
+              </button>
+            </div>
+            <div>
+              <button
+                className="p-2"
+                onClick={handleNextClick}
+                type="button"
+                name="carouselMoveButton"
+              >
+                <AiFillCaretRight />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {showComponent && modalIndex > 0 && <SliderModal data={modalIndex} />}
+        {showComponent && modalIndex > 0 && <SliderModal data={modalIndex} />}
+      </div>
     </div>
   );
 };

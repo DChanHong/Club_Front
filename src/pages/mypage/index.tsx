@@ -114,7 +114,7 @@ const Index = () => {
               My Profile
             </p>
             <p className="flex justify-center">
-              <Skeleton width={125} height={120} circle={true} className="" />
+              <Skeleton width={125} height={120} circle={true} />
             </p>
             <p className="flex flex-row-reverse my-2 mx-2">
               <Skeleton width={60} />
